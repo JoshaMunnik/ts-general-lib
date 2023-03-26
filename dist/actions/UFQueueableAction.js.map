@@ -1,0 +1,1 @@
+{"version":3,"file":"UFQueueableAction.js","sourceRoot":"","sources":["../../src/actions/UFQueueableAction.ts"],"names":[],"mappings":"AAAA;;;;;;;;;;;;;;;;;;;;;;GAsBG;AAQH,YAAY;AAEZ,iBAAiB;AAEjB;;;;;GAKG;AACH,MAAM,OAAgB,iBAAiB;IACrC,6BAA6B;IAE7B;;OAEG;IACH,IAAI,QAAQ;QACV,OAAO,CAAC,CAAC;IACX,CAAC;IAED;;OAEG;IACH,IAAI,cAAc;QAChB,OAAO,GAAG,CAAC;IACb,CAAC;CAYF;AAED,YAAY"}
