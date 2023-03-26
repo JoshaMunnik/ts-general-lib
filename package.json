@@ -17,6 +17,10 @@
     "typescript",
     "utility"
   ],
+  "repository": {
+    "url": "https://github.com/JoshaMunnik/ts-general-lib",
+    "type": "git"
+  },
   "author": "Josha Munnik",
   "license": "MIT",
   "devDependencies": {
