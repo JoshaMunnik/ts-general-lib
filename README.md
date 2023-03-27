@@ -11,3 +11,7 @@ The code in this repository does not depend on any other libraries.
 ## Installation
 
 `npm install @ultraforce/ts-general-lib`
+
+## Documentation
+
+To view the generated documentation, visit: https://joshamunnik.github.io/ts-general-lib/
