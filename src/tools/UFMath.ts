@@ -47,16 +47,18 @@ export class UFMath {
 
   // endregion
 
-  // region private variables
+  // region static private variables
 
   /**
    * See property definitions
+   *
+   * @private
    */
   private static s_angleUnit: UFAngleUnit = UFAngleUnit.degrees;
 
   // endregion
 
-  // region public properties
+  // region static properties
 
   /**
    * Determines how to treat angle parameters or which unit to use when returning angles.
@@ -70,7 +72,7 @@ export class UFMath {
 
   // endregion
 
-  // region public methods
+  // region static methods
 
   /**
    * Convert angle to radians, use angleUnit to determine unit of input parameter.
@@ -98,7 +100,7 @@ export class UFMath {
 
   // endregion
 
-  // region Public methods
+  // region public methods
 
   /**
    * Rotates a 2D coordinate around a certain point.
@@ -114,7 +116,7 @@ export class UFMath {
    * @param anOriginY=0
    *   Y coordinate of point to rotate around
    *
-   * @returns An object with x and y property.
+   * @returns {{x:Number,y:Number}} An object with x and y property.
    */
   static rotate(
     anAngle: number, aX: number, aY: number, anOriginX: number = 0, anOriginY: number = 0
@@ -176,7 +178,7 @@ export class UFMath {
    * @param aMax
    *   Maximal value
    *
-   * @return Random integer between aMin and aMax (inclusive)
+   * @return {number} random integer between aMin and aMax (inclusive)
    */
   static randomInteger(aMinOrMax: number, aMax?: number): number {
     if (aMax === undefined) {
@@ -257,7 +259,7 @@ export class UFMath {
    * @param anHeight1
    *   Left of second rectangle
    *
-   * @returns True if two rectangles overlap
+   * @returns {boolean} True if two rectangles overlap
    */
   static isOverlapping(
     aX0: number, aY0: number, aWidth0: number, anHeight0: number,
