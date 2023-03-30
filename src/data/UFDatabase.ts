@@ -75,12 +75,14 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
   /**
    * @inheritDoc
    */
-  async insertObject<T extends object>(aTable: string, aData: T, aPrimaryKey: string = 'id'): Promise<T> {
+  async insertObject<T extends object>(
+    aTable: string, aData: T, aPrimaryKey: string = 'id', anIgnoreFields: string[] = []
+  ): Promise<T> {
     let columns = '';
     let values = '';
     const data: IUFDynamicObject = {};
     Object.entries(aData).forEach(([key, value]) => {
-      if (key !== aPrimaryKey) {
+      if ((key !== aPrimaryKey) && !anIgnoreFields.includes(key)) {
         columns = UFText.append(columns, key, ',');
         values = UFText.append(values, ':' + key, ',');
         data[key] = value;
@@ -88,7 +90,10 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
     });
     const id = await this.insert(`insert into ${aTable} (${columns}) values (${values})`, data);
     if (id > 0) {
-      (aData as IUFDynamicObject)[aPrimaryKey] = id;
+      return {
+        ...aData,
+        [aPrimaryKey]: id
+      };
     }
     return aData;
   }
@@ -134,12 +139,12 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
    * @inheritDoc
    */
   async updateObject<T extends object>(
-    aTable: string, aPrimaryValue: any, aData: T, aPrimaryKey: string = 'id'
+    aTable: string, aPrimaryValue: any, aData: T, aPrimaryKey: string = 'id', anIgnoreFields: string[] = []
   ): Promise<void> {
     let fields = '';
     const data: IUFDynamicObject = {};
     Object.entries(aData).forEach(([key, value]) => {
-      if (key !== aPrimaryKey) {
+      if ((key !== aPrimaryKey) && !anIgnoreFields.includes(key)) {
         fields = UFText.append(fields, key + '=' + ':' + key, ',');
         data[key] = value;
       }
@@ -153,9 +158,11 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
 
   /**
    * @inheritDoc
+   *
+   * The default implementation calls {@link update} assuming it is handled in the same way by the database
+   * implementation.
    */
   async delete(aSql: string, aParameterValues?: IUFDynamicObject): Promise<number> {
-    // the default implementation calls updates assuming it is handled in the same way by the database implementation.
     return await this.update(aSql, aParameterValues);
   }
 
