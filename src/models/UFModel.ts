@@ -183,7 +183,7 @@ export class UFModel implements IUFModel {
   /**
    * Gets all dirty properties.
    *
-   * @returns {string[]} a list of dirty property names.
+   * @returns a list of dirty property names.
    */
   getDirtyProperties(): string[] {
     return Array.from(this.m_dirtyList);
