@@ -51,6 +51,9 @@ export class UFDelayAction extends UFQueueableAction {
    */
   private m_progress: number = 0.0;
 
+
+  // endregion
+
   // region public methods
 
   /**
