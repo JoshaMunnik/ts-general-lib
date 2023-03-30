@@ -31,7 +31,7 @@ import {UFText} from "./UFText";
 // region types
 
 /**
- * {@link UFDate} defines support methods for {@link Date}.
+ * {@link UFDate} defines support methods for `Date`.
  */
 export class UFDate {
   // region constructor
