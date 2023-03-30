@@ -32,8 +32,10 @@ import {IUFModel} from "../models/IUFModel";
 
 /**
  * Number of days in a month. The first month starts at 1.
+ *
+ * @type {number[]}
  */
-const MONTH_DAYS: number[] = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const MONTH_DAYS = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 /**
  * A regular expression to test for integer numbers (without plus or minus sign)
@@ -42,7 +44,7 @@ const INT_NUMBER: RegExp = /\d+/;
 
 // endregion
 
-// region types
+// region exports
 
 /**
  * A function interface to validate a value.
@@ -230,7 +232,7 @@ export class UFValidators {
    *
    * @returns validator function.
    */
-  static createTextLength(aMin: number, aMax: number = Number.MAX_VALUE): IUFValidateValue {
+  createTextLength(aMin: number, aMax: number = Number.MAX_VALUE): IUFValidateValue {
     return aValue => {
       const charCount = aValue.toString().length;
       return (charCount >= aMin) && (charCount <= aMax);
@@ -247,7 +249,7 @@ export class UFValidators {
    *
    * @returns validator function.
    */
-  static createNumberRange(aMin: number, aMax: number = Number.MAX_VALUE): IUFValidateValue {
+  createNumberRange(aMin: number, aMax: number = Number.MAX_VALUE): IUFValidateValue {
     return aValue => {
       if (!UFValidators.isNumber(aValue)) {
         return false;
@@ -267,7 +269,7 @@ export class UFValidators {
    *
    * @returns validator function.
    */
-  static createIntegerRange(aMin: number, aMax: number = Number.MAX_VALUE): IUFValidateValue {
+  createIntegerRange(aMin: number, aMax: number = Number.MAX_VALUE): IUFValidateValue {
     return aValue => {
       if (!UFValidators.isInteger(aValue)) {
         return false;
@@ -287,7 +289,7 @@ export class UFValidators {
    *
    * @returns validator function.
    */
-  static createArrayRange(aMin: number, aMax: number = Number.MAX_VALUE): IUFValidateValue {
+  createArrayRange(aMin: number, aMax: number = Number.MAX_VALUE): IUFValidateValue {
     return aValue => {
       if (!UFValidators.isArray(aValue)) {
         return false;
