@@ -50,6 +50,8 @@ export class UFText {
 
   /**
    * Maps certain characters to their entity or special html tag or empty string if it has no use in html
+   *
+   * @private
    */
   static s_escapeHtmlMap: Map<string, string> = new Map([
     ['&', '&amp;'],
@@ -70,14 +72,14 @@ export class UFText {
    * Appends a text to another text using a separator. If either texts are empty, the method just returns the other
    * texts without the separator.
    *
-   * @param aSource
+   * @param {string} aSource
    *   Source to add to
-   * @param aValue
+   * @param {string} aValue
    *   Value to append
-   * @param aSeparator
+   * @param {string} aSeparator
    *   Separator to use
    *
-   * @return aValue added to aSource with aSeparator if both aValue and aSource are not empty.
+   * @return {string} aValue added to aSource with aSeparator if both aValue and aSource are not empty.
    */
   static append(aSource: string, aValue: string, aSeparator: string): string {
     if (aSource.length <= 0) {
@@ -95,10 +97,10 @@ export class UFText {
    *
    * Based on code from answer: https://stackoverflow.com/a/4835406/968451
    *
-   * @param aText
+   * @param {string} aText
    *   Text to convert
    *
-   * @return Html formatted plain text
+   * @return {string} Html formatted plain text
    */
   static escapeHtml(aText: string): string {
     return aText.replace(/[&<>"'\n\t\r]/g, character => this.s_escapeHtmlMap.get(character) as string);
@@ -107,10 +109,10 @@ export class UFText {
   /**
    * Generate a code existing of a random sequence of upper and lowercase and numbers.
    *
-   * @param aLength
+   * @param {number} aLength
    *   Number of characters the code exists of
    *
-   * @return The generated code.
+   * @return {string} The generated code.
    */
   static generateCode(aLength: number): string {
     let result = '';
@@ -146,10 +148,10 @@ export class UFText {
   /**
    * Converts a number to a string of 2 digits
    *
-   * @param aNumber
+   * @param {number} aNumber
    *   A number between 0 and 99
    *
-   * @return aNumber as string, prefixed with a 0 if number exists of 1 digit
+   * @return {string} aNumber as string, prefixed with a 0 if number exists of 1 digit
    *
    * @private
    */
@@ -160,10 +162,10 @@ export class UFText {
   /**
    * Converts a number to a string of 3 digits
    *
-   * @param aNumber
+   * @param {number} aNumber
    *   A number between 0 and 999
    *
-   * @return aNumber as string, prefixed with a 0 if number exists of 1 digit
+   * @return {string} aNumber as string, prefixed with a 0 if number exists of 1 digit
    *
    * @private
    */
@@ -174,12 +176,12 @@ export class UFText {
   /**
    * Replace all keys by their value in a string.
    *
-   * @param aText
+   * @param {string} aText
    *   Text to update
-   * @param aMap
+   * @param {Object} aMap
    *   Replace keys with their values
    *
-   * @return Updated aText
+   * @return {string} Updated aText
    */
   static replace(aText: string, aMap: object): string {
     for (const [key, value] of Object.entries(aMap)) {
@@ -191,10 +193,10 @@ export class UFText {
   /**
    * Returns a number converted to a hex number of two digits.
    *
-   * @param aNumber
+   * @param {number} aNumber
    *   Number to convert (will be clamped between 0 and 255)
    *
-   * @return hexadecimal string of 2 digits
+   * @return {string} hexadecimal string of 2 digits
    */
   static hexTwoDigits(aNumber: number): string {
     return ('0' + Math.min(255, Math.max(0, aNumber)).toString(16)).substring(-2);
@@ -203,10 +205,10 @@ export class UFText {
   /**
    * Returns a number converted to a hex number of four digits.
    *
-   * @param aNumber
+   * @param {number} aNumber
    *   Number to convert (will be clamped between 0 and 65535)
    *
-   * @return hexadecimal string of 4 digits
+   * @return {string} hexadecimal string of 4 digits
    */
   static hexFourDigits(aNumber: number): string {
     return ('000' + Math.min(65535, Math.max(0, aNumber)).toString(16)).substring(-4);
@@ -277,27 +279,6 @@ export class UFText {
    */
   static getOrdinalNumber(aNumber: number): string {
     return aNumber.toString() + this.getOrdinalPost(aNumber);
-  }
-
-  /**
-   * Gets a value as string.
-   *
-   * @param aValue
-   *   Value to get
-   * @param aDefault
-   *   Default is used if aValue can not be converted to a string (in case of null, undefined, NaN)
-   *
-   * @return aValue as string (via toString() call) or aDefault.
-   */
-  static asString(aValue: any, aDefault: string = ''): string {
-    switch(aValue) {
-      case null:
-      case undefined:
-      case NaN:
-        return aDefault;
-      default:
-        return aValue.toString();
-    }
   }
 }
 
