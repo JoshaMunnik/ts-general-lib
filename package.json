@@ -1,6 +1,6 @@
 {
   "name": "@ultraforce/ts-general-lib",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Various general utility classes.",
   "scripts": {
     "build": "tsc",
@@ -21,6 +21,7 @@
     "url": "https://github.com/JoshaMunnik/ts-general-lib",
     "type": "git"
   },
+  "typings": "./dist/index.d.ts",
   "author": "Josha Munnik",
   "license": "MIT",
   "devDependencies": {
