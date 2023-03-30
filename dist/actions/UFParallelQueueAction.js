@@ -156,8 +156,6 @@ export class UFParallelQueueAction extends UFQueueableAction {
         return (progressSum + this.m_doneProgressWeight) / this.m_totalProgressWeight;
     }
     // endregion
-    // region protected methods
-    // endregion
     // region private methods
     /**
      * Starts running actions until all actions have finished running or the token is requesting cancellation.

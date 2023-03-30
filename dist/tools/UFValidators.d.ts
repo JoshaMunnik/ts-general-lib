@@ -165,7 +165,7 @@ export declare class UFValidators {
      *
      * @returns validator function.
      */
-    static createTextLength(aMin: number, aMax?: number): IUFValidateValue;
+    createTextLength(aMin: number, aMax?: number): IUFValidateValue;
     /**
      * Creates a validator that checks if a value is a valid number and within a certain value range.
      *
@@ -176,7 +176,7 @@ export declare class UFValidators {
      *
      * @returns validator function.
      */
-    static createNumberRange(aMin: number, aMax?: number): IUFValidateValue;
+    createNumberRange(aMin: number, aMax?: number): IUFValidateValue;
     /**
      * Creates a validator that checks if a value is a valid integer and within a certain value range.
      *
@@ -187,7 +187,7 @@ export declare class UFValidators {
      *
      * @returns validator function.
      */
-    static createIntegerRange(aMin: number, aMax?: number): IUFValidateValue;
+    createIntegerRange(aMin: number, aMax?: number): IUFValidateValue;
     /**
      * Creates a validator that checks if a value is a valid integer and within a certain value range.
      *
@@ -198,7 +198,7 @@ export declare class UFValidators {
      *
      * @returns validator function.
      */
-    static createArrayRange(aMin: number, aMax?: number): IUFValidateValue;
+    createArrayRange(aMin: number, aMax?: number): IUFValidateValue;
     /**
      * Creates a validator that checks if a value matches a boolean value.
      *

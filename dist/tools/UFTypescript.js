@@ -49,7 +49,7 @@ export class UFTypescript {
      * @param aTime
      *   Time to wait in milliseconds.
      *
-     * @returns Promise that resolves after aTime milliseconds have passed.
+     * @returns empty promise
      */
     static delay(aTime) {
         return __awaiter(this, void 0, void 0, function* () {

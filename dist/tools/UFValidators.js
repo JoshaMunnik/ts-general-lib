@@ -25,6 +25,8 @@
 // region private constants
 /**
  * Number of days in a month. The first month starts at 1.
+ *
+ * @type {number[]}
  */
 const MONTH_DAYS = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 /**
@@ -154,7 +156,7 @@ export class UFValidators {
      *
      * @returns validator function.
      */
-    static createTextLength(aMin, aMax = Number.MAX_VALUE) {
+    createTextLength(aMin, aMax = Number.MAX_VALUE) {
         return aValue => {
             const charCount = aValue.toString().length;
             return (charCount >= aMin) && (charCount <= aMax);
@@ -170,7 +172,7 @@ export class UFValidators {
      *
      * @returns validator function.
      */
-    static createNumberRange(aMin, aMax = Number.MAX_VALUE) {
+    createNumberRange(aMin, aMax = Number.MAX_VALUE) {
         return aValue => {
             if (!UFValidators.isNumber(aValue)) {
                 return false;
@@ -189,7 +191,7 @@ export class UFValidators {
      *
      * @returns validator function.
      */
-    static createIntegerRange(aMin, aMax = Number.MAX_VALUE) {
+    createIntegerRange(aMin, aMax = Number.MAX_VALUE) {
         return aValue => {
             if (!UFValidators.isInteger(aValue)) {
                 return false;
@@ -208,7 +210,7 @@ export class UFValidators {
      *
      * @returns validator function.
      */
-    static createArrayRange(aMin, aMax = Number.MAX_VALUE) {
+    createArrayRange(aMin, aMax = Number.MAX_VALUE) {
         return aValue => {
             if (!UFValidators.isArray(aValue)) {
                 return false;

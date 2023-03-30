@@ -40,6 +40,8 @@ export declare class UFMath {
     private constructor();
     /**
      * See property definitions
+     *
+     * @private
      */
     private static s_angleUnit;
     /**
@@ -79,7 +81,7 @@ export declare class UFMath {
      * @param anOriginY=0
      *   Y coordinate of point to rotate around
      *
-     * @returns An object with x and y property.
+     * @returns {{x:Number,y:Number}} An object with x and y property.
      */
     static rotate(anAngle: number, aX: number, aY: number, anOriginX?: number, anOriginY?: number): {
         x: number;
@@ -123,7 +125,7 @@ export declare class UFMath {
      * @param aMax
      *   Maximal value
      *
-     * @return Random integer between aMin and aMax (inclusive)
+     * @return {number} random integer between aMin and aMax (inclusive)
      */
     static randomInteger(aMinOrMax: number, aMax?: number): number;
     /**
@@ -187,7 +189,7 @@ export declare class UFMath {
      * @param anHeight1
      *   Left of second rectangle
      *
-     * @returns True if two rectangles overlap
+     * @returns {boolean} True if two rectangles overlap
      */
     static isOverlapping(aX0: number, aY0: number, aWidth0: number, anHeight0: number, aX1: number, aY1: number, aWidth1: number, anHeight1: number): boolean;
     /**

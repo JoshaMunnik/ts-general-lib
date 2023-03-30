@@ -82,10 +82,12 @@ export interface IUFDatabase {
      *   Data to insert (should be some form of object), the primary key value will be updated after the insert
      * @param aPrimaryKey
      *   Name of primary key field
+     * @param anIgnoreFields
+     *   Fields to ignore in aData
      *
-     * @return aData with primary key value updated
+     * @return values copied from aData with primary key value updated
      */
-    insertObject<T extends object>(aTable: string, aData: T, aPrimaryKey: string): Promise<T>;
+    insertObject<T extends object>(aTable: string, aData: T, aPrimaryKey?: string, anIgnoreFields?: string[]): Promise<T>;
     /**
      * Execute a sql to get a row as a certain type.
      *
@@ -162,8 +164,10 @@ export interface IUFDatabase {
      *   Object containing field names and their new values.
      * @param aPrimaryKey
      *   Name of primary key
+     * @param anIgnoreFields
+     *   Fields to ignore in aData
      */
-    updateObject<T extends object>(aTable: string, aPrimaryValue: any, aData: T, aPrimaryKey: string): Promise<void>;
+    updateObject<T extends object>(aTable: string, aPrimaryValue: any, aData: T, aPrimaryKey?: string, anIgnoreFields?: string[]): Promise<void>;
     /**
      * Performs a database delete and returns the number of deleted records.
      *

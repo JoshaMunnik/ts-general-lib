@@ -23,7 +23,7 @@
 <ul class="tsd-hierarchy">
 <li><span class="target">UFObject</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/JoshaMunnik/ts-general-lib/blob/8c2ee95/src/tools/UFObject.ts#L30">tools/UFObject.ts:30</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/JoshaMunnik/ts-general-lib/blob/c2dc79b/src/tools/UFObject.ts#L30">tools/UFObject.ts:30</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -33,6 +33,7 @@
 <h3 class="tsd-index-heading">Methods</h3>
 <div class="tsd-index-list"><a href="UFObject.html#applyProperties" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF4DB8" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-2048-path"></rect><path d="M9.162 16V7.24H10.578L11.514 10.072C11.602 10.328 11.674 10.584 11.73 10.84C11.794 11.088 11.842 11.28 11.874 11.416C11.906 11.28 11.954 11.088 12.018 10.84C12.082 10.584 12.154 10.324 12.234 10.06L13.122 7.24H14.538V16H13.482V12.82C13.482 12.468 13.49 12.068 13.506 11.62C13.53 11.172 13.558 10.716 13.59 10.252C13.622 9.78 13.654 9.332 13.686 8.908C13.726 8.476 13.762 8.1 13.794 7.78L12.366 12.16H11.334L9.894 7.78C9.934 8.092 9.97 8.456 10.002 8.872C10.042 9.28 10.078 9.716 10.11 10.18C10.142 10.636 10.166 11.092 10.182 11.548C10.206 12.004 10.218 12.428 10.218 12.82V16H9.162Z" fill="var(--color-text)" id="icon-2048-text"></path></svg><span>apply<wbr/>Properties</span></a>
 <a href="UFObject.html#backupProperties" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>backup<wbr/>Properties</span></a>
+<a href="UFObject.html#deepCopy" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>deep<wbr/>Copy</span></a>
 <a href="UFObject.html#equalProperties" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>equal<wbr/>Properties</span></a>
 <a href="UFObject.html#getAs" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>As</span></a>
 <a href="UFObject.html#getOrFail" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Or<wbr/>Fail</span></a>
@@ -69,7 +70,7 @@ anObject, property name. The function is responsible for assigning a value to an
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/JoshaMunnik/ts-general-lib/blob/8c2ee95/src/tools/UFObject.ts#L233">tools/UFObject.ts:233</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/JoshaMunnik/ts-general-lib/blob/c2dc79b/src/tools/UFObject.ts#L234">tools/UFObject.ts:234</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="backupProperties" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>backup<wbr/>Properties</span><a href="#backupProperties" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -98,7 +99,31 @@ properties are scanned.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/JoshaMunnik/ts-general-lib/blob/8c2ee95/src/tools/UFObject.ts#L186">tools/UFObject.ts:186</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/JoshaMunnik/ts-general-lib/blob/c2dc79b/src/tools/UFObject.ts#L186">tools/UFObject.ts:186</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="deepCopy" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>deep<wbr/>Copy</span><a href="#deepCopy" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="deepCopy.deepCopy-1">deep<wbr/>Copy<span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span>anObject<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span><a href="#deepCopy.deepCopy-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Copies the properties of an object. Recursively call this method of properties that are object values.</p>
+
+<h3>Returns</h3><p>copy of an object</p>
+</div>
+<section class="tsd-panel tsd-type-parameters">
+<h4>Type Parameters</h4>
+<ul class="tsd-type-parameters">
+<li>
+<h4>T<span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">object</span></h4></li></ul></section>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>anObject: <span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span></h5>
+<div class="tsd-comment tsd-typography"><p>Object to copy</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/JoshaMunnik/ts-general-lib/blob/c2dc79b/src/tools/UFObject.ts#L262">tools/UFObject.ts:262</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="equalProperties" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>equal<wbr/>Properties</span><a href="#equalProperties" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -127,7 +152,7 @@ method will call itself recursively.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/JoshaMunnik/ts-general-lib/blob/8c2ee95/src/tools/UFObject.ts#L111">tools/UFObject.ts:111</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/JoshaMunnik/ts-general-lib/blob/c2dc79b/src/tools/UFObject.ts#L111">tools/UFObject.ts:111</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getAs" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>get<wbr/>As</span><a href="#getAs" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -159,7 +184,7 @@ method will call itself recursively.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/JoshaMunnik/ts-general-lib/blob/8c2ee95/src/tools/UFObject.ts#L92">tools/UFObject.ts:92</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/JoshaMunnik/ts-general-lib/blob/c2dc79b/src/tools/UFObject.ts#L92">tools/UFObject.ts:92</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getOrFail" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>get<wbr/>Or<wbr/>Fail</span><a href="#getOrFail" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -184,7 +209,7 @@ method will call itself recursively.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/JoshaMunnik/ts-general-lib/blob/8c2ee95/src/tools/UFObject.ts#L57">tools/UFObject.ts:57</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/JoshaMunnik/ts-general-lib/blob/c2dc79b/src/tools/UFObject.ts#L57">tools/UFObject.ts:57</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getOrFailAs" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>get<wbr/>Or<wbr/>Fail<wbr/>As</span><a href="#getOrFailAs" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -214,7 +239,7 @@ method will call itself recursively.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type" data-tsd-kind="Type parameter">T</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/JoshaMunnik/ts-general-lib/blob/8c2ee95/src/tools/UFObject.ts#L76">tools/UFObject.ts:76</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/JoshaMunnik/ts-general-lib/blob/c2dc79b/src/tools/UFObject.ts#L76">tools/UFObject.ts:76</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -241,6 +266,7 @@ method will call itself recursively.</p>
 <ul>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="UFObject.html#applyProperties" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>apply<wbr/>Properties</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="UFObject.html#backupProperties" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>backup<wbr/>Properties</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="UFObject.html#deepCopy" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>deep<wbr/>Copy</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="UFObject.html#equalProperties" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>equal<wbr/>Properties</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="UFObject.html#getAs" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>As</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="UFObject.html#getOrFail" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get<wbr/>Or<wbr/>Fail</a></li>

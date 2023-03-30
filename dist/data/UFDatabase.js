@@ -72,13 +72,13 @@ export class UFDatabase {
     /**
      * @inheritDoc
      */
-    insertObject(aTable, aData, aPrimaryKey = 'id') {
+    insertObject(aTable, aData, aPrimaryKey = 'id', anIgnoreFields = []) {
         return __awaiter(this, void 0, void 0, function* () {
             let columns = '';
             let values = '';
             const data = {};
             Object.entries(aData).forEach(([key, value]) => {
-                if (key !== aPrimaryKey) {
+                if ((key !== aPrimaryKey) && !anIgnoreFields.includes(key)) {
                     columns = UFText.append(columns, key, ',');
                     values = UFText.append(values, ':' + key, ',');
                     data[key] = value;
@@ -86,7 +86,7 @@ export class UFDatabase {
             });
             const id = yield this.insert(`insert into ${aTable} (${columns}) values (${values})`, data);
             if (id > 0) {
-                aData[aPrimaryKey] = id;
+                return Object.assign(Object.assign({}, aData), { [aPrimaryKey]: id });
             }
             return aData;
         });
@@ -124,12 +124,12 @@ export class UFDatabase {
     /**
      * @inheritDoc
      */
-    updateObject(aTable, aPrimaryValue, aData, aPrimaryKey = 'id') {
+    updateObject(aTable, aPrimaryValue, aData, aPrimaryKey = 'id', anIgnoreFields = []) {
         return __awaiter(this, void 0, void 0, function* () {
             let fields = '';
             const data = {};
             Object.entries(aData).forEach(([key, value]) => {
-                if (key !== aPrimaryKey) {
+                if ((key !== aPrimaryKey) && !anIgnoreFields.includes(key)) {
                     fields = UFText.append(fields, key + '=' + ':' + key, ',');
                     data[key] = value;
                 }
@@ -143,10 +143,12 @@ export class UFDatabase {
     }
     /**
      * @inheritDoc
+     *
+     * The default implementation calls {@link update} assuming it is handled in the same way by the database
+     * implementation.
      */
     delete(aSql, aParameterValues) {
         return __awaiter(this, void 0, void 0, function* () {
-            // the default implementation calls updates assuming it is handled in the same way by the database implementation.
             return yield this.update(aSql, aParameterValues);
         });
     }

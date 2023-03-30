@@ -147,4 +147,13 @@ export declare class UFObject {
      * UFObjectTools.applyProperties(SomeTextInput, originalProperties);
      */
     static applyProperties(anObject: any, aValues: any): any;
+    /**
+     * Copies the properties of an object. Recursively call this method of properties that are object values.
+     *
+     * @param anObject
+     *   Object to copy
+     *
+     * @return copy of an object
+     */
+    static deepCopy<T extends object>(anObject: T): T;
 }

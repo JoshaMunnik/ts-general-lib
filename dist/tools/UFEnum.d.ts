@@ -22,7 +22,7 @@
  * SUCH DAMAGE.
  */
 /**
- * Support methods for `enum`
+ * Support methods for enum
  */
 export declare class UFEnum {
     /**

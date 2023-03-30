@@ -242,31 +242,13 @@ export class UFText {
     static getOrdinalNumber(aNumber) {
         return aNumber.toString() + this.getOrdinalPost(aNumber);
     }
-    /**
-     * Gets a value as string.
-     *
-     * @param aValue
-     *   Value to get
-     * @param aDefault
-     *   Default is used if aValue can not be converted to a string (in case of null, undefined, NaN)
-     *
-     * @return aValue as string (via toString() call) or aDefault.
-     */
-    static asString(aValue, aDefault = '') {
-        switch (aValue) {
-            case null:
-            case undefined:
-            case NaN:
-                return aDefault;
-            default:
-                return aValue.toString();
-        }
-    }
 }
 // endregion
 // region private vars
 /**
  * Maps certain characters to their entity or special html tag or empty string if it has no use in html
+ *
+ * @private
  */
 UFText.s_escapeHtmlMap = new Map([
     ['&', '&amp;'],

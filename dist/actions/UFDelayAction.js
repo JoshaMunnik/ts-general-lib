@@ -29,6 +29,7 @@ import { UFQueueableAction } from "./UFQueueableAction";
  * A simple action that waits a certain time before finishing.
  */
 export class UFDelayAction extends UFQueueableAction {
+    // endregion
     // region public methods
     /**
      * Constructs an instance of {@link UFDelayAction}.

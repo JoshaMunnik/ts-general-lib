@@ -36,7 +36,7 @@ export declare class UFSystem {
      *
      * See: https://locutus.io/php/datetime/time/
      *
-     * @return Seconds
+     * @return {number} seconds
      */
     static time(): number;
 }

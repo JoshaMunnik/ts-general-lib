@@ -36,14 +36,12 @@ class PropertyMetaData {
         this.validators = [];
     }
 }
-// endregion
-// region default export
 /**
  * {@link UFModel} implements {@link IUFModel} and adds support change events and dirty state.
  */
 export class UFModel {
     constructor() {
-        // region Private variables
+        // region private variables
         /**
          * Current lock count
          *
@@ -145,7 +143,7 @@ export class UFModel {
     /**
      * Gets all dirty properties.
      *
-     * @returns {string[]} a list of dirty property names.
+     * @returns a list of dirty property names.
      */
     getDirtyProperties() {
         return Array.from(this.m_dirtyList);
@@ -209,7 +207,7 @@ export class UFModel {
         }
     }
     // endregion
-    // region Protected methods
+    // region protected methods
     /**
      * Processes a possible property assignment. If aNewValue is not undefined, compare it to the current
      * value and when not equal call {@link changed} for the property.
@@ -296,7 +294,7 @@ export class UFModel {
         copy.forEach(listener => listener(this, aList));
     }
     // endregion
-    // region Private methods
+    // region private methods
     /**
      * Gets metadata for property name. Creates a metadata record if none exists for the property.
      *

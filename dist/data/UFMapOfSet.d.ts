@@ -54,6 +54,13 @@ export declare class UFMapOfSet<TKey, TValue> {
      */
     remove(aKey: TKey, aValue: TValue): void;
     /**
+     * Searches for a key that contains the value and remove it.
+     *
+     * @param aValue
+     *   Value to remove
+     */
+    removeValue(aValue: TValue): void;
+    /**
      * Gets all values stored for a certain key.
      *
      * @param aKey
@@ -88,4 +95,21 @@ export declare class UFMapOfSet<TKey, TValue> {
      * @returns true if there are no sets.
      */
     isEmpty(): boolean;
+    /**
+     * Tries to the first key the value has been stored for.
+     *
+     * @param aValue
+     *   Value to find key
+     *
+     * @returns the key or null if no key could be found.
+     */
+    findKey(aValue: TValue): TKey | null;
+    /**
+     * Gets the number of key entries.
+     */
+    get keyCount(): number;
+    /**
+     * Gets the total number of value entries.
+     */
+    get valueTotalCount(): number;
 }

@@ -38,7 +38,7 @@ export declare class UFSorted {
      * @param aData
      *   Object or array.
      *
-     * @returns Sorted values
+     * @returns sorted values
      */
     static sort<T extends IUFSorted>(aData: T[] | {
         [key: string]: T;
@@ -49,7 +49,7 @@ export declare class UFSorted {
      * @param aData
      *   Data to process
      *
-     * @returns Maximum value or Number.MIN_VALUE if none was found.
+     * @returns {number} maximum value or Number.MIN_VALUE if none was found.
      */
     static getMax(aData: IUFSorted[] | {
         [key: string]: IUFSorted;
@@ -60,7 +60,7 @@ export declare class UFSorted {
      * @param aData
      *   Data to process
      *
-     * @returns Minimum value or Number.MAX_VALUE if none was found.
+     * @returns {number} minimum value or Number.MAX_VALUE if none was found.
      */
     static getMin(aData: IUFSorted[] | {
         [key: string]: IUFSorted;
@@ -70,7 +70,7 @@ export declare class UFSorted {
      * @param aData
      *   Data to get values from
      *
-     * @returns List of values
+     * @returns list of values
      */
     private static getValues;
 }

@@ -49,7 +49,7 @@ export declare class UFArray {
      *
      * @template T
      *
-     * @param anArray
+     * @param {T[]} anArray
      *   Array to shuffle
      * @param [anIterations]
      *   Number of times to perform swap. If the value is not set, it will be set to 1.5 * length of the array.
@@ -241,7 +241,7 @@ export declare class UFArray {
      * @param aValue
      *   One or more values to check
      *
-     * @returns True if the array contains one of the values or the object has a key that
+     * @returns {boolean} True if the array contains one of the values or the object has a key that
      *   matches one of the values.
      */
     static contains(aList: (object | []), ...aValue: any[]): boolean;
@@ -253,7 +253,7 @@ export declare class UFArray {
      * @param [aReverse=false]
      *   When true sort in reverse order.
      *
-     * @returns anArray with sorted items
+     * @returns {number[]} anArray with sorted items
      */
     static sortNumeric(anArray: number[], aReverse?: boolean): number[];
     /**

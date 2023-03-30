@@ -43,7 +43,7 @@ export class UFMath {
     constructor() {
     }
     // endregion
-    // region public properties
+    // region static properties
     /**
      * Determines how to treat angle parameters or which unit to use when returning angles.
      */
@@ -54,7 +54,7 @@ export class UFMath {
         UFMath.s_angleUnit = value;
     }
     // endregion
-    // region public methods
+    // region static methods
     /**
      * Convert angle to radians, use angleUnit to determine unit of input parameter.
      *
@@ -78,7 +78,7 @@ export class UFMath {
         return (UFMath.angleUnit === UFAngleUnit.degrees) ? anAngle * 180 / Math.PI : anAngle;
     }
     // endregion
-    // region Public methods
+    // region public methods
     /**
      * Rotates a 2D coordinate around a certain point.
      *
@@ -93,7 +93,7 @@ export class UFMath {
      * @param anOriginY=0
      *   Y coordinate of point to rotate around
      *
-     * @returns An object with x and y property.
+     * @returns {{x:Number,y:Number}} An object with x and y property.
      */
     static rotate(anAngle, aX, aY, anOriginX = 0, anOriginY = 0) {
         anAngle = UFMath.toRadians(anAngle);
@@ -150,7 +150,7 @@ export class UFMath {
      * @param aMax
      *   Maximal value
      *
-     * @return Random integer between aMin and aMax (inclusive)
+     * @return {number} random integer between aMin and aMax (inclusive)
      */
     static randomInteger(aMinOrMax, aMax) {
         if (aMax === undefined) {
@@ -227,7 +227,7 @@ export class UFMath {
      * @param anHeight1
      *   Left of second rectangle
      *
-     * @returns True if two rectangles overlap
+     * @returns {boolean} True if two rectangles overlap
      */
     static isOverlapping(aX0, aY0, aWidth0, anHeight0, aX1, aY1, aWidth1, anHeight1) {
         // just check if minimum value in one direction is equal or larger than the maximum value in that direction
@@ -269,9 +269,11 @@ export class UFMath {
     }
 }
 // endregion
-// region private variables
+// region static private variables
 /**
  * See property definitions
+ *
+ * @private
  */
 UFMath.s_angleUnit = UFAngleUnit.degrees;
 // endregion

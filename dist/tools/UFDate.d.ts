@@ -22,7 +22,7 @@
  * SUCH DAMAGE.
  */
 /**
- * {@link UFDate} defines support methods for `Date`.
+ * {@link UFDate} defines support methods for {@link Date}.
  */
 export declare class UFDate {
     /**
@@ -34,30 +34,30 @@ export declare class UFDate {
     /**
      * Gets the date formatted for use with mysql: "yyyy-mm-dd hh:mm:ss"
      *
-     * @param aDate
+     * @param {Date | null | undefined} aDate
      *   Date to format
-     * @param aDefault
+     * @param {string} aDefault
      *   Default to return if aData is not a date.
      *
-     * @returns Formatted date or aDefault if data is null or undefined
+     * @returns {string} Formatted date or aDefault if data is null or undefined
      */
     static mysql(aDate: (Date | null | undefined), aDefault?: string): string;
     /**
      * Returns the newest date.
      *
-     * @param aDates
+     * @param {Date} aDates
      *   One or more dates.
      *
-     * @returns newest date
+     * @returns {Date}
      */
     static max(...aDates: Date[]): Date;
     /**
      * Returns the oldest date.
      *
-     * @param aDates
+     * @param {Date} aDates
      *   One or more dates.
      *
-     * @returns oldest date
+     * @returns {Date}
      */
     static min(...aDates: Date[]): Date;
     /**
@@ -68,4 +68,15 @@ export declare class UFDate {
      * Returns one hour in milliseconds.
      */
     static get HOUR_IN_MILLISECONDS(): number;
+    /**
+     * Checks if two dates are equal by comparing their utc year, month and date.
+     *
+     * @param aFirst
+     *   First date to check
+     * @param aSecond
+     *   Second date to check
+     *
+     * @return True if the date parts are equal.
+     */
+    static isEqualDate(aFirst: Date, aSecond: Date): boolean;
 }

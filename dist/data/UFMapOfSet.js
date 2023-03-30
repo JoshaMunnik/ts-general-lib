@@ -74,6 +74,18 @@ export class UFMapOfSet {
         }
     }
     /**
+     * Searches for a key that contains the value and remove it.
+     *
+     * @param aValue
+     *   Value to remove
+     */
+    removeValue(aValue) {
+        const key = this.findKey(aValue);
+        if (key) {
+            this.remove(key, aValue);
+        }
+    }
+    /**
      * Gets all values stored for a certain key.
      *
      * @param aKey
@@ -119,6 +131,38 @@ export class UFMapOfSet {
      */
     isEmpty() {
         return this.m_map.size === 0;
+    }
+    /**
+     * Tries to the first key the value has been stored for.
+     *
+     * @param aValue
+     *   Value to find key
+     *
+     * @returns the key or null if no key could be found.
+     */
+    findKey(aValue) {
+        for (const key of this.m_map.keys()) {
+            if (this.hasValue(key, aValue)) {
+                return key;
+            }
+        }
+        return null;
+    }
+    // endregion
+    // region public properties
+    /**
+     * Gets the number of key entries.
+     */
+    get keyCount() {
+        return this.m_map.size;
+    }
+    /**
+     * Gets the total number of value entries.
+     */
+    get valueTotalCount() {
+        let result = 0;
+        this.m_map.forEach(values => result += values.size);
+        return result;
     }
 }
 // endregion

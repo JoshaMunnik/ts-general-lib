@@ -233,6 +233,22 @@ export class UFObject {
         }
         return anObject;
     }
+    /**
+     * Copies the properties of an object. Recursively call this method of properties that are object values.
+     *
+     * @param anObject
+     *   Object to copy
+     *
+     * @return copy of an object
+     */
+    static deepCopy(anObject) {
+        const result = {};
+        Object.keys(anObject).forEach(key => {
+            const value = anObject[key];
+            result[key] = typeof value === 'object' ? this.deepCopy(value) : value;
+        });
+        return result;
+    }
 }
 // endregion
 //# sourceMappingURL=UFObject.js.map
