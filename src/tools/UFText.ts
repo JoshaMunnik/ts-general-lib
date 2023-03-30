@@ -72,14 +72,14 @@ export class UFText {
    * Appends a text to another text using a separator. If either texts are empty, the method just returns the other
    * texts without the separator.
    *
-   * @param {string} aSource
+   * @param aSource
    *   Source to add to
-   * @param {string} aValue
+   * @param aValue
    *   Value to append
-   * @param {string} aSeparator
+   * @param aSeparator
    *   Separator to use
    *
-   * @return {string} aValue added to aSource with aSeparator if both aValue and aSource are not empty.
+   * @return aValue added to aSource with aSeparator if both aValue and aSource are not empty.
    */
   static append(aSource: string, aValue: string, aSeparator: string): string {
     if (aSource.length <= 0) {
@@ -97,10 +97,10 @@ export class UFText {
    *
    * Based on code from answer: https://stackoverflow.com/a/4835406/968451
    *
-   * @param {string} aText
+   * @param aText
    *   Text to convert
    *
-   * @return {string} Html formatted plain text
+   * @return Html formatted plain text
    */
   static escapeHtml(aText: string): string {
     return aText.replace(/[&<>"'\n\t\r]/g, character => this.s_escapeHtmlMap.get(character) as string);
@@ -109,10 +109,10 @@ export class UFText {
   /**
    * Generate a code existing of a random sequence of upper and lowercase and numbers.
    *
-   * @param {number} aLength
+   * @param aLength
    *   Number of characters the code exists of
    *
-   * @return {string} The generated code.
+   * @return The generated code.
    */
   static generateCode(aLength: number): string {
     let result = '';
@@ -148,10 +148,10 @@ export class UFText {
   /**
    * Converts a number to a string of 2 digits
    *
-   * @param {number} aNumber
+   * @param aNumber
    *   A number between 0 and 99
    *
-   * @return {string} aNumber as string, prefixed with a 0 if number exists of 1 digit
+   * @return aNumber as string, prefixed with a 0 if number exists of 1 digit
    *
    * @private
    */
@@ -162,10 +162,10 @@ export class UFText {
   /**
    * Converts a number to a string of 3 digits
    *
-   * @param {number} aNumber
+   * @param aNumber
    *   A number between 0 and 999
    *
-   * @return {string} aNumber as string, prefixed with a 0 if number exists of 1 digit
+   * @return aNumber as string, prefixed with a 0 if number exists of 1 digit
    *
    * @private
    */
@@ -176,12 +176,12 @@ export class UFText {
   /**
    * Replace all keys by their value in a string.
    *
-   * @param {string} aText
+   * @param aText
    *   Text to update
-   * @param {Object} aMap
+   * @param aMap
    *   Replace keys with their values
    *
-   * @return {string} Updated aText
+   * @return Updated aText
    */
   static replace(aText: string, aMap: object): string {
     for (const [key, value] of Object.entries(aMap)) {
@@ -193,10 +193,10 @@ export class UFText {
   /**
    * Returns a number converted to a hex number of two digits.
    *
-   * @param {number} aNumber
+   * @param aNumber
    *   Number to convert (will be clamped between 0 and 255)
    *
-   * @return {string} hexadecimal string of 2 digits
+   * @return hexadecimal string of 2 digits
    */
   static hexTwoDigits(aNumber: number): string {
     return ('0' + Math.min(255, Math.max(0, aNumber)).toString(16)).substring(-2);
@@ -205,10 +205,10 @@ export class UFText {
   /**
    * Returns a number converted to a hex number of four digits.
    *
-   * @param {number} aNumber
+   * @param aNumber
    *   Number to convert (will be clamped between 0 and 65535)
    *
-   * @return {string} hexadecimal string of 4 digits
+   * @return hexadecimal string of 4 digits
    */
   static hexFourDigits(aNumber: number): string {
     return ('000' + Math.min(65535, Math.max(0, aNumber)).toString(16)).substring(-4);
