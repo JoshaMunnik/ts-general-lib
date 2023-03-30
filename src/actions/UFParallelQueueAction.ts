@@ -196,10 +196,6 @@ export class UFParallelQueueAction extends UFQueueableAction {
 
   // endregion
 
-  // region protected methods
-
-  // endregion
-
   // region private methods
 
   /**
