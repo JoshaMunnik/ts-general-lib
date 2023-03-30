@@ -158,11 +158,10 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
 
   /**
    * @inheritDoc
-   *
-   * The default implementation calls {@link update} assuming it is handled in the same way by the database
-   * implementation.
    */
   async delete(aSql: string, aParameterValues?: IUFDynamicObject): Promise<number> {
+    // The default implementation calls update assuming it is handled in the same way by the database
+    // implementation.
     return await this.update(aSql, aParameterValues);
   }
 
