@@ -23,7 +23,7 @@
  */
 
 /**
- * Support methods for `enum`
+ * Support methods for enum
  */
 export class UFEnum {
   // region constructor
