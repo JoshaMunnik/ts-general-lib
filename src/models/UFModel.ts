@@ -43,7 +43,7 @@ class PropertyMetaData {
 
 // endregion
 
-// region types
+// region exports
 
 /**
  * Function template a listener function must use
@@ -61,15 +61,11 @@ export interface IUFModelChangeListener {
   (sender: UFModel, properties: string[]): void
 }
 
-// endregion
-
-// region default export
-
 /**
  * {@link UFModel} implements {@link IUFModel} and adds support change events and dirty state.
  */
 export class UFModel implements IUFModel {
-  // region Private variables
+  // region private variables
 
   /**
    * Current lock count
@@ -257,7 +253,7 @@ export class UFModel implements IUFModel {
 
   // endregion
 
-  // region Protected methods
+  // region protected methods
 
   /**
    * Processes a possible property assignment. If aNewValue is not undefined, compare it to the current
@@ -359,7 +355,7 @@ export class UFModel implements IUFModel {
 
   // endregion
 
-  // region Private methods
+  // region private methods
 
   /**
    * Gets metadata for property name. Creates a metadata record if none exists for the property.
