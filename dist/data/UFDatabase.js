@@ -143,12 +143,11 @@ export class UFDatabase {
     }
     /**
      * @inheritDoc
-     *
-     * The default implementation calls {@link update} assuming it is handled in the same way by the database
-     * implementation.
      */
     delete(aSql, aParameterValues) {
         return __awaiter(this, void 0, void 0, function* () {
+            // The default implementation calls update assuming it is handled in the same way by the database
+            // implementation.
             return yield this.update(aSql, aParameterValues);
         });
     }

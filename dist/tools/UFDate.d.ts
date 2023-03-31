@@ -22,7 +22,7 @@
  * SUCH DAMAGE.
  */
 /**
- * {@link UFDate} defines support methods for {@link Date}.
+ * {@link UFDate} defines support methods for `Date`.
  */
 export declare class UFDate {
     /**

@@ -80,9 +80,6 @@ export declare abstract class UFDatabase<TRow> implements IUFDatabase {
     updateObject<T extends object>(aTable: string, aPrimaryValue: any, aData: T, aPrimaryKey?: string, anIgnoreFields?: string[]): Promise<void>;
     /**
      * @inheritDoc
-     *
-     * The default implementation calls {@link update} assuming it is handled in the same way by the database
-     * implementation.
      */
     delete(aSql: string, aParameterValues?: IUFDynamicObject): Promise<number>;
     /**

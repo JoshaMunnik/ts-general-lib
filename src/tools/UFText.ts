@@ -280,6 +280,27 @@ export class UFText {
   static getOrdinalNumber(aNumber: number): string {
     return aNumber.toString() + this.getOrdinalPost(aNumber);
   }
+
+  /**
+   * Gets a value as string.
+   *
+   * @param aValue
+   *   Value to get
+   * @param aDefault
+   *   Default is used if aValue can not be converted to a string (in case of null, undefined, NaN)
+   *
+   * @return aValue as string (via toString() call) or aDefault.
+   */
+  static asString(aValue: any, aDefault: string = ''): string {
+    switch(aValue) {
+      case null:
+      case undefined:
+      case NaN:
+        return aDefault;
+      default:
+        return aValue.toString();
+    }
+  }
 }
 
 // endregion
