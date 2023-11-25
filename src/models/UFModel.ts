@@ -24,7 +24,6 @@
 
 // region imports
 
-import {UFArray} from '../tools/UFArray';
 import {IUFPropertyValidator, IUFValidateValue, IUFValueValidator, UFValidators} from "../tools/UFValidators";
 import {IUFModel} from "./IUFModel";
 
@@ -46,7 +45,7 @@ class PropertyMetaData {
 // region exports
 
 /**
- * Function template a listener function must use
+ * Function template a model change listener function must use
  */
 export interface IUFModelChangeListener {
   /**
@@ -56,9 +55,23 @@ export interface IUFModelChangeListener {
    *   Sender of 'event', the model instance with one or more changed properties.
    * @param properties
    *   The names of properties that changed.
-   *
    */
   (sender: UFModel, properties: string[]): void
+}
+
+/**
+ * Function template a property change listener function must use
+ */
+export interface IUFPropertyChangeListener {
+  /**
+   * The function is called whenever a certain property has changed value.
+   *
+   * @param sender
+   *  Sender of 'event', the model instance with the changed property.
+   * @param property
+   *   The name of the property that has changed.
+   */
+  (sender: UFModel, property: string): void
 }
 
 /**
@@ -79,21 +92,21 @@ export class UFModel implements IUFModel {
    *
    * @private
    */
-  private m_changedList: Set<string> = new Set();
+  private readonly m_changedList: Set<string> = new Set();
 
   /**
    * List of property names that have changed since last call to {@link clearDirty}.
    *
    * @private
    */
-  private m_dirtyList: Set<string> = new Set();
+  private readonly m_dirtyList: Set<string> = new Set();
 
   /**
    * Registered change listeners
    *
    * @private
    */
-  private m_listeners: Array<IUFModelChangeListener> = [];
+  private readonly m_listeners: Set<IUFModelChangeListener> = new Set();
 
   /**
    * An object containing a meta data object for property names.
@@ -101,6 +114,13 @@ export class UFModel implements IUFModel {
    * @private
    */
   private m_propertyMetaData: Record<string, PropertyMetaData> = {};
+
+  /**
+   * Registered property change listeners
+   *
+   * @private
+   */
+  private readonly m_propertyListeners: Map<string, Set<IUFPropertyChangeListener>> = new Map();
 
   // endregion
   
@@ -138,13 +158,13 @@ export class UFModel implements IUFModel {
   }
 
   /**
-   * Adds a listener for data changes.
+   * Adds a listener for data changes. If the listener was already added, nothing happens.
    *
    * @param aCallback
    *   Callback to add
    */
   addChangeListener(aCallback: IUFModelChangeListener) {
-    this.m_listeners.push(aCallback);
+    this.m_listeners.add(aCallback);
   }
 
   /**
@@ -154,7 +174,46 @@ export class UFModel implements IUFModel {
    *   Callback to remove
    */
   removeChangeListener(aCallback: IUFModelChangeListener) {
-    UFArray.removeItem(this.m_listeners, aCallback);
+    this.m_listeners.delete(aCallback);
+  }
+
+  /**
+   * Adds a listener for changes to a certain property. If the listener was already added for the property, nothing
+   * happens.
+   *
+   * @param aProperty
+   *   Name of property
+   * @param aListener
+   *   Callback function to call when property changes value
+   */
+  public addPropertyChangeListener(aProperty: string, aListener: IUFPropertyChangeListener): void {
+    if (!this.m_propertyListeners.has(aProperty)) {
+      this.m_propertyListeners.set(aProperty, new Set());
+    }
+    this.m_propertyListeners.get(aProperty)!.add(aListener);
+  }
+
+  /**
+   * Removes a listener for changes to a certain property.
+   *
+   * @param aProperty
+   *   Name of property
+   * @param aListener
+   *   Listener to remove
+   */
+  public removePropertyChangeListener(aProperty: string, aListener: IUFPropertyChangeListener): void {
+    if (!this.m_propertyListeners.has(aProperty)) {
+      return;
+    }
+    const listeners: Set<IUFPropertyChangeListener> = this.m_propertyListeners.get(aProperty)!;
+    if (!listeners.has(aListener)) {
+      return;
+    }
+    listeners.delete(aListener);
+    if (listeners.size > 0) {
+      return;
+    }
+    this.m_propertyListeners.delete(aProperty);
   }
 
   /**
@@ -349,8 +408,9 @@ export class UFModel implements IUFModel {
    *   List of property names
    */
   protected onPropertiesChanged(aList: Array<string>) {
-    const copy: IUFModelChangeListener[] = this.m_listeners.slice();
-    copy.forEach(listener => listener(this, aList));
+    const changeListeners: IUFModelChangeListener[] = [...this.m_listeners];
+    changeListeners.forEach(listener => listener(this, aList));
+    aList.forEach(property => this.callPropertyListeners(property));
   }
 
   // endregion
@@ -387,6 +447,24 @@ export class UFModel implements IUFModel {
   private hasPropertyMetaData(aPropertyName: string): boolean {
     return this.m_propertyMetaData.hasOwnProperty(aPropertyName);
   }
+
+  /**
+   * Calls the listeners for a certain property.
+   *
+   * @param aProperty
+   *   Property to call listeners for
+   *
+   * @private
+   */
+  private callPropertyListeners(aProperty: string): void {
+    if (!this.m_propertyListeners.has(aProperty)) {
+      return;
+    }
+    // make a copy so there are no conflicts when the set changes while calling the listeners
+    const listeners: IUFPropertyChangeListener[] = [...this.m_propertyListeners.get(aProperty)!];
+    listeners.forEach(listener => listener(this, aProperty));
+  }
+
 
   // endregion
 }
