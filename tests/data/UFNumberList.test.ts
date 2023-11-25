@@ -1,4 +1,4 @@
-import {UFNumberList} from "../../src/UF/data/UFNumberList";
+import {UFNumberList} from "../../src/data/UFNumberList";
 
 describe('UFNumberList', () => {
   describe('empty list', () => {

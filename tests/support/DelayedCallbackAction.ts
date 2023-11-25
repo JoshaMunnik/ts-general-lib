@@ -1,7 +1,7 @@
 // region imports
 
-import {UFQueueableAction} from "../../src/UF/actions/UFQueueableAction";
-import {IUFCancellationToken} from "../../src/UF/actions/IUFCancellationToken";
+import {UFQueueableAction} from "../../src/actions/UFQueueableAction";
+import {IUFCancellationToken} from "../../src/actions/IUFCancellationToken";
 
 // endregion
 

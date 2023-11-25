@@ -1,4 +1,4 @@
-import {UFMath} from "../../src/UF/tools/UFMath";
+import {UFMath} from "../../src/tools/UFMath";
 
 describe('UFMath', () => {
   describe('rotate', () => {

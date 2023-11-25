@@ -1,4 +1,4 @@
-import {UFCancellationTokenSource} from "../../src/UF/actions/UFCancellationTokenSource";
+import {UFCancellationTokenSource} from "../../src/actions/UFCancellationTokenSource";
 
 describe('UFCancellationTokenSource', () => {
   describe('token', () => {

@@ -1,9 +1,9 @@
 // noinspection ES6MissingAwait
 
 import {DelayedCallbackAction} from "../support/DelayedCallbackAction";
-import {UFCancellationTokenSource} from "../../src/UF/actions/UFCancellationTokenSource";
-import {UFTypescript} from "../../src/UF/tools/UFTypescript";
-import {UFSerialQueueAction} from "../../src/UF/actions/UFSerialQueueAction";
+import {UFCancellationTokenSource} from "../../src/actions/UFCancellationTokenSource";
+import {UFTypescript} from "../../src/tools/UFTypescript";
+import {UFSerialQueueAction} from "../../src/actions/UFSerialQueueAction";
 
 describe('UFSerialQueueAction', () => {
   describe('run', () => {

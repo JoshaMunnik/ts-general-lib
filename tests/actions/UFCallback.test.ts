@@ -1,5 +1,5 @@
-import {UFCallbackAction} from "../../src/UF/actions/UFCallbackAction";
-import {UFCancellationTokenSource} from "../../src/UF/actions/UFCancellationTokenSource";
+import {UFCallbackAction} from "../../src/actions/UFCallbackAction";
+import {UFCancellationTokenSource} from "../../src/actions/UFCancellationTokenSource";
 
 describe('UFCallback', () => {
   describe('run', () => {

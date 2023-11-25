@@ -1,4 +1,4 @@
-import {UFObject} from "../../src/UF/tools/UFObject";
+import {UFObject} from "../../src/tools/UFObject";
 
 describe('UFObject', () => {
   describe('getAs', () => {

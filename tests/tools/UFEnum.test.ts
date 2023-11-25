@@ -1,4 +1,4 @@
-import {UFEnum} from "../../src/UF/tools/UFEnum";
+import {UFEnum} from "../../src/tools/UFEnum";
 
 describe('UFEnum', () => {
   describe('getMinMax', () => {

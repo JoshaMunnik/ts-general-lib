@@ -1,5 +1,5 @@
-import {UFDelayAction} from "../../src/UF/actions/UFDelayAction";
-import {UFCancellationTokenSource} from "../../src/UF/actions/UFCancellationTokenSource";
+import {UFDelayAction} from "../../src/actions/UFDelayAction";
+import {UFCancellationTokenSource} from "../../src/actions/UFCancellationTokenSource";
 
 describe('UFDelayAction', () => {
   describe('run', () => {

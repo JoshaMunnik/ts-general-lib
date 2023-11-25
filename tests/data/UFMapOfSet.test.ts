@@ -1,4 +1,4 @@
-import {UFMapOfSet} from "../../src/UF/data/UFMapOfSet";
+import {UFMapOfSet} from "../../src/data/UFMapOfSet";
 
 describe('UFMapOFSet', () => {
 
