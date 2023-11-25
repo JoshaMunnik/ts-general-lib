@@ -22,7 +22,6 @@
  * SUCH DAMAGE.
  */
 // region imports
-import { UFArray } from '../tools/UFArray';
 import { UFValidators } from "../tools/UFValidators";
 // endregion
 // region private types
@@ -65,13 +64,19 @@ export class UFModel {
          *
          * @private
          */
-        this.m_listeners = [];
+        this.m_listeners = new Set();
         /**
          * An object containing a meta data object for property names.
          *
          * @private
          */
         this.m_propertyMetaData = {};
+        /**
+         * Registered property change listeners
+         *
+         * @private
+         */
+        this.m_propertyListeners = new Map();
         // endregion
     }
     // endregion
@@ -112,7 +117,7 @@ export class UFModel {
      *   Callback to add
      */
     addChangeListener(aCallback) {
-        this.m_listeners.push(aCallback);
+        this.m_listeners.add(aCallback);
     }
     /**
      * Removes a listener for data changes.
@@ -121,7 +126,43 @@ export class UFModel {
      *   Callback to remove
      */
     removeChangeListener(aCallback) {
-        UFArray.removeItem(this.m_listeners, aCallback);
+        this.m_listeners.delete(aCallback);
+    }
+    /**
+     * Adds a listener for changes to a certain property.
+     *
+     * @param aProperty
+     *   Name of property
+     * @param aListener
+     *   Callback function to call when property changes value
+     */
+    addPropertyChangeListener(aProperty, aListener) {
+        if (!this.m_propertyListeners.has(aProperty)) {
+            this.m_propertyListeners.set(aProperty, new Set());
+        }
+        this.m_propertyListeners.get(aProperty).add(aListener);
+    }
+    /**
+     * Removes a listener for changes to a certain property.
+     *
+     * @param aProperty
+     *   Name of property
+     * @param aListener
+     *   Listener to remove
+     */
+    removePropertyChangeListener(aProperty, aListener) {
+        if (!this.m_propertyListeners.has(aProperty)) {
+            return;
+        }
+        const listeners = this.m_propertyListeners.get(aProperty);
+        if (!listeners.has(aListener)) {
+            return;
+        }
+        listeners.delete(aListener);
+        if (listeners.size > 0) {
+            return;
+        }
+        this.m_propertyListeners.delete(aProperty);
     }
     /**
      * Checks if there are changed properties. This method only is useful while the data is locked. Else the method
@@ -290,8 +331,9 @@ export class UFModel {
      *   List of property names
      */
     onPropertiesChanged(aList) {
-        const copy = this.m_listeners.slice();
-        copy.forEach(listener => listener(this, aList));
+        const changeListeners = [...this.m_listeners];
+        changeListeners.forEach(listener => listener(this, aList));
+        aList.forEach(property => this.callPropertyListeners(property));
     }
     // endregion
     // region private methods
@@ -323,6 +365,22 @@ export class UFModel {
      */
     hasPropertyMetaData(aPropertyName) {
         return this.m_propertyMetaData.hasOwnProperty(aPropertyName);
+    }
+    /**
+     * Calls the listeners for a certain property.
+     *
+     * @param aProperty
+     *   Property to call listeners for
+     *
+     * @private
+     */
+    callPropertyListeners(aProperty) {
+        if (!this.m_propertyListeners.has(aProperty)) {
+            return;
+        }
+        // make a copy so there are no conflicts when the set changes while calling the listeners
+        const listeners = [...this.m_propertyListeners.get(aProperty)];
+        listeners.forEach(listener => listener(this, aProperty));
     }
 }
 // endregion

@@ -24,7 +24,7 @@
 import { IUFPropertyValidator, IUFValidateValue, IUFValueValidator } from "../tools/UFValidators";
 import { IUFModel } from "./IUFModel";
 /**
- * Function template a listener function must use
+ * Function template a model change listener function must use
  */
 export interface IUFModelChangeListener {
     /**
@@ -34,9 +34,22 @@ export interface IUFModelChangeListener {
      *   Sender of 'event', the model instance with one or more changed properties.
      * @param properties
      *   The names of properties that changed.
-     *
      */
     (sender: UFModel, properties: string[]): void;
+}
+/**
+ * Function template a property change listener function must use
+ */
+export interface IUFPropertyChangeListener {
+    /**
+     * The function is called whenever a certain property has changed value.
+     *
+     * @param sender
+     *  Sender of 'event', the model instance with the changed property.
+     * @param property
+     *   The name of the property that has changed.
+     */
+    (sender: UFModel, property: string): void;
 }
 /**
  * {@link UFModel} implements {@link IUFModel} and adds support change events and dirty state.
@@ -53,25 +66,31 @@ export declare class UFModel implements IUFModel {
      *
      * @private
      */
-    private m_changedList;
+    private readonly m_changedList;
     /**
      * List of property names that have changed since last call to {@link clearDirty}.
      *
      * @private
      */
-    private m_dirtyList;
+    private readonly m_dirtyList;
     /**
      * Registered change listeners
      *
      * @private
      */
-    private m_listeners;
+    private readonly m_listeners;
     /**
      * An object containing a meta data object for property names.
      *
      * @private
      */
     private m_propertyMetaData;
+    /**
+     * Registered property change listeners
+     *
+     * @private
+     */
+    private readonly m_propertyListeners;
     /**
      * Locks the model instance, preventing changed events from being fired. An internal lock counter is
      * kept; so the number of lock and unlock calls must match before the model instance is
@@ -101,6 +120,24 @@ export declare class UFModel implements IUFModel {
      *   Callback to remove
      */
     removeChangeListener(aCallback: IUFModelChangeListener): void;
+    /**
+     * Adds a listener for changes to a certain property.
+     *
+     * @param aProperty
+     *   Name of property
+     * @param aListener
+     *   Callback function to call when property changes value
+     */
+    addPropertyChangeListener(aProperty: string, aListener: IUFPropertyChangeListener): void;
+    /**
+     * Removes a listener for changes to a certain property.
+     *
+     * @param aProperty
+     *   Name of property
+     * @param aListener
+     *   Listener to remove
+     */
+    removePropertyChangeListener(aProperty: string, aListener: IUFPropertyChangeListener): void;
     /**
      * Checks if there are changed properties. This method only is useful while the data is locked. Else the method
      * will always return false.
@@ -228,4 +265,13 @@ export declare class UFModel implements IUFModel {
      * @private
      */
     private hasPropertyMetaData;
+    /**
+     * Calls the listeners for a certain property.
+     *
+     * @param aProperty
+     *   Property to call listeners for
+     *
+     * @private
+     */
+    private callPropertyListeners;
 }
