@@ -26,6 +26,7 @@
 
 import {IUFPropertyValidator, IUFValidateValue, IUFValueValidator, UFValidators} from "../tools/UFValidators";
 import {IUFModel} from "./IUFModel";
+import {UFMapOfSet} from "../data/UFMapOfSet";
 
 // endregion
 
@@ -120,7 +121,8 @@ export class UFModel implements IUFModel {
    *
    * @private
    */
-  private readonly m_propertyListeners: Map<string, Set<IUFPropertyChangeListener>> = new Map();
+  private readonly m_propertyListeners: UFMapOfSet<string, IUFPropertyChangeListener> =
+    new UFMapOfSet<string, IUFPropertyChangeListener>();
 
   // endregion
   
@@ -187,10 +189,7 @@ export class UFModel implements IUFModel {
    *   Callback function to call when property changes value
    */
   public addPropertyChangeListener(aProperty: string, aListener: IUFPropertyChangeListener): void {
-    if (!this.m_propertyListeners.has(aProperty)) {
-      this.m_propertyListeners.set(aProperty, new Set());
-    }
-    this.m_propertyListeners.get(aProperty)!.add(aListener);
+    this.m_propertyListeners.add(aProperty, aListener);
   }
 
   /**
@@ -202,18 +201,7 @@ export class UFModel implements IUFModel {
    *   Listener to remove
    */
   public removePropertyChangeListener(aProperty: string, aListener: IUFPropertyChangeListener): void {
-    if (!this.m_propertyListeners.has(aProperty)) {
-      return;
-    }
-    const listeners: Set<IUFPropertyChangeListener> = this.m_propertyListeners.get(aProperty)!;
-    if (!listeners.has(aListener)) {
-      return;
-    }
-    listeners.delete(aListener);
-    if (listeners.size > 0) {
-      return;
-    }
-    this.m_propertyListeners.delete(aProperty);
+    this.m_propertyListeners.remove(aProperty, aListener);
   }
 
   /**
@@ -457,11 +445,7 @@ export class UFModel implements IUFModel {
    * @private
    */
   private callPropertyListeners(aProperty: string): void {
-    if (!this.m_propertyListeners.has(aProperty)) {
-      return;
-    }
-    // make a copy so there are no conflicts when the set changes while calling the listeners
-    const listeners: IUFPropertyChangeListener[] = [...this.m_propertyListeners.get(aProperty)!];
+    const listeners: IUFPropertyChangeListener[] = this.m_propertyListeners.get(aProperty);
     listeners.forEach(listener => listener(this, aProperty));
   }
 
