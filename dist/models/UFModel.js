@@ -23,6 +23,7 @@
  */
 // region imports
 import { UFValidators } from "../tools/UFValidators";
+import { UFMapOfSet } from "../data/UFMapOfSet";
 // endregion
 // region private types
 /**
@@ -76,7 +77,7 @@ export class UFModel {
          *
          * @private
          */
-        this.m_propertyListeners = new Map();
+        this.m_propertyListeners = new UFMapOfSet();
         // endregion
     }
     // endregion
@@ -111,7 +112,7 @@ export class UFModel {
         return this.m_lockCount;
     }
     /**
-     * Adds a listener for data changes.
+     * Adds a listener for data changes. If the listener was already added, nothing happens.
      *
      * @param aCallback
      *   Callback to add
@@ -129,7 +130,8 @@ export class UFModel {
         this.m_listeners.delete(aCallback);
     }
     /**
-     * Adds a listener for changes to a certain property.
+     * Adds a listener for changes to a certain property. If the listener was already added for the property, nothing
+     * happens.
      *
      * @param aProperty
      *   Name of property
@@ -137,10 +139,7 @@ export class UFModel {
      *   Callback function to call when property changes value
      */
     addPropertyChangeListener(aProperty, aListener) {
-        if (!this.m_propertyListeners.has(aProperty)) {
-            this.m_propertyListeners.set(aProperty, new Set());
-        }
-        this.m_propertyListeners.get(aProperty).add(aListener);
+        this.m_propertyListeners.add(aProperty, aListener);
     }
     /**
      * Removes a listener for changes to a certain property.
@@ -151,18 +150,7 @@ export class UFModel {
      *   Listener to remove
      */
     removePropertyChangeListener(aProperty, aListener) {
-        if (!this.m_propertyListeners.has(aProperty)) {
-            return;
-        }
-        const listeners = this.m_propertyListeners.get(aProperty);
-        if (!listeners.has(aListener)) {
-            return;
-        }
-        listeners.delete(aListener);
-        if (listeners.size > 0) {
-            return;
-        }
-        this.m_propertyListeners.delete(aProperty);
+        this.m_propertyListeners.remove(aProperty, aListener);
     }
     /**
      * Checks if there are changed properties. This method only is useful while the data is locked. Else the method
@@ -375,11 +363,7 @@ export class UFModel {
      * @private
      */
     callPropertyListeners(aProperty) {
-        if (!this.m_propertyListeners.has(aProperty)) {
-            return;
-        }
-        // make a copy so there are no conflicts when the set changes while calling the listeners
-        const listeners = [...this.m_propertyListeners.get(aProperty)];
+        const listeners = this.m_propertyListeners.get(aProperty);
         listeners.forEach(listener => listener(this, aProperty));
     }
 }

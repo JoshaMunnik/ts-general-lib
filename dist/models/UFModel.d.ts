@@ -107,7 +107,7 @@ export declare class UFModel implements IUFModel {
      */
     unlock(): number;
     /**
-     * Adds a listener for data changes.
+     * Adds a listener for data changes. If the listener was already added, nothing happens.
      *
      * @param aCallback
      *   Callback to add
@@ -121,7 +121,8 @@ export declare class UFModel implements IUFModel {
      */
     removeChangeListener(aCallback: IUFModelChangeListener): void;
     /**
-     * Adds a listener for changes to a certain property.
+     * Adds a listener for changes to a certain property. If the listener was already added for the property, nothing
+     * happens.
      *
      * @param aProperty
      *   Name of property
