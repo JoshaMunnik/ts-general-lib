@@ -12,7 +12,7 @@
  *     software without specific prior written permission.</li>
  * </ul>
  * <br/>
- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS´´ AND ANY EXPRESS OR IMPLIED WARRANTIES,
  * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
  * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
@@ -83,6 +83,25 @@ export class UFObject {
      */
     static getAs(anObject, aPropertyName, aDefault) {
         return aPropertyName in anObject ? anObject[aPropertyName] : aDefault;
+    }
+    /**
+     * Gets a property from an object. If there is no property, create a new value and attach it
+     * to the object.
+     *
+     * @param anObject
+     *   Object to get property from
+     * @param aPropertyName
+     *   Name of property to get
+     * @param aFactory
+     *   Factory function to create a new value
+     *
+     * @return value from property
+     */
+    static getAttachedAs(anObject, aPropertyName, aFactory) {
+        if (!(aPropertyName in anObject)) {
+            anObject[aPropertyName] = aFactory();
+        }
+        return anObject[aPropertyName];
     }
     /**
      * See if all properties in aMatch can be found in aSource and are equal. If a property is an object, the

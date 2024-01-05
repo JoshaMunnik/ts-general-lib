@@ -12,6 +12,7 @@ export * from "./data/IUFDatabase";
 export * from "./data/UFDatabase";
 export * from "./data/UFMapOfSet";
 export * from "./data/UFNumberList";
+export * from "./data/UFKeyedStorage";
 export * from "./models/IUFModel";
 export * from "./models/IUFSorted";
 export * from "./models/UFModel";
