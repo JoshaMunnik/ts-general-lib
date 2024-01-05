@@ -94,6 +94,26 @@ export class UFObject {
   }
 
   /**
+   * Gets a property from an object. If there is no property, create a new value and attach it
+   * to the object.
+   *
+   * @param anObject
+   *   Object to get property from
+   * @param aPropertyName
+   *   Name of property to get
+   * @param aFactory
+   *   Factory function to create a new value
+   *
+   * @return value from property
+   */
+  static getAttachedAs<T>(anObject: any, aPropertyName: string, aFactory: () => T): T {
+    if (!(aPropertyName in anObject)) {
+      anObject[aPropertyName] = aFactory();
+    }
+    return anObject[aPropertyName] as T;
+  }
+
+  /**
    * See if all properties in aMatch can be found in aSource and are equal. If a property is an object, the
    * method will call itself recursively.
    *
@@ -267,6 +287,7 @@ export class UFObject {
     });
     return result;
   }
+
 
 }
 
