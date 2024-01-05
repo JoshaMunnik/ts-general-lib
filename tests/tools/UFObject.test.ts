@@ -1,5 +1,9 @@
 import {UFObject} from "../../src/tools/UFObject";
 
+type Fruits = {
+  apple: string
+}
+
 describe('UFObject', () => {
   describe('getAs', () => {
     test('existing property', () => {
@@ -21,6 +25,30 @@ describe('UFObject', () => {
     });
   });
 
+  describe('getAttachedAs', () => {
+    test('missing property', () => {
+      const test: any = {};
+      const actual = UFObject.getAttachedAs<Fruits>(
+        test, 'fruits', () => ({apple: 'green',})
+      );
+      expect(UFObject.equalProperties(actual, {apple: 'green'})).toBeTruthy();
+      expect(UFObject.equalProperties(test.fruits, {apple: 'green'})).toBeTruthy();
+    });
+
+    test('existing property', () => {
+      const test = {
+        'fruits': {
+          apple: 'red'
+        }
+      };
+      const actual = UFObject.getAttachedAs<Fruits>(
+        test, 'fruits', () => ({apple: 'green',})
+      );
+      expect(UFObject.equalProperties(actual, {apple: 'red'})).toBeTruthy();
+      expect(UFObject.equalProperties(test.fruits, {apple: 'red'})).toBeTruthy();
+    });
+  });
+
   describe('equalProperties', () => {
 
     test('equals single property', () => {
@@ -29,7 +57,7 @@ describe('UFObject', () => {
         banana: 'yellow',
         berry: 'blue'
       };
-      expect(UFObject.equalProperties(test, { apple: 'green'})).toBeTruthy();
+      expect(UFObject.equalProperties(test, {apple: 'green'})).toBeTruthy();
     });
 
     test('equals double property', () => {

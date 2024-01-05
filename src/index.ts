@@ -17,6 +17,7 @@ export * from "./data/IUFDatabase";
 export * from "./data/UFDatabase";
 export * from "./data/UFMapOfSet";
 export * from "./data/UFNumberList";
+export * from "./data/UFKeyedStorage";
 
 // models
 
