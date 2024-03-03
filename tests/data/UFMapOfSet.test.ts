@@ -40,6 +40,18 @@ describe('UFMapOFSet', () => {
     });
   });
 
+  describe('getKeys', () => {
+    test('unknown key', () => {
+      const map = new UFMapOfSet<string, number>();
+      map.add('a', 1);
+      map.add('a', 2);
+      map.add('a', 3);
+      map.add('b', 2);
+      map.add('c', 3);
+      expect(map.getKeys()).toEqual(['a', 'b', 'c']);
+    });
+  });
+
   describe('has', () => {
     test('existing key', () => {
       const map = new UFMapOfSet<string, number>();

@@ -108,6 +108,15 @@ export class UFMapOfSet<TKey, TValue> {
   }
 
   /**
+   * Gets all keys stored.
+   *
+   * @returns all stored keys.
+   */
+  getKeys(): TKey[] {
+    return Array.from(this.m_map.keys());
+  }
+
+  /**
    * Checks if the map has a certain key.
    *
    * @param aKey

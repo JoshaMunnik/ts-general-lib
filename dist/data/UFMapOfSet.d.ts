@@ -70,6 +70,12 @@ export declare class UFMapOfSet<TKey, TValue> {
      */
     get(aKey: TKey): TValue[];
     /**
+     * Gets all keys stored.
+     *
+     * @returns all stored keys.
+     */
+    getKeys(): TKey[];
+    /**
      * Checks if the map has a certain key.
      *
      * @param aKey

@@ -101,6 +101,14 @@ export class UFMapOfSet {
         return [];
     }
     /**
+     * Gets all keys stored.
+     *
+     * @returns all stored keys.
+     */
+    getKeys() {
+        return Array.from(this.m_map.keys());
+    }
+    /**
      * Checks if the map has a certain key.
      *
      * @param aKey
