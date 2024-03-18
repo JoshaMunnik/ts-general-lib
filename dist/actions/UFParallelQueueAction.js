@@ -30,10 +30,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { UFQueueableAction } from "./UFQueueableAction";
-import { UFProgressTools } from "../tools/UFProgressTools";
-import { UFCancellationTokenSource } from "./UFCancellationTokenSource";
-import { UFText } from "../tools/UFText";
+import { UFQueueableAction } from "./UFQueueableAction.js";
+import { UFProgressTools } from "../tools/UFProgressTools.js";
+import { UFCancellationTokenSource } from "./UFCancellationTokenSource.js";
+import { UFText } from "../tools/UFText.js";
 // endregion
 // region exports
 /**

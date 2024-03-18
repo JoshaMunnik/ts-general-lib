@@ -24,9 +24,9 @@
 
 // region imports
 
-import {IUFPropertyValidator, IUFValidateValue, IUFValueValidator, UFValidators} from "../tools/UFValidators";
-import {IUFModel} from "./IUFModel";
-import {UFMapOfSet} from "../data/UFMapOfSet";
+import {IUFPropertyValidator, IUFValidateValue, IUFValueValidator, UFValidators} from "../tools/UFValidators.js";
+import {IUFModel} from "./IUFModel.js";
+import {UFMapOfSet} from "../data/UFMapOfSet.js";
 
 // endregion
 

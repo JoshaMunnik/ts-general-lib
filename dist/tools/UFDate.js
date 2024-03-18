@@ -22,7 +22,7 @@
  * SUCH DAMAGE.
  */
 // region imports
-import { UFText } from "./UFText";
+import { UFText } from "./UFText.js";
 // endregion
 // region types
 /**

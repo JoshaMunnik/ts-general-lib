@@ -21,7 +21,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-import { IUFSorted } from "../models/IUFSorted";
+import { IUFSorted } from "../models/IUFSorted.js";
 /**
  * {@link UFSorted} implements various static support methods for {@link IUFSorted}.
  */

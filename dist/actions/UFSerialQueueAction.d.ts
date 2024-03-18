@@ -21,8 +21,8 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-import { UFParallelQueueAction } from "./UFParallelQueueAction";
-import { IUFQueueableAction } from "./IUFQueueableAction";
+import { UFParallelQueueAction } from "./UFParallelQueueAction.js";
+import { IUFQueueableAction } from "./IUFQueueableAction.js";
 /**
  * {@link UFSerialQueueAction} can be used to run one or more {@link IUFQueueableAction} sequentially.
  *

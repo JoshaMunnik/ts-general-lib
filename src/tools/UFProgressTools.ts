@@ -22,7 +22,7 @@
  * SUCH DAMAGE.
  */
 
-import {UFObject} from "./UFObject";
+import {UFObject} from "./UFObject.js";
 
 export class UFProgressTools {
   // region constructor

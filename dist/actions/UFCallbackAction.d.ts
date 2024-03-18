@@ -21,8 +21,8 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-import { UFQueueableAction } from "./UFQueueableAction";
-import { IUFCancellationToken } from "./IUFCancellationToken";
+import { UFQueueableAction } from "./UFQueueableAction.js";
+import { IUFCancellationToken } from "./IUFCancellationToken.js";
 /**
  * A simple action to call a callback when run.
  */

@@ -22,7 +22,7 @@
  * SUCH DAMAGE.
  */
 // region imports
-import { UFParallelQueueAction } from "./UFParallelQueueAction";
+import { UFParallelQueueAction } from "./UFParallelQueueAction.js";
 // endregion
 // region exports
 /**

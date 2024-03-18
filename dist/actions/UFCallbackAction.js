@@ -31,7 +31,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 // region imports
-import { UFQueueableAction } from "./UFQueueableAction";
+import { UFQueueableAction } from "./UFQueueableAction.js";
 // endregion
 // region exports
 /**

@@ -22,7 +22,7 @@
  * SUCH DAMAGE.
  */
 // region imports
-import { UFMath } from "./UFMath";
+import { UFMath } from "./UFMath.js";
 // endregion
 // region class
 /**

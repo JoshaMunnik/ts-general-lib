@@ -21,7 +21,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-import { UFObject } from "./UFObject";
+import { UFObject } from "./UFObject.js";
 export class UFProgressTools {
     // region constructor
     /**

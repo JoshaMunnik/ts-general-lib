@@ -21,7 +21,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-import { IUFProgress } from "./IUFProgress";
+import { IUFProgress } from "./IUFProgress.js";
 /**
  * This interface extends the {@link IUFProgress} and adds a method to request the progress weight.
  *

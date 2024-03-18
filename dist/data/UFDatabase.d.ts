@@ -21,8 +21,8 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-import { IUFDynamicObject } from "../types/IUFDynamicObject";
-import { IUFDatabase } from "./IUFDatabase";
+import { IUFDynamicObject } from "../types/IUFDynamicObject.js";
+import { IUFDatabase } from "./IUFDatabase.js";
 /**
  * {@link UFDatabase} can act as a base class for database implementations.
  *

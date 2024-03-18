@@ -21,9 +21,9 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-import { IUFQueueableAction } from "./IUFQueueableAction";
-import { UFQueueableAction } from "./UFQueueableAction";
-import { IUFCancellationToken } from "./IUFCancellationToken";
+import { IUFQueueableAction } from "./IUFQueueableAction.js";
+import { UFQueueableAction } from "./UFQueueableAction.js";
+import { IUFCancellationToken } from "./IUFCancellationToken.js";
 /**
  * {@link UFParallelQueueAction} implements an action queue that can run a number of {@link IUFQueueableAction} actions
  * at the same time.

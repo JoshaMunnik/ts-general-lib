@@ -21,9 +21,9 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-import { IUFQueueableAction } from "./IUFQueueableAction";
-import { IUFWeightedProgress } from "./IUFWeightedProgress";
-import { IUFCancellationToken } from "./IUFCancellationToken";
+import { IUFQueueableAction } from "./IUFQueueableAction.js";
+import { IUFWeightedProgress } from "./IUFWeightedProgress.js";
+import { IUFCancellationToken } from "./IUFCancellationToken.js";
 /**
  * A base class implementation of {@link IUFQueueableAction} that can be used to implement actions. It adds support
  * for {@link IUFWeightedProgress}.

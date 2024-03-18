@@ -21,8 +21,8 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-import { IUFPropertyValidator, IUFValidateValue, IUFValueValidator } from "../tools/UFValidators";
-import { IUFModel } from "./IUFModel";
+import { IUFPropertyValidator, IUFValidateValue, IUFValueValidator } from "../tools/UFValidators.js";
+import { IUFModel } from "./IUFModel.js";
 /**
  * Function template a model change listener function must use
  */

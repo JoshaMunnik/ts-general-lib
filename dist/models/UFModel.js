@@ -22,8 +22,8 @@
  * SUCH DAMAGE.
  */
 // region imports
-import { UFValidators } from "../tools/UFValidators";
-import { UFMapOfSet } from "../data/UFMapOfSet";
+import { UFValidators } from "../tools/UFValidators.js";
+import { UFMapOfSet } from "../data/UFMapOfSet.js";
 // endregion
 // region private types
 /**

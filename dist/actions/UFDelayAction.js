@@ -22,7 +22,7 @@
  * SUCH DAMAGE.
  */
 // region imports
-import { UFQueueableAction } from "./UFQueueableAction";
+import { UFQueueableAction } from "./UFQueueableAction.js";
 // endregion
 // region exports
 /**

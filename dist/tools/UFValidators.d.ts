@@ -21,7 +21,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-import { IUFModel } from "../models/IUFModel";
+import { IUFModel } from "../models/IUFModel.js";
 /**
  * A function interface to validate a value.
  */

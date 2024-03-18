@@ -21,7 +21,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-import { IUFCancellationToken } from "./IUFCancellationToken";
+import { IUFCancellationToken } from "./IUFCancellationToken.js";
 /**
  * {@link UFCancellationTokenSource} can be used to get a {@link IUFCancellationToken}. The token can be activated by
  * calling the {@link cancel} method.
