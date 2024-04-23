@@ -61,6 +61,10 @@ export declare class UFMapOfSet<TKey, TValue> {
      */
     removeValue(aValue: TValue): void;
     /**
+     * Clears the map and removes all keys and related sets.
+     */
+    clear(): void;
+    /**
      * Gets all values stored for a certain key.
      *
      * @param aKey

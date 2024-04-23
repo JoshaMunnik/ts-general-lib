@@ -86,6 +86,12 @@ export class UFMapOfSet {
         }
     }
     /**
+     * Clears the map and removes all keys and related sets.
+     */
+    clear() {
+        this.m_map.clear();
+    }
+    /**
      * Gets all values stored for a certain key.
      *
      * @param aKey
