@@ -23,6 +23,7 @@ export * from "./models/UFModel.js";
 export * from "./tools/UFArray.js";
 export * from "./tools/UFDate.js";
 export * from "./tools/UFEnum.js";
+export * from "./tools/UFMap.js";
 export * from "./tools/UFMath.js";
 export * from "./tools/UFObject.js";
 export * from "./tools/UFProgressTools.js";
