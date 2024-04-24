@@ -1,6 +1,6 @@
 {
   "name": "@ultraforce/ts-general-lib",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "Various general utility classes.",
   "scripts": {
     "build": "tsc",

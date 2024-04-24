@@ -70,6 +70,21 @@ export class UFObject {
         return UFObject.getOrFail(anObject, aPropertyName);
     }
     /**
+     * Gets a property from an object.
+     *
+     * @param anObject
+     *   Object to get property from
+     * @param aPropertyName
+     *   Property to get
+     * @param aDefault
+     *   Default value to use
+     *
+     * @return value from property or aDefault if it does not exist
+     */
+    static get(anObject, aPropertyName, aDefault) {
+        return aPropertyName in anObject ? anObject[aPropertyName] : aDefault;
+    }
+    /**
      * Gets a property from an object and typecast it to a type.
      *
      * @param anObject
@@ -83,6 +98,41 @@ export class UFObject {
      */
     static getAs(anObject, aPropertyName, aDefault) {
         return aPropertyName in anObject ? anObject[aPropertyName] : aDefault;
+    }
+    /**
+     * Sets a property in an object to a value. If the property can not be found, the method does
+     * nothing.
+     *
+     * @param anObject
+     *   Object to get property from
+     * @param aPropertyName
+     *   Property to set
+     * @param aValue
+     *   Value to set property with
+     */
+    static set(anObject, aPropertyName, aValue) {
+        if (aPropertyName in anObject) {
+            anObject[aPropertyName] = aValue;
+        }
+    }
+    /**
+     * Sets a property in an object to a value. If the property can not be found, the method throws
+     * an error.
+     *
+     * @param anObject
+     *   Object to get property from
+     * @param aPropertyName
+     *   Property to set
+     * @param aValue
+     *   Value to set property with
+     */
+    static setOrFail(anObject, aPropertyName, aValue) {
+        if (aPropertyName in anObject) {
+            anObject[aPropertyName] = aValue;
+        }
+        else {
+            throw new Error(`Missing ${aPropertyName} in object`);
+        }
     }
     /**
      * Gets a property from an object. If there is no property, create a new value and attach it
