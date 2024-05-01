@@ -1,30 +1,33 @@
 /**
- * @version 1
  * @author Josha Munnik
- * @copyright Copyright (c) 2019 Ultra Force Development
+ * @copyright Copyright (c) 2022 Ultra Force Development
  * @license
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * <ul>
- * <li>Redistributions of source code must retain the above copyright notice, this list of conditions and
- *     the following disclaimer.</li>
- * <li>The authors and companies name may not be used to endorse or promote products derived from this
- *     software without specific prior written permission.</li>
- * </ul>
- * <br/>
- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS´´ AND ANY EXPRESS OR IMPLIED WARRANTIES,
- * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
+ * MIT License
+ *
+ * Copyright (c) 2022 Josha Munnik
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 
 // region imports
 
-import {IUFDynamicObject} from "../types/IUFDynamicObject.js";
+import {UFDynamicObject} from "../types/UFDynamicObject";
 
 // endregion
 
@@ -48,10 +51,11 @@ export interface IUFDatabase {
    *
    * @return result from sql statement or aDefault
    */
-  fieldAs<T>(aSql: string, aParameterValues: IUFDynamicObject, aDefault: T): Promise<T>;
+  fieldAs<T>(aSql: string, aParameterValues: UFDynamicObject, aDefault: T): Promise<T>;
 
   /**
-   * Execute a sql to get a single value as a certain type. If no value can be found, the method will throw an error.
+   * Execute a sql to get a single value as a certain type. If no value can be found, the method
+   * will throw an error.
    *
    * @template T
    *
@@ -64,7 +68,7 @@ export interface IUFDatabase {
    *
    * @throws if no row (and thus field) can be found
    */
-  fieldOrFailAs<T>(aSql: string, aParameterValues?: IUFDynamicObject): Promise<T>;
+  fieldOrFailAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T>;
 
   /**
    * Performs an insert and returns the id of the created record.
@@ -74,31 +78,35 @@ export interface IUFDatabase {
    * @param aParameterValues
    *   Values to use in case the statement contains parameters
    *
-   * @return id of created record.
+   * @return id of created record or 0 if there is no id.
    */
-  insert(aSql: string, aParameterValues?: IUFDynamicObject): Promise<number>;
+  insert(aSql: string, aParameterValues?: UFDynamicObject): Promise<number>;
 
   /**
-   * Inserts a data from a structure. The method creates an insert into statement using the property names inside
-   * the type.
+   * Inserts a data from an object. The method creates an insert into statement using the property
+   * names inside the object.
    *
-   * The aData structure can contain a primary key property, when building the sql statement it will be skipped.
-   * After the insert statement the generated id will be assigned to the primary key field.
+   * The aData structure can contain a primary key property, when building the sql statement it
+   * will be skipped. After the insert statement the generated id (if any) will be assigned to the
+   * primary key field.
    *
-   * @template T
+   * @template T should be an object type not a class; since the method might create a new object
    *
    * @param aTable
    *   Name of table
    * @param aData
-   *   Data to insert (should be some form of object), the primary key value will be updated after the insert
+   *   Data to insert (should be some form of object)
    * @param aPrimaryKey
    *   Name of primary key field
    * @param anIgnoreFields
    *   Fields to ignore in aData
    *
-   * @return values copied from aData with primary key value updated
+   * @return Either aData if there is no primary key or a new object with values copied from aData
+   * with the new primary key value.
    */
-  insertObject<T extends object>(aTable: string, aData: T, aPrimaryKey?: string, anIgnoreFields?: string[]): Promise<T>;
+  insertObject<T extends object>(
+    aTable: string, aData: T, aPrimaryKey?: string, anIgnoreFields?: string[]
+  ): Promise<T>;
 
   /**
    * Execute a sql to get a row as a certain type.
@@ -112,10 +120,11 @@ export interface IUFDatabase {
    *
    * @return result from sql statement; undefined when no row could be found
    */
-  rowAs<T>(aSql: string, aParameterValues?: IUFDynamicObject): Promise<T | undefined>;
+  rowAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T | undefined>;
 
   /**
-   * Execute a sql to get a row as a certain type. If no row can be found, the method will throw an error.
+   * Execute a sql to get a row as a certain type. If no row can be found, the method will throw an
+   * error.
    *
    * @template T
    *
@@ -128,7 +137,7 @@ export interface IUFDatabase {
    *
    * @throws error if no row can be found
    */
-  rowOrFailAs<T>(aSql: string, aParameterValues?: IUFDynamicObject): Promise<T>;
+  rowOrFailAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T>;
 
   /**
    * Execute a sql to get multiple rows as a certain type.
@@ -142,15 +151,15 @@ export interface IUFDatabase {
    *
    * @return result from sql statement
    */
-  rowsAs<T>(aSql: string, aParameterValues?: IUFDynamicObject): Promise<T[]>;
+  rowsAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T[]>;
 
   /**
    * Execute a function within a transaction.
    *
    * @param aCallback
-   *   A function that will be called with await. It will be called with a single parameter, which can be used to
-   *   communicate with the database. The parameter might be a different instance then the instance the transaction call
-   *   originated from.
+   *   A function that will be called with await. It will be called with a single parameter, which
+   *   can be used to communicate with the database. The parameter might be a different instance
+   *   then the instance the transaction call originated from.
    *
    * @throws any exception that occurred while calling aCallback
    */
@@ -166,7 +175,7 @@ export interface IUFDatabase {
    *
    * @return number of changed records.
    */
-  update(aSql: string, aParameterValues?: IUFDynamicObject): Promise<number>;
+  update(aSql: string, aParameterValues?: UFDynamicObject): Promise<number>;
 
   /**
    * Updates a record in a table assuming it has a single primary key column.
@@ -199,7 +208,7 @@ export interface IUFDatabase {
    *
    * @return number of deleted records.
    */
-  delete(aSql: string, aParameterValues?: IUFDynamicObject): Promise<number>;
+  delete(aSql: string, aParameterValues?: UFDynamicObject): Promise<number>;
 
   /**
    * Generates a unique code with {@link UFText.generateCode} to be used in some table.

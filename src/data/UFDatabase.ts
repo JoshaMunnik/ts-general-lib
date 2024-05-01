@@ -1,30 +1,33 @@
 /**
- * @version 1
  * @author Josha Munnik
  * @copyright Copyright (c) 2022 Ultra Force Development
  * @license
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * <ul>
- * <li>Redistributions of source code must retain the above copyright notice, this list of conditions and
- *     the following disclaimer.</li>
- * <li>The authors and companies name may not be used to endorse or promote products derived from this
- *     software without specific prior written permission.</li>
- * </ul>
- * <br/>
- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS´´ AND ANY EXPRESS OR IMPLIED WARRANTIES,
- * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
+ * MIT License
+ *
+ * Copyright (c) 2022 Josha Munnik
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 
 // region imports
 
-import {IUFDynamicObject} from "../types/IUFDynamicObject.js";
+import {UFDynamicObject} from "../types/UFDynamicObject";
 import {UFText} from "../tools/UFText.js";
 import {IUFDatabase} from "./IUFDatabase.js";
 
@@ -35,10 +38,11 @@ import {IUFDatabase} from "./IUFDatabase.js";
 /**
  * {@link UFDatabase} can act as a base class for database implementations.
  *
- * It supports named parameters in sql queries, using ':name' where name can be a combination of letters, numbers
- * and underscores.
+ * It supports named parameters in sql queries, using ':name' where name can be a combination of
+ * letters, numbers and underscores.
  *
- * The parameter values are contained in a dynamic object, where the property names match the named parameter.
+ * The parameter values are contained in a dynamic object, where the property names match the
+ * named parameter.
  *
  * Subclasses can use {@link processSqlParameters} to convert the sql statement.
  *
@@ -52,14 +56,14 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
   /**
    * @inheritDoc
    */
-  async fieldAs<T>(aSql: string, aParameterValues: IUFDynamicObject, aDefault: T): Promise<T> {
+  async fieldAs<T>(aSql: string, aParameterValues: UFDynamicObject, aDefault: T): Promise<T> {
     return await this.field(aSql, aParameterValues, aDefault) as T;
   }
 
   /**
    * @inheritDoc
    */
-  async fieldOrFailAs<T>(aSql: string, aParameterValues?: IUFDynamicObject): Promise<T> {
+  async fieldOrFailAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T> {
     const field = await this.field(aSql, aParameterValues);
     if (field === undefined) {
       throw new Error('no field for query');
@@ -70,7 +74,7 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
   /**
    * @inheritDoc
    */
-  abstract insert(aSql: string, aParameterValues?: IUFDynamicObject): Promise<number>;
+  abstract insert(aSql: string, aParameterValues?: UFDynamicObject): Promise<number>;
 
   /**
    * @inheritDoc
@@ -80,7 +84,7 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
   ): Promise<T> {
     let columns = '';
     let values = '';
-    const data: IUFDynamicObject = {};
+    const data: UFDynamicObject = {};
     Object.entries(aData).forEach(([key, value]) => {
       if ((key !== aPrimaryKey) && !anIgnoreFields.includes(key)) {
         columns = UFText.append(columns, key, ',');
@@ -88,7 +92,9 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
         data[key] = value;
       }
     });
-    const id = await this.insert(`insert into ${aTable} (${columns}) values (${values})`, data);
+    const id = await this.insert(
+      `insert into ${aTable} (${columns}) values (${values})`, data
+    );
     if (id > 0) {
       return {
         ...aData,
@@ -101,7 +107,7 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
   /**
    * @inheritDoc
    */
-  async rowAs<T>(aSql: string, aParameterValues?: IUFDynamicObject): Promise<T | undefined> {
+  async rowAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T | undefined> {
     const result = await this.row(aSql, aParameterValues);
     return result == undefined ? undefined : this.convertRow<T>(result as TRow);
   }
@@ -109,7 +115,7 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
   /**
    * @inheritDoc
    */
-  async rowOrFailAs<T>(aSql: string, aParameterValues?: IUFDynamicObject): Promise<T> {
+  async rowOrFailAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T> {
     const row = await this.rowAs<T>(aSql, aParameterValues);
     if (row == undefined) {
       throw new Error('no row for query ' + aSql + ' ' + JSON.stringify(aParameterValues));
@@ -120,7 +126,7 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
   /**
    * @inheritDoc
    */
-  async rowsAs<T>(aSql: string, aParameterValues?: IUFDynamicObject): Promise<T[]> {
+  async rowsAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T[]> {
     const result = await this.rows(aSql, aParameterValues);
     return result.map(row => this.convertRow<T>(row));
   }
@@ -133,16 +139,17 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
   /**
    * @inheritDoc
    */
-  abstract update(aSql: string, aParameterValues?: IUFDynamicObject): Promise<number>;
+  abstract update(aSql: string, aParameterValues?: UFDynamicObject): Promise<number>;
 
   /**
    * @inheritDoc
    */
   async updateObject<T extends object>(
-    aTable: string, aPrimaryValue: any, aData: T, aPrimaryKey: string = 'id', anIgnoreFields: string[] = []
+    aTable: string, aPrimaryValue: any, aData: T,
+    aPrimaryKey: string = 'id', anIgnoreFields: string[] = []
   ): Promise<void> {
     let fields = '';
-    const data: IUFDynamicObject = {};
+    const data: UFDynamicObject = {};
     Object.entries(aData).forEach(([key, value]) => {
       if ((key !== aPrimaryKey) && !anIgnoreFields.includes(key)) {
         fields = UFText.append(fields, key + '=' + ':' + key, ',');
@@ -159,7 +166,7 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
   /**
    * @inheritDoc
    */
-  async delete(aSql: string, aParameterValues?: IUFDynamicObject): Promise<number> {
+  async delete(aSql: string, aParameterValues?: UFDynamicObject): Promise<number> {
     // The default implementation calls update assuming it is handled in the same way by the database
     // implementation.
     return await this.update(aSql, aParameterValues);
@@ -195,7 +202,7 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
    *
    * @return result from sql statement or aDefault
    */
-  protected abstract field(aSql: string, aParameterValues?: IUFDynamicObject, aDefault?: any): Promise<any>;
+  protected abstract field(aSql: string, aParameterValues?: UFDynamicObject, aDefault?: any): Promise<any>;
 
   /**
    * Execute a sql to get a row.
@@ -207,7 +214,7 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
    *
    * @return result from sql statement; undefined when no row could be found
    */
-  protected abstract row(aSql: string, aParameterValues?: IUFDynamicObject): Promise<TRow | undefined>;
+  protected abstract row(aSql: string, aParameterValues?: UFDynamicObject): Promise<TRow | undefined>;
 
   /**
    * Execute a sql to get multiple rows.
@@ -219,10 +226,11 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
    *
    * @return Result from sql statement
    */
-  protected abstract rows(aSql: string, aParameterValues?: IUFDynamicObject): Promise<TRow[]>;
+  protected abstract rows(aSql: string, aParameterValues?: UFDynamicObject): Promise<TRow[]>;
 
   /**
-   * Converts a row from database type to an external type. The default implementation just uses a typecast.
+   * Converts a row from database type to an external type. The default implementation just uses a
+   * typecast.
    *
    * @template T
    * @template TRow
@@ -249,7 +257,7 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
    * @return an updated SQL statement
    */
   protected processSqlParameters(
-    aSql: string, aParameterValues: IUFDynamicObject, aCallback: (aName: string, aValue: any) => string
+    aSql: string, aParameterValues: UFDynamicObject, aCallback: (aName: string, aValue: any) => string
   ): string {
     const matches = aSql.matchAll(/(:[\w\d_]+)/g);
     let start = 0;

@@ -1,25 +1,28 @@
 /**
- * @version 1
  * @author Josha Munnik
  * @copyright Copyright (c) 2022 Ultra Force Development
  * @license
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * <ul>
- * <li>Redistributions of source code must retain the above copyright notice, this list of conditions and
- *     the following disclaimer.</li>
- * <li>The authors and companies name may not be used to endorse or promote products derived from this
- *     software without specific prior written permission.</li>
- * </ul>
- * <br/>
- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS´´ AND ANY EXPRESS OR IMPLIED WARRANTIES,
- * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
+ * MIT License
+ *
+ * Copyright (c) 2022 Josha Munnik
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -36,10 +39,11 @@ import { UFText } from "../tools/UFText.js";
 /**
  * {@link UFDatabase} can act as a base class for database implementations.
  *
- * It supports named parameters in sql queries, using ':name' where name can be a combination of letters, numbers
- * and underscores.
+ * It supports named parameters in sql queries, using ':name' where name can be a combination of
+ * letters, numbers and underscores.
  *
- * The parameter values are contained in a dynamic object, where the property names match the named parameter.
+ * The parameter values are contained in a dynamic object, where the property names match the
+ * named parameter.
  *
  * Subclasses can use {@link processSqlParameters} to convert the sql statement.
  *
@@ -72,8 +76,8 @@ export class UFDatabase {
     /**
      * @inheritDoc
      */
-    insertObject(aTable, aData, aPrimaryKey = 'id', anIgnoreFields = []) {
-        return __awaiter(this, void 0, void 0, function* () {
+    insertObject(aTable_1, aData_1) {
+        return __awaiter(this, arguments, void 0, function* (aTable, aData, aPrimaryKey = 'id', anIgnoreFields = []) {
             let columns = '';
             let values = '';
             const data = {};
@@ -124,8 +128,8 @@ export class UFDatabase {
     /**
      * @inheritDoc
      */
-    updateObject(aTable, aPrimaryValue, aData, aPrimaryKey = 'id', anIgnoreFields = []) {
-        return __awaiter(this, void 0, void 0, function* () {
+    updateObject(aTable_1, aPrimaryValue_1, aData_1) {
+        return __awaiter(this, arguments, void 0, function* (aTable, aPrimaryValue, aData, aPrimaryKey = 'id', anIgnoreFields = []) {
             let fields = '';
             const data = {};
             Object.entries(aData).forEach(([key, value]) => {
@@ -167,7 +171,8 @@ export class UFDatabase {
         });
     }
     /**
-     * Converts a row from database type to an external type. The default implementation just uses a typecast.
+     * Converts a row from database type to an external type. The default implementation just uses a
+     * typecast.
      *
      * @template T
      * @template TRow

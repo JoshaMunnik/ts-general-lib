@@ -1,32 +1,41 @@
 /**
- * @version 1
  * @author Josha Munnik
- * @copyright Copyright (c) 2019 Ultra Force Development
+ * @copyright Copyright (c) 2022 Ultra Force Development
  * @license
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * <ul>
- * <li>Redistributions of source code must retain the above copyright notice, this list of conditions and
- *     the following disclaimer.</li>
- * <li>The authors and companies name may not be used to endorse or promote products derived from this
- *     software without specific prior written permission.</li>
- * </ul>
- * <br/>
- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS´´ AND ANY EXPRESS OR IMPLIED WARRANTIES,
- * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
+ * MIT License
+ *
+ * Copyright (c) 2022 Josha Munnik
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 
 // region imports
 
-import {IUFPropertyValidator, IUFValidateValue, IUFValueValidator, UFValidators} from "../tools/UFValidators.js";
+import {
+  IUFPropertyValidator,
+  IUFValidateValue,
+  IUFValueValidator,
+  UFValidators
+} from "../tools/UFValidators.js";
 import {IUFModel} from "./IUFModel.js";
 import {UFMapOfSet} from "../data/UFMapOfSet.js";
+import {UFCallback} from "../types/UFCallback";
 
 // endregion
 
@@ -46,34 +55,24 @@ class PropertyMetaData {
 // region exports
 
 /**
- * Function template a model change listener function must use
+ * The function template that is called whenever one or more properties have changed value.
+ *
+ * @param sender
+ *   Sender of 'event', the model instance with one or more changed properties.
+ * @param properties
+ *   The names of properties that changed.
  */
-export interface IUFModelChangeListener {
-  /**
-   * The function is called whenever one or more properties have changed value.
-   *
-   * @param sender
-   *   Sender of 'event', the model instance with one or more changed properties.
-   * @param properties
-   *   The names of properties that changed.
-   */
-  (sender: UFModel, properties: string[]): void
-}
+export type UFModelChangedCallback = (sender: UFModel, properties: string[]) => void;
 
 /**
- * Function template a property change listener function must use
+ * The function template that is called whenever a certain property has changed value.
+ *
+ * @param sender
+ *  Sender of 'event', the model instance with the changed property.
+ * @param property
+ *   The name of the property that has changed.
  */
-export interface IUFPropertyChangeListener {
-  /**
-   * The function is called whenever a certain property has changed value.
-   *
-   * @param sender
-   *  Sender of 'event', the model instance with the changed property.
-   * @param property
-   *   The name of the property that has changed.
-   */
-  (sender: UFModel, property: string): void
-}
+export type UFPropertyChangedCallback = (sender: UFModel, property: string) => void;
 
 /**
  * {@link UFModel} implements {@link IUFModel} and adds support change events and dirty state.
@@ -107,7 +106,7 @@ export class UFModel implements IUFModel {
    *
    * @private
    */
-  private readonly m_listeners: Set<IUFModelChangeListener> = new Set();
+  private readonly m_listeners: Set<UFModelChangedCallback> = new Set();
 
   /**
    * An object containing a meta data object for property names.
@@ -121,17 +120,17 @@ export class UFModel implements IUFModel {
    *
    * @private
    */
-  private readonly m_propertyListeners: UFMapOfSet<string, IUFPropertyChangeListener> =
-    new UFMapOfSet<string, IUFPropertyChangeListener>();
+  private readonly m_propertyListeners: UFMapOfSet<string, UFPropertyChangedCallback> =
+    new UFMapOfSet<string, UFPropertyChangedCallback>();
 
   // endregion
-  
+
   // region public methods
 
   /**
-   * Locks the model instance, preventing changed events from being fired. An internal lock counter is
-   * kept; so the number of lock and unlock calls must match before the model instance is
-   * fully unlocked.
+   * Locks the model instance, preventing changed events from being fired. An internal lock counter
+   * is kept; so the number of {@link lock} and {@link unlock} calls must match
+   * before the model instance is fully unlocked.
    *
    * @return current lock count
    */
@@ -141,7 +140,7 @@ export class UFModel implements IUFModel {
   }
 
   /**
-   * Unlocks the model instance. If a call matches the first call to {@link lock} call
+   * Unlocks the model instance. If a call matches the first call to {@link lock}, call
    * {@link onPropertiesChanged} if there are any pending changes.
    *
    * @return current lock count
@@ -164,9 +163,13 @@ export class UFModel implements IUFModel {
    *
    * @param aCallback
    *   Callback to add
+   *
+   * @return a function that can be called to remove the listener. It just
+   * calls {@link removeChangeListener} with aCallback.
    */
-  addChangeListener(aCallback: IUFModelChangeListener) {
+  addChangeListener(aCallback: UFModelChangedCallback): UFCallback {
     this.m_listeners.add(aCallback);
+    return () => this.removeChangeListener(aCallback);
   }
 
   /**
@@ -175,21 +178,27 @@ export class UFModel implements IUFModel {
    * @param aCallback
    *   Callback to remove
    */
-  removeChangeListener(aCallback: IUFModelChangeListener) {
+  removeChangeListener(aCallback: UFModelChangedCallback) {
     this.m_listeners.delete(aCallback);
   }
 
   /**
-   * Adds a listener for changes to a certain property. If the listener was already added for the property, nothing
-   * happens.
+   * Adds a listener for changes to a certain property. If the listener was already added for
+   * the property, nothing happens.
    *
    * @param aProperty
    *   Name of property
    * @param aListener
    *   Callback function to call when property changes value
+   *
+   * @return a function that can be called to remove the listener. It just calls
+   * {@link removePropertyChangeListener} with aProperty and aListener.
    */
-  public addPropertyChangeListener(aProperty: string, aListener: IUFPropertyChangeListener): void {
+  public addPropertyChangeListener(
+    aProperty: string, aListener: UFPropertyChangedCallback
+  ): UFCallback {
     this.m_propertyListeners.add(aProperty, aListener);
+    return () => this.removePropertyChangeListener(aProperty, aListener);
   }
 
   /**
@@ -200,13 +209,15 @@ export class UFModel implements IUFModel {
    * @param aListener
    *   Listener to remove
    */
-  public removePropertyChangeListener(aProperty: string, aListener: IUFPropertyChangeListener): void {
+  public removePropertyChangeListener(
+    aProperty: string, aListener: UFPropertyChangedCallback
+  ): void {
     this.m_propertyListeners.remove(aProperty, aListener);
   }
 
   /**
-   * Checks if there are changed properties. This method only is useful while the data is locked. Else the method
-   * will always return false.
+   * Checks if there are changed properties. This method only is useful while the data is locked.
+   * Else the method will always return false.
    *
    * @returns true if there is a changed property.
    */
@@ -258,8 +269,9 @@ export class UFModel implements IUFModel {
   }
 
   /**
-   * Gets a value of a property. The method checks if the property is a function. If it is, the method
-   * returns the result of a call to that function. Else the method just returns the value.
+   * Gets a value of a property. The method checks if the property is a function.
+   * If it is, the method returns the result of a call to that function. Else the method just
+   * returns the value.
    *
    * @param aName
    *   Name of property
@@ -272,9 +284,9 @@ export class UFModel implements IUFModel {
   }
 
   /**
-   * Sets a property to a value. The method checks if the property is a function. If it is, the method
-   * will call the function passing the value as parameter. Else the method will assign the value
-   * directly and call {@link changed}.
+   * Sets a property to a value. The method checks if the property is a function. If it is, the
+   * method will call the function passing the value as parameter. Else the method will assign the
+   * value directly and call {@link changed}.
    *
    * @param aName
    *   Property name
@@ -303,8 +315,8 @@ export class UFModel implements IUFModel {
   // region protected methods
 
   /**
-   * Processes a possible property assignment. If aNewValue is not undefined, compare it to the current
-   * value and when not equal call {@link changed} for the property.
+   * Processes a possible property assignment. If aNewValue is not undefined, compare it to the
+   * current value and when not equal call {@link changed} for the property.
    *
    * When anEqualFunction is not defined, the method uses ===.
    *
@@ -367,8 +379,9 @@ export class UFModel implements IUFModel {
   }
 
   /**
-   * This method can be called when a property changes value. If the instance is locked via {@link lock} the names are
-   * stored. Else the {@link onPropertiesChanged} method is called with the list of names.
+   * This method can be called when a property changes value. If the instance is locked
+   * via {@link lock} the names are stored. Else the {@link onPropertiesChanged} method is
+   * called with the list of names.
    *
    * The function accepts a variable number of name parameters
    *
@@ -386,17 +399,17 @@ export class UFModel implements IUFModel {
   }
 
   /**
-   * This method is called whenever changed is called or the data structure is unlocked and there are
-   * changed properties.
+   * This method is called whenever changed is called or the data structure is unlocked and there
+   * are changed properties.
    *
-   * The default implementation invokes all the registered listeners. Subclasses can override this method to
-   * take additional actions.
+   * The default implementation invokes all the registered listeners. Subclasses can override this
+   * method to take additional actions.
    *
    * @param aList
    *   List of property names
    */
   protected onPropertiesChanged(aList: Array<string>) {
-    const changeListeners: IUFModelChangeListener[] = [...this.m_listeners];
+    const changeListeners: UFModelChangedCallback[] = [...this.m_listeners];
     changeListeners.forEach(listener => listener(this, aList));
     aList.forEach(property => this.callPropertyListeners(property));
   }
@@ -445,10 +458,9 @@ export class UFModel implements IUFModel {
    * @private
    */
   private callPropertyListeners(aProperty: string): void {
-    const listeners: IUFPropertyChangeListener[] = this.m_propertyListeners.get(aProperty);
+    const listeners: UFPropertyChangedCallback[] = this.m_propertyListeners.get(aProperty);
     listeners.forEach(listener => listener(this, aProperty));
   }
-
 
   // endregion
 }

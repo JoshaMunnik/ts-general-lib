@@ -17,7 +17,6 @@ export * from "./data/UFNumberList.js";
 export * from "./data/UFKeyedStorage.js";
 // models
 export * from "./models/IUFModel.js";
-export * from "./models/IUFSorted.js";
 export * from "./models/UFModel.js";
 // tools
 export * from "./tools/UFArray.js";
@@ -33,5 +32,7 @@ export * from "./tools/UFText.js";
 export * from "./tools/UFTypescript.js";
 export * from "./tools/UFValidators.js";
 // types
-export * from "./types/IUFDynamicObject.js";
+export * from "./types/UFCallback.js";
+export * from "./types/UFDynamicObject.js";
+export * from "./types/UFSortableObject.js";
 //# sourceMappingURL=index.js.map
