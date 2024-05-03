@@ -24,7 +24,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { UFDynamicObject } from "../types/UFDynamicObject";
+import { UFDynamicObject } from "../types/UFDynamicObject.js";
 /**
  * {@link IUFDatabase} defines the methods a database will implement.
  */

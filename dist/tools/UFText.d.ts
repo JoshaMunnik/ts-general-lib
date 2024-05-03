@@ -35,14 +35,15 @@ export declare class UFText {
      */
     private constructor();
     /**
-     * Maps certain characters to their entity or special html tag or empty string if it has no use in html
+     * Maps certain characters to their entity or special html tag or empty string if it has no
+     * use in html
      *
      * @private
      */
     static s_escapeHtmlMap: Map<string, string>;
     /**
-     * Appends a text to another text using a separator. If either texts are empty, the method just returns the other
-     * texts without the separator.
+     * Appends a text to another text using a separator. If either texts are empty, the method
+     * just returns the other text without the separator.
      *
      * @param aSource
      *   Source to add to
@@ -147,7 +148,7 @@ export declare class UFText {
      */
     static joinPath(...aTexts: string[]): string;
     /**
-     * Gets the text to convert a number to an english ordinal number.
+     * Gets the text to convert a number to an English ordinal number.
      *
      * @param aNumber
      *   Number to convert.
@@ -156,7 +157,7 @@ export declare class UFText {
      */
     static getOrdinalPost(aNumber: number): string;
     /**
-     * Converts a number to an english ordinal number.
+     * Converts a number to an English ordinal number.
      *
      * @param aNumber
      *   Number to convert.
@@ -175,4 +176,207 @@ export declare class UFText {
      * @return aValue as string (via toString() call) or aDefault.
      */
     static asString(aValue: any, aDefault?: string): string;
+    /**
+     * Formats a file size adding unit (bytes, KB, MB or GB).
+     *
+     * @param aSize
+     *   Size to format
+     *
+     * @returns formatted size
+     */
+    static formatFileSize(aSize: number): string;
+    /**
+     * Gets the extension of file by returning the part after the last '.' in the name.
+     *
+     * @param aFileName
+     *   Filename to get extension of (may include path parts)
+     *
+     * @returns extension (without '.' and in lowercase) or false if no '.' could be
+     *   located in the name.
+     */
+    static getFileExtension(aFileName: string): string | false;
+    /**
+     * Add a number of padding chars on the left (in front) until a string reaches a certain
+     * minimal size.
+     *
+     * @param aText
+     *   Text to pad
+     * @param aMinSize
+     *   Minimal size
+     * @param aPadChar
+     *   Char to add
+     *
+     * @return {string} aText padded with aPadChar, if aTexts length >= aMinSize then aText
+     *   is just returned
+     */
+    static lpad(aText: string, aMinSize: number, aPadChar?: string): string;
+    /**
+     * Add a number of padding chars on the right until a string reaches a certain minimal size.
+     *
+     * @param aText
+     *   Text to pad
+     * @param aMinSize
+     *   Minimal size
+     * @param aPadChar
+     *   Char to add
+     *
+     * @return {string} aText padded with aPadChar, if aTexts length >= aMinSize then aText is
+     * just returned
+     */
+    static rpad(aText: string, aMinSize: number, aPadChar?: string): string;
+    /**
+     * Adds a parameter to an url. The method checks if the url already contains parameters
+     * (by containing a ? character). If it does the parameter is added to the end with a '&'
+     * character. Else the parameter is added to the end with a '?' character.
+     *
+     * @param anUrl
+     *   Filename to add parameter to
+     * @param aParameter
+     *   Parameter to add
+     * @param aValue
+     *   When specified the value to add to the parameter using '='
+     *
+     * @return anUrl with '?aParameter[=aValue]' or '&aParameter[=aValue]' added to it.
+     */
+    static addParameter(anUrl: string, aParameter: string, aValue?: string): string;
+    /**
+     * Format a string using format specifiers and additional parameters. Next to formatting primitive
+     * values the method can also format a property within an object.
+     *
+     * Format:
+     * `%[number$][{name}][+][0|'char][-][number]\[.number]%|(name)|b|c|d|e|f|F|o|u|s|x|X`
+     * - [] = optional
+     * - | = choices for a single location
+     *
+     * Format specifiers:
+     * - `number$` = use argument at index number (first argument has index 1); if the value is too
+     *   high and points to a non-existing argument the method will skip this format string and leave
+     *   it as is.
+     * - `{name}` = show the value of a property of the specified name, the property is formatted
+     *              according to the type specifier.
+     * - `+` = when formatting a decimal or float prefix with a '+' if the number is positive
+     *        (sign of number is always shown)
+     * - `0` = use 0 as padding character (default is a space)
+     * - `'char` = use char as padding character (char is a single character)
+     * - `-` = instead of right justification, left justify the result when padding
+     * - `number` = minimal size, add padding characters if needed
+     * - `.number` = with floats this number specifies the number of decimal digits to display;
+     *               else it specifies the maximum size (in characters)
+     *
+     * The format specification should end with a type specifier that indicates the type of the argument:
+     * - `%` = no argument is used and all the formatting is ignored, a single % character is
+     *         inserted (with other words, use %% inside the format string to get a single %)
+     * - `(name)` = show the value of a property, treating the value as a string. Other
+     *              formatting specifiers can still be used. See also comments below.
+     * - `b` = the argument is treated as an unsigned integer and presented as a binary number.
+     * - `c` = the argument is treated as an unsigned integer and presented as the character with
+     *         that ASCII value.
+     * - `d` = the argument is treated as an integer and presented as a (signed) decimal number.
+     * - `e` = the argument is treated as a float and presented using scientific notation
+     *         (e.g. 1.2e+2). The precision specifier stands for the number of digits after
+     *         the decimal point.
+     * - `u` = the argument is treated as an unsigned integer and presented as an unsigned
+     *         decimal number. The plus modifier is not used.
+     * - `f` = the argument is treated as a float and presented as a floating-point number.
+     * - `F` = same as f (to be compatible with PHP's formatting)
+     * - `o` = the argument is treated as an unsigned integer and presented as an octal number.
+     * - `s` = the argument is treated as and presented as a string.
+     * - `x` = the argument is treated as an unsigned integer and presented as a hexadecimal
+     *         number (with lowercase letters).
+     * - `X` = the argument is treated as an unsigned integer and presented as a hexadecimal
+     *         number (with uppercase letters).
+     *
+     * The method uses a regular expression with named groups to identify the various parts. The
+     * order of the format specifiers must follow the order as specified above.
+     *
+     * The first time a property value specification is encountered, the method will store the
+     * matching argument assuming it is an object. Any property value specification after will use
+     * the same object.
+     *
+     * To show property values of multiple objects, one can use the `number$` specifier to select
+     * a certain argument. When using `number$` to select a certain object that object
+     * is not stored as default object.
+     *
+     * To format a property value using a certain type specifier use the `{}` specifier; to show
+     * the property as string one can use the `()` specifier.
+     *
+     * If no argument index is used and there are no more arguments to map to, the method will
+     * not process the string and just keep it.
+     *
+     * @param {string} aFormat
+     *   A string including format specifiers.
+     * @param {...*} anArguments
+     *   Various arguments to format within the string
+     *
+     * @return {string} formatted string
+     *
+     * @example <caption>A few formatting statements</caption>
+     * var pear = {color: 'brown', shape: 'pear', weight: 100 };
+     * var apple = {color: 'green', shape: 'round', weight: 150 };
+     *
+     * console.log(UFText.sprintf('The color of an apple is %(color) and the shape is %(shape)', apple));
+     * // The color of an apple is green and the shape is round
+     *
+     * console.log(UFText.sprintf('The color of a pear is %0$(color) and the color of an apple is %1$(color)', pear, apple));
+     * // The color of a pear is brown and the color of an apple is green
+     *
+     * console.log(UFText.sprintf('The weight of a pear is %0${weight}.2f and the weight of an apple is %1${weight}.2f', pear, apple));
+     * // The weight of a pear is 100.00 and the weight of an apple is 150.00
+     *
+     * console.log(UFText.sprintf('The number 12 as binary = %b', 12));
+     * // The number 12 as binary = 1100
+     *
+     * console.log(UFText.sprintf('The number 12 as octal = %o', 12));
+     * // The number 12 as octal = 14
+     *
+     * console.log(UFText.sprintf('The number 12 as decimal = %d', 12));
+     * // The number 12 as decimal = 12
+     *
+     * console.log(UFText.sprintf('The number 12 as decimal with + = %+d', 12));
+     * // The number 12 as decimal with + = +12
+     *
+     * console.log(UFText.sprintf('The number 12 as hexadecimal = %x', 12));
+     * // The number 12 as hexadecimal = c
+     *
+     * console.log(UFText.sprintf('The number 12 as hexadecimal = %X', 12));
+     * // The number 12 as hexadecimal = C
+     *
+     * console.log(UFText.sprintf('The number 12 as hexadecimal with padding = %04X', 12));
+     * // The number 12 as hexadecimal = 000C
+     *
+     * console.log(UFText.sprintf('The number 12.5 as exponential = %.3e', 12.5));
+     * // The number 12.5 as exponential = 1.250e+1
+     *
+     * console.log(UFText.sprintf('The number 12.5 as float = %.3f', 12.5));
+     * // The number 12.5 as float = 12.500
+     *
+     * console.log(UFText.sprintf('[%8s] = default justification', 'abcd'));
+     * // [    abcd] = default justification
+     *
+     * console.log(UFText.sprintf('[%-8s] = left justification', 'abcd'));
+     * // [abcd    ] = left justification
+     *
+     * console.log(UFText.sprintf('[%08s] = default justification with zero padding', 'abcd'));
+     * // [0000abcd] = default justification with zero padding
+     *
+     * // the next example uses \' to insert the - into the string
+     * console.log(UFText.sprintf('[%\'-8s] = default justification with - padding', 'abcd'));
+     * // [----abcd] = default justification with - padding
+     *
+     * console.log(UFText.sprintf('[%10s] = default justification with space padding', 'abcd'));
+     * // [      abcd] = default justification with space padding
+     *
+     * console.log(UFText.sprintf('%%%.2f percentage', 33.5));
+     * // %33.50 percentage
+     */
+    static sprintf(aFormat: string, ...anArguments: any[]): string;
+    /**
+     * This method performs: `console.log(UFStringTools.sprintf(aFormat, ...));`.
+     *
+     * @param aFormat
+     *   String to format
+     * @param anArguments
+     *   Various parameters to format within the string
+     */
+    static printf(aFormat: string, ...anArguments: any[]): void;
 }

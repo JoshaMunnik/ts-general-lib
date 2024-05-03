@@ -26,7 +26,7 @@
  */
 import { IUFPropertyValidator, IUFValidateValue, IUFValueValidator } from "../tools/UFValidators.js";
 import { IUFModel } from "./IUFModel.js";
-import { UFCallback } from "../types/UFCallback";
+import { UFCallback } from "../types/UFCallback.js";
 /**
  * The function template that is called whenever one or more properties have changed value.
  *

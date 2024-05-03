@@ -18,6 +18,8 @@ export * from "./data/UFKeyedStorage.js";
 // models
 export * from "./models/IUFModel.js";
 export * from "./models/UFModel.js";
+// services
+export * from "./services/UFService.js";
 // tools
 export * from "./tools/UFArray.js";
 export * from "./tools/UFDate.js";

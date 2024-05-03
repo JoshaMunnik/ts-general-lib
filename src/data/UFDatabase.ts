@@ -27,7 +27,7 @@
 
 // region imports
 
-import {UFDynamicObject} from "../types/UFDynamicObject";
+import {UFDynamicObject} from "../types/UFDynamicObject.js";
 import {UFText} from "../tools/UFText.js";
 import {IUFDatabase} from "./IUFDatabase.js";
 

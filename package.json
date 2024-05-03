@@ -1,6 +1,6 @@
 {
   "name": "@ultraforce/ts-general-lib",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "Various general utility classes.",
   "scripts": {
     "build": "tsc",
@@ -30,6 +30,7 @@
     "@types/jest": "^29.5.12",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
     "typedoc": "^0.25.13",
     "typescript": "^5.4.5"
   }

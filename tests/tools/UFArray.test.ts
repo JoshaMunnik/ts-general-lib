@@ -1,4 +1,4 @@
-import {UFArray} from "../../src/tools/UFArray";
+import {UFArray} from '../../src/tools/UFArray.js';
 
 describe('UFArray', () => {
   describe('swap', () => {

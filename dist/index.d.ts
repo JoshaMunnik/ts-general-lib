@@ -15,6 +15,7 @@ export * from "./data/UFNumberList.js";
 export * from "./data/UFKeyedStorage.js";
 export * from "./models/IUFModel.js";
 export * from "./models/UFModel.js";
+export * from "./services/UFService.js";
 export * from "./tools/UFArray.js";
 export * from "./tools/UFDate.js";
 export * from "./tools/UFEnum.js";

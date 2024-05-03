@@ -218,4 +218,17 @@ export declare class UFMath {
      * @returns either aValue as a number or aDefault
      */
     static getNumber(aValue: any, aDefault: number): number;
+    /**
+     * Performs a logical xor on two values.
+     *
+     * Reference: {@link http://www.howtocreate.co.uk/xor.html}
+     *
+     * @param aValue0
+     *   First value
+     * @param aValue1
+     *   Second value
+     * @returns `True` if either aValue0 or aValue1 evaluates to a truthy but not both;
+     *   otherwise `false` if both values evaluate to a truthy or falsy.
+     */
+    static xor(aValue0: any, aValue1: any): boolean;
 }

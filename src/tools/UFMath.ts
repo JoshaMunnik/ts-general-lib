@@ -310,6 +310,25 @@ export class UFMath {
     return this.isNumeric(aValue) ? aValue as number : aDefault;
   }
 
+  /**
+   * Performs a logical xor on two values.
+   *
+   * Reference: {@link http://www.howtocreate.co.uk/xor.html}
+   *
+   * @param aValue0
+   *   First value
+   * @param aValue1
+   *   Second value
+   * @returns `True` if either aValue0 or aValue1 evaluates to a truthy but not both;
+   *   otherwise `false` if both values evaluate to a truthy or falsy.
+   */
+  static xor(aValue0: any, aValue1: any): boolean {
+    // use !! to make sure with two falsy values, the result is still a boolean
+    return !!((aValue0 || aValue1) && !(aValue0 && aValue1));
+  }
+
+
+
   // endregion
 }
 

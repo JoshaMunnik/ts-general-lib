@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
+    "module": "NodeNext",
     "target": "es6",
     "strict": true,
     "declaration": true,
     "sourceMap": true,
     "outDir": "./dist",
-    "moduleResolution": "Node",
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true
   },
   "exclude": [

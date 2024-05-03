@@ -35,7 +35,7 @@ import {
 } from "../tools/UFValidators.js";
 import {IUFModel} from "./IUFModel.js";
 import {UFMapOfSet} from "../data/UFMapOfSet.js";
-import {UFCallback} from "../types/UFCallback";
+import {UFCallback} from "../types/UFCallback.js";
 
 // endregion
 

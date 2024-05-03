@@ -125,8 +125,8 @@ export declare class UFObject {
      */
     static getAttachedAs<T>(anObject: any, aPropertyName: string, aFactory: () => T): T;
     /**
-     * See if all properties in aMatch can be found in aSource and are equal. If a property is an object, the
-     * method will call itself recursively.
+     * See if all properties in aMatch can be found in aSource and are equal. If a property is
+     * an object, the method will call itself recursively.
      *
      * Only properties defined in aMatch are checked.
      *
@@ -134,19 +134,20 @@ export declare class UFObject {
      *   Source object to test
      * @param aMatch
      *   Contains properties to match
-     * @param [anIgnoreCase=false]
-     *   True=ignore case of string properties,  false=casing must match for properties to be equal
+     * @param anIgnoreCase
+     *   True: ignore case of string properties, false: casing must match for properties to be equal
      *
      * @return True: all properties found and matching in value
      */
     static equalProperties(aSource: any, aMatch: any, anIgnoreCase?: boolean): boolean;
     /**
-     * Create a copy of the map setting properties in it to values of properties in aSource.
+     * Create a copy of the map object, setting properties in it to values of properties in aSource.
      *
-     * aMap can contain properties with basic types or properties of type Object. In that case the object
-     * properties are scanned.
+     * aMap can contain properties with basic types or properties of type Object. In that case the
+     * object properties are scanned.
      *
-     * If aSource is an Array instance, a new Array instance is created else a new Object instance is used.
+     * If aSource is an Array instance, a new Array instance is created else a new Object
+     * instance is used.
      *
      * @param aSource
      *   Source object to obtain values from
@@ -174,10 +175,11 @@ export declare class UFObject {
     /**
      * Copy the values of properties in aValues to properties of same name in anObject.
      *
-     * If a property of aValue is an object, the function will copy the properties in that object.
+     * If a property of aValue is an object, the function will copy all the properties in that object.
      *
-     * If the value of a property if aValue is a function, the function will be called with two parameters:
-     * anObject, property name. The function is responsible for assigning a value to anObject.
+     * If the value of a property of aValue is a function, the function will be called with
+     * two parameters: anObject, property name. The function is responsible for assigning a value to
+     * anObject.
      *
      * @param anObject
      *   Object to update properties
@@ -202,7 +204,8 @@ export declare class UFObject {
      */
     static applyProperties(anObject: any, aValues: any): any;
     /**
-     * Copies the properties of an object. Recursively call this method of properties that are object values.
+     * Copies the properties of an object. Recursively call this method for properties that are
+     * object values.
      *
      * @param anObject
      *   Object to copy
@@ -210,4 +213,87 @@ export declare class UFObject {
      * @return copy of an object
      */
     static deepCopy<T extends object>(anObject: T): T;
+    /**
+     * Checks if an object contains a certain key. It is possible to specify multiple values.
+     *
+     * @param anObject
+     *   An object (keys are checked)
+     * @param aKeys
+     *   One or more key names to check
+     *
+     * @returns True if the object has a key that matches one of the aKeys values.
+     */
+    static contains(anObject: any, ...aKeys: string[]): boolean;
+    /**
+     * Combines multiple object instances.
+     *
+     * The method will create a new object and copies all properties (including getters and setters)
+     * from each argument to the new object.
+     *
+     * After processing all arguments, the method checks each argument again if it contains the
+     * initialize method specified by anInitMethod.
+     *
+     * If aCallInit is true, the initialize method gets called using the newly created object as
+     * its function scope.
+     *
+     * If aCallInit is false, a new initialize method is attached to the created object that will call
+     * all the other initialize methods with the correct function scope.
+     *
+     * @param anObjects
+     *   Object instances to combine
+     * @param aCallInitialize
+     *   When false do not call the initialize methods but create and attach a new initialize method
+     *   that will call the initialize methods (if any of the other objects contains the initialize
+     *   method).
+     * @param anInitializeName
+     *   The name of the initialize method to call or null to skip.
+     *
+     * @return An instance being a combination of all arguments
+     */
+    static combineObjects(anObjects: any[], aCallInitialize?: boolean, anInitializeName?: string): any;
+    /**
+     * Copies a property/method from one object to another. If the property is a getter or setter,
+     * the method will redefine the property in the target object.
+     *
+     * @param aName
+     *   Name of property
+     * @param aSource
+     *   Source to copy property from
+     * @param aTarget
+     *   Target to copy property to
+     */
+    static copyProperty(aName: string, aSource: any, aTarget: any): void;
+    /**
+     * Copies all properties from one object to another object using {@link copyProperty}.
+     *
+     * It is possible to specify a separator name via `aSeparatorName`; in that case the property
+     * of that name is not copied but is placed in the `aSeparatorList`.
+     *
+     * @private
+     *
+     * @param aSource
+     *   Source to copy from
+     * @param aTarget
+     *   Target to copy to
+     * @param aSeparatorName
+     *   Optional name of property to place in aSeparatorList
+     * @param aSeparatorList
+     *   Must be specified if aSeparatorName is specified.
+     */
+    static copyProperties(aSource: any, aTarget: any, aSeparatorName?: string, aSeparatorList?: any[]): void;
+    /**
+     * Processes init methods.
+     *
+     * @private
+     *
+     * @param {object} aTarget
+     *   Object that acts as the function scope and might get an initialized function attached to it
+     *   if aCallInit is false.
+     * @param aFunctions
+     *   A list of functions to call using aTarget as function scope.
+     * @param aMethodName
+     *   When specified, instead of calling the functions a new method will be attached to aTarget
+     *   using this name. The method will call all functions with aTarget as function scope.
+     */
+    static callMethods(aTarget: any, aFunctions: any[], aMethodName?: string): void;
 }
