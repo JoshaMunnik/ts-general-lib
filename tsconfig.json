@@ -2,12 +2,19 @@
   "compilerOptions": {
     "module": "NodeNext",
     "target": "es6",
-    "strict": true,
     "declaration": true,
     "sourceMap": true,
     "outDir": "./dist",
     "moduleResolution": "NodeNext",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true
   },
   "exclude": [
     "tests",
