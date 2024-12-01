@@ -296,4 +296,18 @@ export declare class UFObject {
      *   using this name. The method will call all functions with aTarget as function scope.
      */
     static callMethods(aTarget: any, aFunctions: any[], aMethodName?: string): void;
+    /**
+     * Checks if an object is an instance of a class. If anObject is not an object, the method will
+     * return false.
+     *
+     * The method will also return false if instanceOf fails with an exception.
+     *
+     * @param anObject
+     *   Object to check
+     * @param aClass
+     *   Class to check
+     *
+     * @return True if anObject is an instance of aClass; in all other cases false.
+     */
+    static instanceOf(anObject: any, aClass: any): boolean;
 }
