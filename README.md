@@ -15,3 +15,8 @@ The code in this repository does not depend on any other libraries.
 ## Documentation
 
 To view the generated documentation, visit: https://joshamunnik.github.io/ts-general-lib/
+
+## Version history
+
+1.0.25
+- added `removeKey` to `UFMapOfSet` class

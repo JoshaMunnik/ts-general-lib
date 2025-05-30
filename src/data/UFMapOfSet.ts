@@ -51,32 +51,32 @@ export class UFMapOfSet<TKey, TValue> {
   /**
    * Adds a value to the group for a key. If the value is already available in the group, nothing changes.
    *
-   * @param aKey
+   * @param key
    *   Key to add for
-   * @param aValue
+   * @param value
    *   Value to add to the group of aKey
    */
-  add(aKey: TKey, aValue: TValue): void {
-    if (!this.m_map.has(aKey)) {
-      this.m_map.set(aKey, new Set<TValue>());
+  add(key: TKey, value: TValue): void {
+    if (!this.m_map.has(key)) {
+      this.m_map.set(key, new Set<TValue>());
     }
-    this.m_map.get(aKey)!.add(aValue);
+    this.m_map.get(key)!.add(value);
   }
 
   /**
    * Removes a value from the group for a key.
    *
-   * @param aKey
+   * @param key
    *   Key to remove for
-   * @param aValue
-   *   Value to remove from the group of aKey
+   * @param value
+   *   Value to remove from the group of key
    */
-  remove(aKey: TKey, aValue: TValue): void {
-    if (this.m_map.has(aKey)) {
-      const set = this.m_map.get(aKey)!;
-      set.delete(aValue);
+  remove(key: TKey, value: TValue): void {
+    if (this.m_map.has(key)) {
+      const set = this.m_map.get(key)!;
+      set.delete(value);
       if (set.size === 0) {
-        this.m_map.delete(aKey);
+        this.m_map.delete(key);
       }
     }
   }
@@ -84,13 +84,24 @@ export class UFMapOfSet<TKey, TValue> {
   /**
    * Searches for a key that contains the value and remove it.
    *
-   * @param aValue
+   * @param value
    *   Value to remove
    */
-  removeValue(aValue: TValue): void {
-    const key = this.findKey(aValue);
+  removeValue(value: TValue): void {
+    const key = this.findKey(value);
     if (key) {
-      this.remove(key, aValue);
+      this.remove(key, value);
+    }
+  }
+
+  /**
+   * Removes a key and all values related to it.
+   *
+   * @param key
+   */
+  removeKey(key: TKey): void {
+    if (this.m_map.has(key)) {
+      this.m_map.delete(key);
     }
   }
 
@@ -104,14 +115,14 @@ export class UFMapOfSet<TKey, TValue> {
   /**
    * Gets all values stored for a certain key.
    *
-   * @param aKey
+   * @param key
    *   Key to get values for
    *
    * @returns all values for the key or an empty array if the key does not exist.
    */
-  get(aKey: TKey): TValue[] {
-    if (this.m_map.has(aKey)) {
-      const set = this.m_map.get(aKey)!;
+  get(key: TKey): TValue[] {
+    if (this.m_map.has(key)) {
+      const set = this.m_map.get(key)!;
       return Array.from(set);
     }
     return [];
@@ -129,27 +140,27 @@ export class UFMapOfSet<TKey, TValue> {
   /**
    * Checks if the map has a certain key.
    *
-   * @param aKey
+   * @param key
    *   Key to check
    *
    * @returns true if the map contains the key.
    */
-  has(aKey: TKey): boolean {
-    return this.m_map.has(aKey);
+  has(key: TKey): boolean {
+    return this.m_map.has(key);
   }
 
   /**
    * Checks if the instance has a certain value for a certain key.
    *
-   * @param aKey
+   * @param key
    *   Key to check
-   * @param aValue
+   * @param value
    *   Value to check
    *
    * @returns true if the map contains the key and value.
    */
-  hasValue(aKey: TKey, aValue: TValue): boolean {
-    return this.m_map.has(aKey) && (this.m_map.get(aKey)!).has(aValue);
+  hasValue(key: TKey, value: TValue): boolean {
+    return this.m_map.has(key) && (this.m_map.get(key)!).has(value);
   }
 
   /**
@@ -164,14 +175,14 @@ export class UFMapOfSet<TKey, TValue> {
   /**
    * Tries to the first key the value has been stored for.
    *
-   * @param aValue
+   * @param value
    *   Value to find key
    *
    * @returns the key or null if no key could be found.
    */
-  findKey(aValue: TValue): TKey | null {
+  findKey(value: TValue): TKey | null {
     for(const key of this.m_map.keys()) {
-      if (this.hasValue(key, aValue)) {
+      if (this.hasValue(key, value)) {
         return key;
       }
     }

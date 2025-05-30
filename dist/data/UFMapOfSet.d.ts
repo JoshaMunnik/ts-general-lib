@@ -41,28 +41,34 @@ export declare class UFMapOfSet<TKey, TValue> {
     /**
      * Adds a value to the group for a key. If the value is already available in the group, nothing changes.
      *
-     * @param aKey
+     * @param key
      *   Key to add for
-     * @param aValue
+     * @param value
      *   Value to add to the group of aKey
      */
-    add(aKey: TKey, aValue: TValue): void;
+    add(key: TKey, value: TValue): void;
     /**
      * Removes a value from the group for a key.
      *
-     * @param aKey
+     * @param key
      *   Key to remove for
-     * @param aValue
-     *   Value to remove from the group of aKey
+     * @param value
+     *   Value to remove from the group of key
      */
-    remove(aKey: TKey, aValue: TValue): void;
+    remove(key: TKey, value: TValue): void;
     /**
      * Searches for a key that contains the value and remove it.
      *
-     * @param aValue
+     * @param value
      *   Value to remove
      */
-    removeValue(aValue: TValue): void;
+    removeValue(value: TValue): void;
+    /**
+     * Removes a key and all values related to it.
+     *
+     * @param key
+     */
+    removeKey(key: TKey): void;
     /**
      * Clears the map and removes all keys and related sets.
      */
@@ -70,12 +76,12 @@ export declare class UFMapOfSet<TKey, TValue> {
     /**
      * Gets all values stored for a certain key.
      *
-     * @param aKey
+     * @param key
      *   Key to get values for
      *
      * @returns all values for the key or an empty array if the key does not exist.
      */
-    get(aKey: TKey): TValue[];
+    get(key: TKey): TValue[];
     /**
      * Gets all keys stored.
      *
@@ -85,23 +91,23 @@ export declare class UFMapOfSet<TKey, TValue> {
     /**
      * Checks if the map has a certain key.
      *
-     * @param aKey
+     * @param key
      *   Key to check
      *
      * @returns true if the map contains the key.
      */
-    has(aKey: TKey): boolean;
+    has(key: TKey): boolean;
     /**
      * Checks if the instance has a certain value for a certain key.
      *
-     * @param aKey
+     * @param key
      *   Key to check
-     * @param aValue
+     * @param value
      *   Value to check
      *
      * @returns true if the map contains the key and value.
      */
-    hasValue(aKey: TKey, aValue: TValue): boolean;
+    hasValue(key: TKey, value: TValue): boolean;
     /**
      * Checks if the map contains any sets.
      *
@@ -111,12 +117,12 @@ export declare class UFMapOfSet<TKey, TValue> {
     /**
      * Tries to the first key the value has been stored for.
      *
-     * @param aValue
+     * @param value
      *   Value to find key
      *
      * @returns the key or null if no key could be found.
      */
-    findKey(aValue: TValue): TKey | null;
+    findKey(value: TValue): TKey | null;
     /**
      * Gets the number of key entries.
      */
