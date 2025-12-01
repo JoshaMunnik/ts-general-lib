@@ -107,16 +107,16 @@ export class UFParallelQueueAction extends UFQueueableAction {
    * Constructs an instance of {@link UFParallelQueueAction} that will run a certain number of {@link UFQueueableAction}
    * at the same time.
    *
-   * @param aConcurrentCount
+   * @param concurrentCount
    *   Maximum number of actions that should run at the same time.
-   * @param anActions
+   * @param actions
    *   One or more actions to run
    */
-  constructor(aConcurrentCount: number, ...anActions: IUFQueueableAction[]) {
+  constructor(concurrentCount: number, ...actions: IUFQueueableAction[]) {
     super();
-    this.m_actions = anActions;
-    this.m_concurrentCount = aConcurrentCount;
-    this.m_totalProgressWeight = anActions.reduce(
+    this.m_actions = actions;
+    this.m_concurrentCount = concurrentCount;
+    this.m_totalProgressWeight = actions.reduce(
       (previous, current) => previous + UFProgressTools.getProgressWeight(current),
       0
     );
@@ -127,21 +127,21 @@ export class UFParallelQueueAction extends UFQueueableAction {
    *
    * If the queue is already running, the method just returns true.
    *
-   * @param aToken
+   * @param token
    *   Token that can be cancelled to stop running.
    *
    * @return true if all actions run successful; false if one of the actions returned false or the token was cancelled.
    *
    * @throws an error if one or more actions threw an error.
    */
-  public async run(aToken: IUFCancellationToken): Promise<boolean> {
+  public async run(token: IUFCancellationToken): Promise<boolean> {
     if (this.running) {
       return true;
     }
     this.m_doneProgressWeight = 0.0;
     this.m_actionIndex = 0;
     this.m_errorMessage = '';
-    const tokenSource = new UFCancellationTokenSource(aToken);
+    const tokenSource = new UFCancellationTokenSource(token);
     await this.runActions(tokenSource);
     // success if no task did cancel or threw an exception
     const result: boolean = !tokenSource.isCancellationRequested;
@@ -204,18 +204,18 @@ export class UFParallelQueueAction extends UFQueueableAction {
   /**
    * Starts running actions until all actions have finished running or the token is requesting cancellation.
    *
-   * @param aTokenSource
+   * @param tokenSource
    *   Will be cancelled if an action returned false or generated an error.
    *
    * @private
    */
-  private async runActions(aTokenSource: UFCancellationTokenSource): Promise<void> {
+  private async runActions(tokenSource: UFCancellationTokenSource): Promise<void> {
     // keep looping if there are actions that still can be added or if there are any active actions still running
     while (
-      (!aTokenSource.isCancellationRequested && (this.m_actionIndex < this.m_actions.length)) ||
+      (!tokenSource.isCancellationRequested && (this.m_actionIndex < this.m_actions.length)) ||
       (this.m_activePromises.size > 0)
       ) {
-      this.addPromises(aTokenSource);
+      this.addPromises(tokenSource);
       await this.waitForPromiseToFinish();
     }
   }
@@ -235,16 +235,16 @@ export class UFParallelQueueAction extends UFQueueableAction {
    * Keep adding promises from {@link runAction} to the active list until the concurrent maximum is reached or there are
    * no more actions or the token is requesting a cancellation.
    *
-   * @param aTokenSource
+   * @param tokenSource
    */
-  private addPromises(aTokenSource: UFCancellationTokenSource) {
+  private addPromises(tokenSource: UFCancellationTokenSource) {
     while (
-      !aTokenSource.isCancellationRequested
+      !tokenSource.isCancellationRequested
       && (this.m_actionIndex < this.m_actions.length)
       && (this.m_activePromises.size < this.m_concurrentCount)
       ) {
       this.m_activePromises.set(
-        this.m_actionIndex, this.runAction(this.m_actionIndex, aTokenSource)
+        this.m_actionIndex, this.runAction(this.m_actionIndex, tokenSource)
       );
       this.m_actionIndex++;
     }
@@ -255,20 +255,20 @@ export class UFParallelQueueAction extends UFQueueableAction {
    *
    * The returned promise will always resolve and never reject.
    *
-   * @param anIndex
+   * @param index
    *   Index to running action
-   * @param aTokenSource
+   * @param tokenSource
    *   Token source that will be cancelled if an error occurred or action returned false.
    *
    * @return a promise that will return the index of the action (same value as anIndex)
    *
    * @private
    */
-  private async runAction(anIndex: number, aTokenSource: UFCancellationTokenSource): Promise<number> {
-    const action = this.m_actions[anIndex];
+  private async runAction(index: number, tokenSource: UFCancellationTokenSource): Promise<number> {
+    const action = this.m_actions[index];
     let actionResult: boolean;
     try {
-      actionResult = await action.run(aTokenSource.token);
+      actionResult = await action.run(tokenSource.token);
     } catch (error: any) {
       // an error results in a running failure
       actionResult = false;
@@ -276,12 +276,12 @@ export class UFParallelQueueAction extends UFQueueableAction {
     }
     // request cancellation if the action did not run successful
     if (!actionResult) {
-      aTokenSource.cancel();
+      tokenSource.cancel();
     }
     else {
       this.m_doneProgressWeight += UFProgressTools.getProgressWeight(action);
     }
-    return anIndex;
+    return index;
   }
 
   // endregion

@@ -106,112 +106,112 @@ export declare class UFService {
      * Registers a service that is created using a factory function. The service is created
      * by invoking the factory function injecting the dependent types.
      *
-     * @param aName
+     * @param name
      *   Name of service
-     * @param aFactory
+     * @param factory
      *   Factory function that creates the service.
-     * @param aServices
+     * @param services
      *   Name of other services that should be resolved an injected into the factory function.
      *   The order of the service names is the order in which they are injected.
      */
-    static registerFactory(aName: string, aFactory: (...args: any[]) => object, aServices?: string[]): void;
+    static registerFactory(name: string, factory: (...args: any[]) => object, services?: string[]): void;
     /**
      * Registers a service that is created using a factory function. The first time the service is
      * requested, it is created by invoking the factory function injecting the dependent types.
      *
      * Subsequent requests for the service will return the same instance.
      *
-     * @param aName
+     * @param name
      *   Name of service
-     * @param aFactory
+     * @param factory
      *   Factory function that creates the service.
-     * @param aServices
+     * @param services
      *   Name of other services that should be resolved an injected into the factory function.
      *   The order of the service names is the order in which they are injected.
      */
-    static registerSingletonFactory(aName: string, aFactory: (...args: any[]) => object, aServices?: string[]): void;
+    static registerSingletonFactory(name: string, factory: (...args: any[]) => object, services?: string[]): void;
     /**
      * Registers a service that is an instance of some class. The service is created by
      * using new on the constructor function injecting the dependent types.
      *
-     * @param aName
+     * @param name
      *   Name of service
-     * @param aConstructor
+     * @param constructor
      *   Constructor function that creates the service.
-     * @param aServices
+     * @param services
      *   Name of other services that should be resolved an injected into the constructor function.
      *   The order of the service names is the order in which they are injected.
      */
-    static registerConstructor(aName: string, aConstructor: new (...args: any[]) => object, aServices?: string[]): void;
+    static registerConstructor(name: string, constructor: new (...args: any[]) => object, services?: string[]): void;
     /**
      * Registers a service that is an instance of some class. The first time the service is requested,
      * it is created by using new on the constructor function injecting the dependent types.
      *
      * Subsequent requests for the service will return the same instance.
      *
-     * @param aName
+     * @param name
      *   Name of service
-     * @param aConstructor
+     * @param constructor
      *   Constructor function that creates the service.
-     * @param aServices
+     * @param services
      *   Name of other services that should be resolved an injected into the constructor function.
      *   The order of the service names is the order in which they are injected.
      */
-    static registerSingletonConstructor(aName: string, aConstructor: new (...args: any[]) => object, aServices?: string[]): void;
+    static registerSingletonConstructor(name: string, constructor: new (...args: any[]) => object, services?: string[]): void;
     /**
      * Registers a service that is already created.
      *
-     * @param {string} aName
+     * @param {string} name
      *   Name of service
-     * @param anObject
+     * @param objectValue
      *   Object that wil be returned when the service is requested.
      */
-    static registerStatic(aName: string, anObject: object): void;
+    static registerStatic(name: string, objectValue: object): void;
     /**
      * Checks if a service of certain name exists.
      *
-     * @param aName
+     * @param name
      *   Name of service
      *
      * @returns True if there is a service.
      */
-    static has(aName: string): boolean;
+    static has(name: string): boolean;
     /**
      * Gets a service instance for a certain service.
      *
-     * @param aName
+     * @param name
      *   Service name
      *
      * @returns an instance implementing the service.
      */
-    static getInstance<T extends object>(aName: string): T;
+    static getInstance<T extends object>(name: string): T;
     /**
      * Calls a function injecting service instances / factories as arguments.
      *
-     * @param aFunction
+     * @param functionValue
      *   Function to call
-     * @param aServices
+     * @param services
      *   Services to inject.
      * @returns Result from function call
      *
      */
-    static call<T>(aFunction: (...args: any[]) => T, aServices: string[]): T;
+    static call<T>(functionValue: (...args: any[]) => T, services: string[]): T;
     /**
      * Constructs a class (via new) by injecting service instances / factories into the
      * constructor function.
      *
-     * @param aConstructor
+     * @param constructor
      *   Constructor function
-     * @param aServices
+     * @param services
      *   Services to inject.
      *
      * @returns instance of class defined by aConstructor
      */
-    static construct<T extends object>(aConstructor: new (...args: any[]) => T, aServices: string[]): T;
+    static construct<T extends object>(constructor: new (...args: any[]) => T, services: string[]): T;
     /**
      * Checks if a service of certain name exists. If not, an error is thrown.
      *
-     * @param aName
+     * @param name
      *   Name of service to check
      *
      * @throws Error if service does not exist.
@@ -224,7 +224,7 @@ export declare class UFService {
      *
      * @private
      *
-     * @param aServices
+     * @param services
      *   A list of service names. If '()' is added to a name, return a factory for that entry.
      *
      * @returns A list of service instances and factories, the same order as the aServices list.
@@ -235,7 +235,7 @@ export declare class UFService {
      *
      * @private
      *
-     * @param aName
+     * @param name
      *   Name of service
      *
      * @returns a function that creates an instance of the service.

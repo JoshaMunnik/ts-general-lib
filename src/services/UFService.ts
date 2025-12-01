@@ -154,26 +154,26 @@ export class UFService {
    * Registers a service that is created using a factory function. The service is created
    * by invoking the factory function injecting the dependent types.
    *
-   * @param aName
+   * @param name
    *   Name of service
-   * @param aFactory
+   * @param factory
    *   Factory function that creates the service.
-   * @param aServices
+   * @param services
    *   Name of other services that should be resolved an injected into the factory function.
    *   The order of the service names is the order in which they are injected.
    */
   static registerFactory(
-    aName: string,
-    aFactory: (...args: any[]) => object,
-    aServices: string[] = []
+    name: string,
+    factory: (...args: any[]) => object,
+    services: string[] = []
   ) {
-    UFService.s_services.set(aName, {
+    UFService.s_services.set(name, {
       type: ServiceProviderType.Factory,
-      factoryProvider: aFactory,
+      factoryProvider: factory,
       constructorProvider: null,
       staticProvider: null,
       instance: null,
-      services: aServices,
+      services: services,
       factory: null
     });
   }
@@ -184,26 +184,26 @@ export class UFService {
    *
    * Subsequent requests for the service will return the same instance.
    *
-   * @param aName
+   * @param name
    *   Name of service
-   * @param aFactory
+   * @param factory
    *   Factory function that creates the service.
-   * @param aServices
+   * @param services
    *   Name of other services that should be resolved an injected into the factory function.
    *   The order of the service names is the order in which they are injected.
    */
   static registerSingletonFactory(
-    aName: string,
-    aFactory: (...args: any[]) => object,
-    aServices: string[] = []
+    name: string,
+    factory: (...args: any[]) => object,
+    services: string[] = []
   ) {
-    UFService.s_services.set(aName, {
+    UFService.s_services.set(name, {
       type: ServiceProviderType.SingletonFactory,
-      factoryProvider: aFactory,
+      factoryProvider: factory,
       constructorProvider: null,
       staticProvider: null,
       instance: null,
-      services: aServices,
+      services: services,
       factory: null
     });
   }
@@ -212,26 +212,26 @@ export class UFService {
    * Registers a service that is an instance of some class. The service is created by
    * using new on the constructor function injecting the dependent types.
    *
-   * @param aName
+   * @param name
    *   Name of service
-   * @param aConstructor
+   * @param constructor
    *   Constructor function that creates the service.
-   * @param aServices
+   * @param services
    *   Name of other services that should be resolved an injected into the constructor function.
    *   The order of the service names is the order in which they are injected.
    */
   static registerConstructor(
-    aName: string,
-    aConstructor: new (...args: any[]) => object,
-    aServices: string[] = []
+    name: string,
+    constructor: new (...args: any[]) => object,
+    services: string[] = []
   ) {
-    UFService.s_services.set(aName, {
+    UFService.s_services.set(name, {
       type: ServiceProviderType.Constructor,
       factoryProvider: null,
-      constructorProvider: aConstructor,
+      constructorProvider: constructor,
       staticProvider: null,
       instance: null,
-      services: aServices,
+      services: services,
       factory: null
     });
   }
@@ -242,26 +242,26 @@ export class UFService {
    *
    * Subsequent requests for the service will return the same instance.
    *
-   * @param aName
+   * @param name
    *   Name of service
-   * @param aConstructor
+   * @param constructor
    *   Constructor function that creates the service.
-   * @param aServices
+   * @param services
    *   Name of other services that should be resolved an injected into the constructor function.
    *   The order of the service names is the order in which they are injected.
    */
   static registerSingletonConstructor(
-    aName: string,
-    aConstructor: new (...args: any[]) => object,
-    aServices: string[] = []
+    name: string,
+    constructor: new (...args: any[]) => object,
+    services: string[] = []
   ) {
-    UFService.s_services.set(aName, {
+    UFService.s_services.set(name, {
       type: ServiceProviderType.SingletonConstructor,
       factoryProvider: null,
-      constructorProvider: aConstructor,
+      constructorProvider: constructor,
       staticProvider: null,
       instance: null,
-      services: aServices,
+      services: services,
       factory: null
     });
   }
@@ -269,17 +269,17 @@ export class UFService {
   /**
    * Registers a service that is already created.
    *
-   * @param {string} aName
+   * @param {string} name
    *   Name of service
-   * @param anObject
+   * @param objectValue
    *   Object that wil be returned when the service is requested.
    */
-  static registerStatic(aName: string, anObject: object) {
-    UFService.s_services.set(aName, {
+  static registerStatic(name: string, objectValue: object) {
+    UFService.s_services.set(name, {
       type: ServiceProviderType.Static,
       factoryProvider: null,
       constructorProvider: null,
-      staticProvider: anObject,
+      staticProvider: objectValue,
       instance: null,
       services: [],
       factory: null
@@ -289,26 +289,26 @@ export class UFService {
   /**
    * Checks if a service of certain name exists.
    *
-   * @param aName
+   * @param name
    *   Name of service
    *
    * @returns True if there is a service.
    */
-  static has(aName: string): boolean {
-    return UFService.s_services.has(aName);
+  static has(name: string): boolean {
+    return UFService.s_services.has(name);
   }
 
   /**
    * Gets a service instance for a certain service.
    *
-   * @param aName
+   * @param name
    *   Service name
    *
    * @returns an instance implementing the service.
    */
-  static getInstance<T extends object>(aName: string): T {
-    UFService.validateService(aName);
-    const service = UFService.s_services.get(aName)!;
+  static getInstance<T extends object>(name: string): T {
+    UFService.validateService(name);
+    const service = UFService.s_services.get(name)!;
     switch (service.type) {
       case ServiceProviderType.Constructor:
         return new service.constructorProvider!(
@@ -340,32 +340,32 @@ export class UFService {
   /**
    * Calls a function injecting service instances / factories as arguments.
    *
-   * @param aFunction
+   * @param functionValue
    *   Function to call
-   * @param aServices
+   * @param services
    *   Services to inject.
    * @returns Result from function call
    *
    */
-  static call<T>(aFunction: (...args: any[]) => T, aServices: string[]): T {
-    return aFunction(...UFService.getServiceInstancesFromNames(aServices));
+  static call<T>(functionValue: (...args: any[]) => T, services: string[]): T {
+    return functionValue(...UFService.getServiceInstancesFromNames(services));
   }
 
   /**
    * Constructs a class (via new) by injecting service instances / factories into the
    * constructor function.
    *
-   * @param aConstructor
+   * @param constructor
    *   Constructor function
-   * @param aServices
+   * @param services
    *   Services to inject.
    *
    * @returns instance of class defined by aConstructor
    */
   static construct<T extends object>(
-    aConstructor: new (...args: any[]) => T, aServices: string[]
+    constructor: new (...args: any[]) => T, services: string[]
   ): T {
-    return new aConstructor(...UFService.getServiceInstancesFromNames(aServices));
+    return new constructor(...UFService.getServiceInstancesFromNames(services));
   }
 
   // endregion
@@ -375,16 +375,16 @@ export class UFService {
   /**
    * Checks if a service of certain name exists. If not, an error is thrown.
    *
-   * @param aName
+   * @param name
    *   Name of service to check
    *
    * @throws Error if service does not exist.
    *
    * @private
    */
-  private static validateService(aName: string) {
-    if (!UFService.has(aName)) {
-      throw new Error(`Can not find service: ${aName}`);
+  private static validateService(name: string) {
+    if (!UFService.has(name)) {
+      throw new Error(`Can not find service: ${name}`);
     }
   }
 
@@ -393,13 +393,13 @@ export class UFService {
    *
    * @private
    *
-   * @param aServices
+   * @param services
    *   A list of service names. If '()' is added to a name, return a factory for that entry.
    *
    * @returns A list of service instances and factories, the same order as the aServices list.
    */
-  private static getServiceInstancesFromNames(aServices: string[]): (object | (() => object))[] {
-    return aServices.map(
+  private static getServiceInstancesFromNames(services: string[]): (object | (() => object))[] {
+    return services.map(
       service => service.endsWith('()')
         ? UFService.getServiceFactory(service.slice(0, -2))
         : UFService.getInstance(service)
@@ -411,16 +411,16 @@ export class UFService {
    *
    * @private
    *
-   * @param aName
+   * @param name
    *   Name of service
    *
    * @returns a function that creates an instance of the service.
    */
-  private static getServiceFactory(aName: string): () => object {
-    UFService.validateService(aName);
-    const service = UFService.s_services.get(aName)!;
+  private static getServiceFactory(name: string): () => object {
+    UFService.validateService(name);
+    const service = UFService.s_services.get(name)!;
     if (!service.factory) {
-      service.factory = () => UFService.getInstance(aName);
+      service.factory = () => UFService.getInstance(name);
     }
     return service.factory;
   }

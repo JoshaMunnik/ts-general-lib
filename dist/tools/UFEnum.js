@@ -44,13 +44,13 @@ export class UFEnum {
      * Code based on answer:
      * https://stackoverflow.com/a/72284659/968451
      *
-     * @param anEnum
+     * @param enumType
      *   Enum using values mapped to a number.
      *
      * @return a tuple of two numbers, the first is the minimum and the second the maximum
      */
-    static getMinMax(anEnum) {
-        const values = Object.keys(anEnum).map(key => key === "" ? NaN : +key).filter(key => !isNaN(key));
+    static getMinMax(enumType) {
+        const values = Object.keys(enumType).map(key => key === "" ? NaN : +key).filter(key => !isNaN(key));
         return [Math.min(...values), Math.max(...values)];
     }
 }

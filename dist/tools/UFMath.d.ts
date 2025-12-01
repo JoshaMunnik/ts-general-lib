@@ -55,180 +55,180 @@ export declare class UFMath {
     /**
      * Convert angle to radians, use angleUnit to determine unit of input parameter.
      *
-     * @param anAngle
+     * @param angle
      *   Angle to convert
      *
      * @returns Converted angle.
      */
-    static toRadians(anAngle: number): number;
+    static toRadians(angle: number): number;
     /**
      * Convert angle from radians to unit as specified by m_angleUnit
      *
-     * @param anAngle
+     * @param angle
      *   Angle to convert
      *
      * @returns Converted angle.
      */
-    static fromRadians(anAngle: number): number;
+    static fromRadians(angle: number): number;
     /**
      * Rotates a 2D coordinate around a certain point.
      *
-     * @param anAngle
+     * @param angle
      *   Angle
-     * @param aX
+     * @param x
      *   X coordinate of point to rotate
-     * @param aY
+     * @param y
      *   Y coordinate of point to rotate
-     * @param anOriginX
+     * @param originX
      *   X coordinate of point to rotate around
-     * @param anOriginY
+     * @param originY
      *   Y coordinate of point to rotate around
      *
      * @returns {{x,y}} An object with x and y property.
      */
-    static rotate(anAngle: number, aX: number, aY: number, anOriginX?: number, anOriginY?: number): {
+    static rotate(angle: number, x: number, y: number, originX?: number, originY?: number): {
         x: number;
         y: number;
     };
     /**
      * Calculates the angle between two points
      *
-     * @param aX1
+     * @param x1
      *  First X coordinate of point
-     * @param aY1
+     * @param y1
      *  First Y coordinate of point
-     * @param aX2
+     * @param x2
      *  Second X coordinate of point
-     * @param aY2
+     * @param y2
      *  Second Y coordinate of point
      *
      * @returns Angle in degrees (0..360)
      */
-    static angle(aX1: number, aY1: number, aX2: number, aY2: number): number;
+    static angle(x1: number, y1: number, x2: number, y2: number): number;
     /**
      * Calculates distance between two points.
      *
-     * @param aX1
+     * @param x1
      *  First X coordinate of point
-     * @param aY1
+     * @param y1
      *  First Y coordinate of point
-     * @param aX2
+     * @param x2
      *  Second X coordinate of point
-     * @param aY2
+     * @param y2
      *  Second Y coordinate of point
      *
      * @returns Distance between two points
      */
-    static distance(aX1: number, aY1: number, aX2: number, aY2: number): number;
+    static distance(x1: number, y1: number, x2: number, y2: number): number;
     /**
      * Returns a random integer.
      *
-     * @param aMinOrMax
+     * @param minOrMaxValue
      *   Minimal or maximum value (if aMax is not specified)
-     * @param aMax
+     * @param maxValue
      *   Maximal value
      *
      * @return {number} random integer between aMin and aMax (inclusive)
      */
-    static randomInteger(aMinOrMax: number, aMax?: number): number;
+    static randomInteger(minOrMaxValue: number, maxValue?: number): number;
     /**
      * Increases or decreases value, so it gets nearer to a target value.
      *
-     * @param aTarget
+     * @param target
      *   Value to reach
-     * @param aCurrent
+     * @param current
      *   Current value
-     * @param aStepSize
+     * @param stepSize
      *   Value to move with
      *
      * @returns aCurrent +/- aStep or aTarget if aCurrent was closer to aTarget then aStep distance
      */
-    static moveTo(aTarget: number, aCurrent: number, aStepSize: number): number;
+    static moveTo(target: number, current: number, stepSize: number): number;
     /**
      * Calculates a position based on movement over time. The method makes sure the returned value is between the
      * specified target and starting values.
      *
-     * @param aTarget
+     * @param target
      *   Target to move to
-     * @param aStart
+     * @param start
      *   Starting position moving from
-     * @param aCurrentTime
+     * @param currentTime
      *   Current time
-     * @param aTotalTime
+     * @param totalTime
      *   Total time movement should take place
      * @returns value between aStart and aTarget (both inclusive)
      */
-    static moveOverTime(aTarget: number, aStart: number, aCurrentTime: number, aTotalTime: number): number;
+    static moveOverTime(target: number, start: number, currentTime: number, totalTime: number): number;
     /**
      * Makes sure a value is within a range.
      *
-     * @param aMin
+     * @param minValue
      *   Minimum value
-     * @param aMax
+     * @param maxValue
      *   Maximum value
-     * @param aValue
+     * @param value
      *   Value to test
      *
      * @returns aValue if it is within range or aMin or aMax
      */
-    static minmax(aMin: number, aMax: number, aValue: number): number;
+    static minmax(minValue: number, maxValue: number, value: number): number;
     /**
      * Checks if two rectangles overlap.
      *
-     * @param aX0
+     * @param x0
      *   Left of first rectangle
-     * @param aY0
+     * @param y0
      *   Left of first rectangle
-     * @param aWidth0
+     * @param width0
      *   Left of first rectangle
-     * @param anHeight0
+     * @param height0
      *   Left of first rectangle
-     * @param aX1
+     * @param x1
      *   Left of second rectangle
-     * @param aY1
+     * @param y1
      *   Left of second rectangle
-     * @param aWidth1
+     * @param width1
      *   Left of second rectangle
-     * @param anHeight1
+     * @param height1
      *   Left of second rectangle
      *
      * @returns {boolean} True if two rectangles overlap
      */
-    static isOverlapping(aX0: number, aY0: number, aWidth0: number, anHeight0: number, aX1: number, aY1: number, aWidth1: number, anHeight1: number): boolean;
+    static isOverlapping(x0: number, y0: number, width0: number, height0: number, x1: number, y1: number, width1: number, height1: number): boolean;
     /**
      * Checks if a value is a number.
      *
      * Copy from:
      * https://github.com/ReactiveX/rxjs/blob/master/src/internal/util/isNumeric.ts
      *
-     * @param aValue
+     * @param value
      *   Value to check
      *
      * @returns true if value is a valid, otherwise false
      */
-    static isNumeric(aValue: any): aValue is number | string;
+    static isNumeric(value: any): value is number | string;
     /**
      * Checks if a value is a valid number, if not return a default value instead.
      *
-     * @param aValue
+     * @param value
      *   Value to check
-     * @param aDefault
+     * @param defaultNumber
      *   Default value to use if aValue is not a valid number
      *
      * @returns either aValue as a number or aDefault
      */
-    static getNumber(aValue: any, aDefault: number): number;
+    static getNumber(value: any, defaultNumber: number): number;
     /**
      * Performs a logical xor on two values.
      *
      * Reference: {@link http://www.howtocreate.co.uk/xor.html}
      *
-     * @param aValue0
+     * @param value0
      *   First value
-     * @param aValue1
+     * @param value1
      *   Second value
      * @returns `True` if either aValue0 or aValue1 evaluates to a truthy but not both;
      *   otherwise `false` if both values evaluate to a truthy or falsy.
      */
-    static xor(aValue0: any, aValue1: any): boolean;
+    static xor(value0: any, value1: any): boolean;
 }

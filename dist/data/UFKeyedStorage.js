@@ -37,124 +37,124 @@ export class UFKeyedStorage {
      * Stores an object in the storage. The default implementation uses JSON.stringify and calls
      * {@link setString} to store the object as string.
      *
-     * @param aKey
+     * @param key
      *   Key to store object for
-     * @param aValue
+     * @param value
      *   Object to store
      */
-    setObject(aKey, aValue) {
-        this.setString(aKey, JSON.stringify(aValue));
+    setObject(key, value) {
+        this.setString(key, JSON.stringify(value));
     }
     /**
      * Retrieves an object from storage. The default implementation gets a string using {@link getString} and uses
      * JSON.parse to convert a string back to an object.
      *
-     * @param aKey
+     * @param key
      *   Key to retrieve object for
-     * @param aDefault
+     * @param defaultValue
      *   Default value to use
      *
      * @returns parsed object or aDefault if there is no item or an exception occurred while parsing the string.
      */
-    getObject(aKey, aDefault) {
+    getObject(key, defaultValue) {
         try {
-            return this.has(aKey) ? JSON.parse(this.getString(aKey, "")) : aDefault;
+            return this.has(key) ? JSON.parse(this.getString(key, "")) : defaultValue;
         }
         catch (error) {
-            return aDefault;
+            return defaultValue;
         }
     }
     /**
      * Stores a number in the storage. The default implementation converts the value to a string and stores it as a
      * string.
      *
-     * @param aKey
+     * @param key
      *   Key to store number for
-     * @param aValue
+     * @param value
      *   number to store
      */
-    setNumber(aKey, aValue) {
-        this.setString(aKey, '' + aValue);
+    setNumber(key, value) {
+        this.setString(key, '' + value);
     }
     /**
      * Retrieves a number from storage. The default implementation gets the value as string and uses parseFloat to
      * convert it back to a number.
      *
-     * @param aKey
+     * @param key
      *   Key to get value for
-     * @param aDefault
+     * @param defaultValue
      *   Default value to use
      *
      * @returns parsed number or aDefault if there is no item or parsing resulted in a NaN value.
      */
-    getNumber(aKey, aDefault) {
-        if (this.has(aKey)) {
-            const result = parseFloat(this.getString(aKey, ""));
-            return isNaN(result) ? aDefault : result;
+    getNumber(key, defaultValue) {
+        if (this.has(key)) {
+            const result = parseFloat(this.getString(key, ""));
+            return isNaN(result) ? defaultValue : result;
         }
         else {
-            return aDefault;
+            return defaultValue;
         }
     }
     /**
      * Stores an integer in the storage. The default implementation converts the value to a string and stores it as
      * a string.
      *
-     * @param aKey
+     * @param key
      *   Key to store integer for
-     * @param aValue
+     * @param value
      *   Integer to store
      */
-    setInteger(aKey, aValue) {
-        this.setString(aKey, '' + aValue);
+    setInteger(key, value) {
+        this.setString(key, '' + value);
     }
     /**
      * Retrieves a integer from storage. The default implementation gets the value as string and uses parseInt to convert
      * it back to an integer.
      *
-     * @param aKey
+     * @param key
      *   Key to get integer for
-     * @param aDefault
+     * @param defaultValue
      *   Default value to use
      *
      * @returns parsed integer or aDefault if there is no item or parsing resulted in a NaN value.
      */
-    getInteger(aKey, aDefault) {
-        if (this.has(aKey)) {
-            const result = parseInt(this.getString(aKey, ""), 10);
-            return isNaN(result) ? aDefault : result;
+    getInteger(key, defaultValue) {
+        if (this.has(key)) {
+            const result = parseInt(this.getString(key, ""), 10);
+            return isNaN(result) ? defaultValue : result;
         }
         else {
-            return aDefault;
+            return defaultValue;
         }
     }
     /**
      * Stores a boolean in the storage. The default implementation stores either '1' or '0'.
      *
-     * @param aKey
+     * @param key
      *   Key to store boolean for
-     * @param aValue
+     * @param value
      *   Boolean to store
      */
-    setBoolean(aKey, aValue) {
-        this.setString(aKey, aValue ? '1' : '0');
+    setBoolean(key, value) {
+        this.setString(key, value ? '1' : '0');
     }
     /**
      * Retrieves a boolean from storage. The default implementation gets the value as string and checks if it equals '1'
      *
-     * @param aKey
+     * @param key
      *   Key to get value for
-     * @param aDefault
+     * @param defaultValue
      *   Default value to use
      *
      * @returns stored value is '1' or aDefault if there is no item
      */
-    getBoolean(aKey, aDefault) {
-        if (this.has(aKey)) {
-            return this.getString(aKey, '') === '1';
+    getBoolean(key, defaultValue) {
+        if (this.has(key)) {
+            return this.getString(key, '') === '1';
         }
         else {
-            return aDefault;
+            return defaultValue;
         }
     }
 }

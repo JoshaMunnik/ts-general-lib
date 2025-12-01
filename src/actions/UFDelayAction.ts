@@ -62,12 +62,12 @@ export class UFDelayAction extends UFQueueableAction {
   /**
    * Constructs an instance of {@link UFDelayAction}.
    *
-   * @param aDelay
+   * @param delay
    *   Delay in milliseconds
    */
-  constructor(aDelay: number) {
+  constructor(delay: number) {
     super();
-    this.m_delay = aDelay;
+    this.m_delay = delay;
   }
 
   // endregion

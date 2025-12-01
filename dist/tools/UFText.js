@@ -46,23 +46,23 @@ export class UFText {
      * Appends a text to another text using a separator. If either texts are empty, the method
      * just returns the other text without the separator.
      *
-     * @param aSource
+     * @param source
      *   Source to add to
-     * @param aValue
+     * @param value
      *   Value to append
-     * @param aSeparator
+     * @param separator
      *   Separator to use
      *
      * @return aValue added to aSource with aSeparator if both aValue and aSource are not empty.
      */
-    static append(aSource, aValue, aSeparator) {
-        if (aSource.length <= 0) {
-            return aValue;
+    static append(source, value, separator) {
+        if (source.length <= 0) {
+            return value;
         }
-        if (aValue.length <= 0) {
-            return aSource;
+        if (value.length <= 0) {
+            return source;
         }
-        return aSource + aSeparator + aValue;
+        return source + separator + value;
     }
     /**
      * Converts plain text to html by replacing certain characters with their entity equivalent and
@@ -70,26 +70,37 @@ export class UFText {
      *
      * Based on code from answer: https://stackoverflow.com/a/4835406/968451
      *
-     * @param aText
+     * @param text
      *   Text to convert
      *
      * @return Html formatted plain text
      */
-    static escapeHtml(aText) {
-        return aText.replace(/[&<>"'\n\t\r]/g, character => this.s_escapeHtmlMap.get(character));
+    static escapeHtml(text) {
+        return text.replace(/[&<>"'\n\t\r]/g, character => this.s_escapeHtmlMap.get(character));
+    }
+    /**
+     * Escapes special characters in a string to be used in a regular expression.
+     *
+     * @param text
+     *   Text to convert
+     *
+     * @return Escaped string with special characters prefixed with a backslash.
+     */
+    static escapeRegExp(text) {
+        return String(text).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
     /**
      * Generate a code existing of a random sequence of upper and lowercase and numbers.
      *
-     * @param aLength
+     * @param length
      *   Number of characters the code exists of
      *
      * @return The generated code.
      */
-    static generateCode(aLength) {
+    static generateCode(length) {
         let result = '';
         let numberCount = 1;
-        for (let cnt = 0; cnt < aLength; cnt++) {
+        for (let cnt = 0; cnt < length; cnt++) {
             // 00..09: '0'..'9'
             // 10..35: 'A'..'Z'
             // 36..61: 'a'..'z'
@@ -121,84 +132,84 @@ export class UFText {
     /**
      * Converts a number to a string of 2 digits
      *
-     * @param aNumber
+     * @param numberValue
      *   A number between 0 and 99
      *
      * @return aNumber as string, prefixed with a 0 if number exists of 1 digit
      *
      * @private
      */
-    static twoDigits(aNumber) {
-        return aNumber < 10 ? '0' + aNumber : aNumber.toString();
+    static twoDigits(numberValue) {
+        return numberValue < 10 ? '0' + numberValue : numberValue.toString();
     }
     /**
      * Converts a number to a string of 3 digits
      *
-     * @param aNumber
+     * @param numberValue
      *   A number between 0 and 999
      *
      * @return aNumber as string, prefixed with a 0 if number exists of 1 digit
      *
      * @private
      */
-    static threeDigits(aNumber) {
-        return ('000' + aNumber.toString()).substring(-3);
+    static threeDigits(numberValue) {
+        return ('000' + numberValue.toString()).substring(-3);
     }
     /**
      * Replace all keys by their value in a string.
      *
-     * @param aText
+     * @param text
      *   Text to update
-     * @param aMap
+     * @param map
      *   Replace keys with their values
      *
      * @return Updated aText
      */
-    static replace(aText, aMap) {
-        for (const [key, value] of Object.entries(aMap)) {
-            aText = aText.replace(key, value);
+    static replace(text, map) {
+        for (const [key, value] of Object.entries(map)) {
+            text = text.replace(key, value);
         }
-        return aText;
+        return text;
     }
     /**
      * Returns a number converted to a hex number of two digits.
      *
-     * @param aNumber
+     * @param numberValue
      *   Number to convert (will be clamped between 0 and 255)
      *
      * @return hexadecimal string of 2 digits
      */
-    static hexTwoDigits(aNumber) {
-        return ('0' + Math.min(255, Math.max(0, aNumber)).toString(16)).substring(-2);
+    static hexTwoDigits(numberValue) {
+        return ('0' + Math.min(255, Math.max(0, numberValue)).toString(16)).substring(-2);
     }
     /**
      * Returns a number converted to a hex number of four digits.
      *
-     * @param aNumber
+     * @param numberValue
      *   Number to convert (will be clamped between 0 and 65535)
      *
      * @return hexadecimal string of 4 digits
      */
-    static hexFourDigits(aNumber) {
-        return ('000' + Math.min(65535, Math.max(0, aNumber)).toString(16)).substring(-4);
+    static hexFourDigits(numberValue) {
+        return ('000' + Math.min(65535, Math.max(0, numberValue)).toString(16)).substring(-4);
     }
     /**
      * Joins strings making sure there is one delimiter string between them.
      *
-     * @param aDelimiter
+     * @param delimiter
      *   Delimiter to use
-     * @param aTexts
+     * @param texts
      *   Texts to join
      *
      * @return aTexts joined together
      */
-    static join(aDelimiter, ...aTexts) {
-        return aTexts.reduce((previous, current) => {
-            if (current.startsWith(aDelimiter)) {
-                current = current.substring(aDelimiter.length);
+    static join(delimiter, ...texts) {
+        return texts.reduce((previous, current) => {
+            if (current.startsWith(delimiter)) {
+                current = current.substring(delimiter.length);
             }
-            if (!previous.endsWith(aDelimiter) && previous.length) {
-                previous += aDelimiter;
+            if (!previous.endsWith(delimiter) && previous.length) {
+                previous += delimiter;
             }
             return previous + current;
         });
@@ -206,24 +217,24 @@ export class UFText {
     /**
      * Joins strings together using '/' as a delimiter.
      *
-     * @param aTexts
+     * @param texts
      *   Texts to join
      *
      * @return aTexts joined together
      */
-    static joinPath(...aTexts) {
-        return this.join('/', ...aTexts);
+    static joinPath(...texts) {
+        return this.join('/', ...texts);
     }
     /**
      * Gets the text to convert a number to an English ordinal number.
      *
-     * @param aNumber
+     * @param numberValue
      *   Number to convert.
      *
      * @return Text to add to the number.
      */
-    static getOrdinalPost(aNumber) {
-        switch (aNumber % 10) {
+    static getOrdinalPost(numberValue) {
+        switch (numberValue % 10) {
             case 1:
                 return 'st';
             case 2:
@@ -237,134 +248,134 @@ export class UFText {
     /**
      * Converts a number to an English ordinal number.
      *
-     * @param aNumber
+     * @param numberValue
      *   Number to convert.
      *
      * @return number with shortened ordinal text added to it.
      */
-    static getOrdinalNumber(aNumber) {
-        return aNumber.toString() + this.getOrdinalPost(aNumber);
+    static getOrdinalNumber(numberValue) {
+        return numberValue.toString() + this.getOrdinalPost(numberValue);
     }
     /**
      * Gets a value as string.
      *
-     * @param aValue
+     * @param value
      *   Value to get
-     * @param aDefault
+     * @param defaultText
      *   Default is used if aValue can not be converted to a string (in case of null, undefined, NaN)
      *
      * @return aValue as string (via toString() call) or aDefault.
      */
-    static asString(aValue, aDefault = '') {
-        switch (aValue) {
+    static asString(value, defaultText = '') {
+        switch (value) {
             case null:
             case undefined:
             case NaN:
-                return aDefault;
+                return defaultText;
             default:
-                return aValue.toString();
+                return value.toString();
         }
     }
     /**
      * Formats a file size adding unit (bytes, KB, MB or GB).
      *
-     * @param aSize
+     * @param size
      *   Size to format
      *
      * @returns formatted size
      */
-    static formatFileSize(aSize) {
+    static formatFileSize(size) {
         let result;
-        if (aSize < 1024) {
-            result = aSize + ' bytes';
+        if (size < 1024) {
+            result = size + ' bytes';
         }
-        else if (aSize < 1024 * 1024) {
-            result = (aSize / 1024).toFixed(1) + ' KB';
+        else if (size < 1024 * 1024) {
+            result = (size / 1024).toFixed(1) + ' KB';
         }
-        else if (aSize < 1024 * 1024 * 1024) {
-            result = (aSize / 1024 / 1024).toFixed(1) + ' MB';
+        else if (size < 1024 * 1024 * 1024) {
+            result = (size / 1024 / 1024).toFixed(1) + ' MB';
         }
         else {
-            result = (aSize / 1024 / 1024 / 1024).toFixed(1) + ' GB';
+            result = (size / 1024 / 1024 / 1024).toFixed(1) + ' GB';
         }
         return result;
     }
     /**
      * Gets the extension of file by returning the part after the last '.' in the name.
      *
-     * @param aFileName
+     * @param fileName
      *   Filename to get extension of (may include path parts)
      *
      * @returns extension (without '.' and in lowercase) or false if no '.' could be
      *   located in the name.
      */
-    static getFileExtension(aFileName) {
-        const fileStart = aFileName.lastIndexOf('/');
+    static getFileExtension(fileName) {
+        const fileStart = fileName.lastIndexOf('/');
         if (fileStart > 0) {
-            aFileName = aFileName.substring(fileStart + 1);
+            fileName = fileName.substring(fileStart + 1);
         }
-        const start = aFileName.lastIndexOf('.');
-        return start < 0 ? false : aFileName.substring(start + 1).toLowerCase();
+        const start = fileName.lastIndexOf('.');
+        return start < 0 ? false : fileName.substring(start + 1).toLowerCase();
     }
     /**
      * Add a number of padding chars on the left (in front) until a string reaches a certain
      * minimal size.
      *
-     * @param aText
+     * @param text
      *   Text to pad
-     * @param aMinSize
+     * @param minSize
      *   Minimal size
-     * @param aPadChar
+     * @param padChar
      *   Char to add
      *
      * @return {string} aText padded with aPadChar, if aTexts length >= aMinSize then aText
      *   is just returned
      */
-    static lpad(aText, aMinSize, aPadChar = ' ') {
-        while (aText.length < aMinSize) {
-            aText = aPadChar + aText;
+    static lpad(text, minSize, padChar = ' ') {
+        while (text.length < minSize) {
+            text = padChar + text;
         }
-        return aText;
+        return text;
     }
     /**
      * Add a number of padding chars on the right until a string reaches a certain minimal size.
      *
-     * @param aText
+     * @param text
      *   Text to pad
-     * @param aMinSize
+     * @param minSize
      *   Minimal size
-     * @param aPadChar
+     * @param padChar
      *   Char to add
      *
      * @return {string} aText padded with aPadChar, if aTexts length >= aMinSize then aText is
      * just returned
      */
-    static rpad(aText, aMinSize, aPadChar = ' ') {
-        while (aText.length < aMinSize) {
-            aText = aText + aPadChar;
+    static rpad(text, minSize, padChar = ' ') {
+        while (text.length < minSize) {
+            text = text + padChar;
         }
-        return aText;
+        return text;
     }
     /**
      * Adds a parameter to an url. The method checks if the url already contains parameters
      * (by containing a ? character). If it does the parameter is added to the end with a '&'
      * character. Else the parameter is added to the end with a '?' character.
      *
-     * @param anUrl
+     * @param url
      *   Filename to add parameter to
-     * @param aParameter
+     * @param parameter
      *   Parameter to add
-     * @param aValue
+     * @param value
      *   When specified the value to add to the parameter using '='
      *
      * @return anUrl with '?aParameter[=aValue]' or '&aParameter[=aValue]' added to it.
      */
-    static addParameter(anUrl, aParameter, aValue) {
-        if (aValue) {
-            aParameter = aParameter + '=' + aValue;
+    static addParameter(url, parameter, value) {
+        if (value) {
+            parameter = parameter + '=' + value;
         }
-        aParameter = (anUrl.indexOf('?') >= 0 ? '&' : '?') + aParameter;
-        return anUrl + aParameter;
+        parameter = (url.indexOf('?') >= 0 ? '&' : '?') + parameter;
+        return url + parameter;
     }
     /**
      * Format a string using format specifiers and additional parameters. Next to formatting primitive
@@ -430,9 +441,9 @@ export class UFText {
      * If no argument index is used and there are no more arguments to map to, the method will
      * not process the string and just keep it.
      *
-     * @param {string} aFormat
+     * @param {string} format
      *   A string including format specifiers.
-     * @param {...*} anArguments
+     * @param {...*} argumentList
      *   Various arguments to format within the string
      *
      * @return {string} formatted string
@@ -496,7 +507,7 @@ export class UFText {
      * console.log(UFText.sprintf('%%%.2f percentage', 33.5));
      * // %33.50 percentage
      */
-    static sprintf(aFormat, ...anArguments) {
+    static sprintf(format, ...argumentList) {
         // build regular expression to find specifications, the format specifier starts with a %
         const regExpr = "%"
             // skip if there is another % (%% are handled at the end of the method)
@@ -528,12 +539,12 @@ export class UFText {
         // object to use for properties
         let defaultObject = null;
         // replace all matches
-        for (let execResult = testExp.exec(aFormat); execResult != null; execResult = testExp.exec(aFormat)) {
+        for (let execResult = testExp.exec(format); execResult != null; execResult = testExp.exec(format)) {
             if (!execResult.groups) {
                 continue;
             }
             // add string from previous position up to current
-            result = result + aFormat.substring(formatEnd, execResult.index);
+            result = result + format.substring(formatEnd, execResult.index);
             // set to point after the found expression ([0] contains the whole regular expression string)
             formatEnd = execResult.index + execResult[0].length;
             // argument contains the value to format
@@ -548,7 +559,7 @@ export class UFText {
             if (execResult.groups.param_index) {
                 // get index to argument/object
                 const index = Number(execResult.groups.param_index);
-                if (index >= anArguments.length) {
+                if (index >= argumentList.length) {
                     // add % to result
                     result = result + '%';
                     // continue parsing with character after %
@@ -556,14 +567,14 @@ export class UFText {
                     continue;
                 }
                 // set argument
-                argument = anArguments[index];
+                argument = argumentList[index];
                 // also use as object to get property value from
                 object = argument;
             }
             else if ((propName.length === 0) || (defaultObject == null)) {
                 // no property name is specified, or there is no default object yet.
                 // skip if there are no more arguments
-                if (argumentIndex >= anArguments.length) {
+                if (argumentIndex >= argumentList.length) {
                     // add % to result
                     result = result + '%';
                     // continue parsing with character after %
@@ -571,7 +582,7 @@ export class UFText {
                     continue;
                 }
                 // Get argument and advance index
-                argument = anArguments[argumentIndex++];
+                argument = argumentList[argumentIndex++];
             }
             // there is a property name? Y: replace argument with value of property
             if (propName.length > 0) {
@@ -672,7 +683,7 @@ export class UFText {
             result = result + textValue;
         }
         // add last part
-        result = result + aFormat.substring(formatEnd);
+        result = result + format.substring(formatEnd);
         // replace all %% with a single %
         result = result.replace(/%%/g, '%');
         // return formatted string
@@ -681,12 +692,12 @@ export class UFText {
     /**
      * This method performs: `console.log(UFStringTools.sprintf(aFormat, ...));`.
      *
-     * @param aFormat
+     * @param format
      *   String to format
-     * @param anArguments
+     * @param argumentList
      *   Various parameters to format within the string
      */
-    static printf(aFormat, ...anArguments) {
+    static printf(format, ...argumentList) {
         console.log(UFText.sprintf.apply(null, arguments));
     }
 }

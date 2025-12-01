@@ -56,15 +56,15 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
   /**
    * @inheritDoc
    */
-  async fieldAs<T>(aSql: string, aParameterValues: UFDynamicObject, aDefault: T): Promise<T> {
-    return await this.field(aSql, aParameterValues, aDefault) as T;
+  async fieldAs<T>(sql: string, parameterValues: UFDynamicObject, defaultValue: T): Promise<T> {
+    return await this.field(sql, parameterValues, defaultValue) as T;
   }
 
   /**
    * @inheritDoc
    */
-  async fieldOrFailAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T> {
-    const field = await this.field(aSql, aParameterValues);
+  async fieldOrFailAs<T>(sql: string, parameterValues?: UFDynamicObject): Promise<T> {
+    const field = await this.field(sql, parameterValues);
     if (field === undefined) {
       throw new Error('no field for query');
     }
@@ -74,51 +74,51 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
   /**
    * @inheritDoc
    */
-  abstract insert(aSql: string, aParameterValues?: UFDynamicObject): Promise<number>;
+  abstract insert(sql: string, parameterValues?: UFDynamicObject): Promise<number>;
 
   /**
    * @inheritDoc
    */
   async insertObject<T extends object>(
-    aTable: string, aData: T, aPrimaryKey: string = 'id', anIgnoreFields: string[] = []
+    table: string, data: T, primaryKey: string = 'id', ignoreFields: string[] = []
   ): Promise<T> {
     let columns = '';
     let values = '';
-    const data: UFDynamicObject = {};
-    Object.entries(aData).forEach(([key, value]) => {
-      if ((key !== aPrimaryKey) && !anIgnoreFields.includes(key)) {
+    const parameters: UFDynamicObject = {};
+    Object.entries(data).forEach(([key, value]) => {
+      if ((key !== primaryKey) && !ignoreFields.includes(key)) {
         columns = UFText.append(columns, key, ',');
         values = UFText.append(values, ':' + key, ',');
-        data[key] = value;
+        parameters[key] = value;
       }
     });
     const id = await this.insert(
-      `insert into ${aTable} (${columns}) values (${values})`, data
+      `insert into ${table} (${columns}) values (${values})`, parameters
     );
     if (id > 0) {
       return {
-        ...aData,
-        [aPrimaryKey]: id
+        ...data,
+        [primaryKey]: id
       };
     }
-    return aData;
+    return data;
   }
 
   /**
    * @inheritDoc
    */
-  async rowAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T | undefined> {
-    const result = await this.row(aSql, aParameterValues);
+  async rowAs<T>(sql: string, parameterValues?: UFDynamicObject): Promise<T | undefined> {
+    const result = await this.row(sql, parameterValues);
     return result == undefined ? undefined : this.convertRow<T>(result as TRow);
   }
 
   /**
    * @inheritDoc
    */
-  async rowOrFailAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T> {
-    const row = await this.rowAs<T>(aSql, aParameterValues);
+  async rowOrFailAs<T>(sql: string, parameterValues?: UFDynamicObject): Promise<T> {
+    const row = await this.rowAs<T>(sql, parameterValues);
     if (row == undefined) {
-      throw new Error('no row for query ' + aSql + ' ' + JSON.stringify(aParameterValues));
+      throw new Error('no row for query ' + sql + ' ' + JSON.stringify(parameterValues));
     }
     return row;
   }
@@ -126,61 +126,61 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
   /**
    * @inheritDoc
    */
-  async rowsAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T[]> {
-    const result = await this.rows(aSql, aParameterValues);
+  async rowsAs<T>(sql: string, parameterValues?: UFDynamicObject): Promise<T[]> {
+    const result = await this.rows(sql, parameterValues);
     return result.map(row => this.convertRow<T>(row));
   }
 
   /**
    * @inheritDoc
    */
-  abstract transaction(aCallback: (aDatabase: IUFDatabase) => Promise<void>): Promise<void>;
+  abstract transaction(callback: (database: IUFDatabase) => Promise<void>): Promise<void>;
 
   /**
    * @inheritDoc
    */
-  abstract update(aSql: string, aParameterValues?: UFDynamicObject): Promise<number>;
+  abstract update(sql: string, parameterValues?: UFDynamicObject): Promise<number>;
 
   /**
    * @inheritDoc
    */
   async updateObject<T extends object>(
-    aTable: string, aPrimaryValue: any, aData: T,
-    aPrimaryKey: string = 'id', anIgnoreFields: string[] = []
+    table: string, primaryValue: any, data: T,
+    primaryKey: string = 'id', ignoreFields: string[] = []
   ): Promise<void> {
     let fields = '';
-    const data: UFDynamicObject = {};
-    Object.entries(aData).forEach(([key, value]) => {
-      if ((key !== aPrimaryKey) && !anIgnoreFields.includes(key)) {
+    const parameters: UFDynamicObject = {};
+    Object.entries(data).forEach(([key, value]) => {
+      if ((key !== primaryKey) && !ignoreFields.includes(key)) {
         fields = UFText.append(fields, key + '=' + ':' + key, ',');
-        data[key] = value;
+        parameters[key] = value;
       }
     });
     if (fields.length) {
-      const sql = 'update ' + aTable + ' set ' + fields + ' where ' + aPrimaryKey + ' = :' + aPrimaryKey;
-      data[aPrimaryKey] = aPrimaryValue;
-      await this.update(sql, data);
+      const sql = 'update ' + table + ' set ' + fields + ' where ' + primaryKey + ' = :' + primaryKey;
+      parameters[primaryKey] = primaryValue;
+      await this.update(sql, parameters);
     }
   }
 
   /**
    * @inheritDoc
    */
-  async delete(aSql: string, aParameterValues?: UFDynamicObject): Promise<number> {
+  async delete(sql: string, parameterValues?: UFDynamicObject): Promise<number> {
     // The default implementation calls update assuming it is handled in the same way by the database
     // implementation.
-    return await this.update(aSql, aParameterValues);
+    return await this.update(sql, parameterValues);
   }
 
   /**
    * @inheritDoc
    */
-  async getUniqueCode(aTable: string, aColumn: string, aLength: number): Promise<string> {
+  async getUniqueCode(table: string, column: string, length: number): Promise<string> {
     while (true) {
       const values = {
-        code: UFText.generateCode(aLength)
+        code: UFText.generateCode(length)
       }
-      if (await this.fieldAs<number>(`select count(*) from ${aTable} where ${aColumn} = :code`, values, 0) === 0) {
+      if (await this.fieldAs<number>(`select count(*) from ${table} where ${column} = :code`, values, 0) === 0) {
         return values.code;
       }
     }
@@ -193,40 +193,40 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
   /**
    * Execute a sql to get a single value.
    *
-   * @param aSql
+   * @param sql
    *   Sql statement to perform
-   * @param aParameterValues
+   * @param parameterValues
    *   Values to use in case the statement contains parameters
-   * @param aDefault
+   * @param defaultValue
    *   Default value to return if the sql statement did not have any results
    *
    * @return result from sql statement or aDefault
    */
-  protected abstract field(aSql: string, aParameterValues?: UFDynamicObject, aDefault?: any): Promise<any>;
+  protected abstract field(sql: string, parameterValues?: UFDynamicObject, defaultValue?: any): Promise<any>;
 
   /**
    * Execute a sql to get a row.
    *
-   * @param aSql
+   * @param sql
    *   Sql statement to perform
-   * @param aParameterValues
+   * @param parameterValues
    *   Values to use in case the statement contains parameters
    *
    * @return result from sql statement; undefined when no row could be found
    */
-  protected abstract row(aSql: string, aParameterValues?: UFDynamicObject): Promise<TRow | undefined>;
+  protected abstract row(sql: string, parameterValues?: UFDynamicObject): Promise<TRow | undefined>;
 
   /**
    * Execute a sql to get multiple rows.
    *
-   * @param aSql
+   * @param sql
    *   Sql statement to perform
-   * @param aParameterValues
+   * @param parameterValues
    *   Values to use in case the statement contains parameters
    *
    * @return Result from sql statement
    */
-  protected abstract rows(aSql: string, aParameterValues?: UFDynamicObject): Promise<TRow[]>;
+  protected abstract rows(sql: string, parameterValues?: UFDynamicObject): Promise<TRow[]>;
 
   /**
    * Converts a row from database type to an external type. The default implementation just uses a
@@ -235,44 +235,44 @@ export abstract class UFDatabase<TRow> implements IUFDatabase {
    * @template T
    * @template TRow
    *
-   * @param aRow
+   * @param row
    *   Row to convert.
    *
    * @return The data from aRow as new type.
    */
-  protected convertRow<T>(aRow: TRow): T {
-    return aRow as unknown as T;
+  protected convertRow<T>(row: TRow): T {
+    return row as unknown as T;
   }
 
   /**
    * Processes a sql with named parameters and replaces the named parameters with values returned by the callback.
    *
-   * @param aSql
+   * @param sql
    *   Sql statement to process.
-   * @param aParameterValues
+   * @param parameterValues
    *   An object that contains properties whose name match the named parameters
-   * @param aCallback
+   * @param callback
    *   This callback is invoked for every found named parameter. The result will be used to replace the named parameter.
    *
    * @return an updated SQL statement
    */
   protected processSqlParameters(
-    aSql: string, aParameterValues: UFDynamicObject, aCallback: (aName: string, aValue: any) => string
+    sql: string, parameterValues: UFDynamicObject, callback: (name: string, value: any) => string
   ): string {
-    const matches = aSql.matchAll(/(:[\w\d_]+)/g);
+    const matches = sql.matchAll(/(:[\w\d_]+)/g);
     let start = 0;
     let result = '';
     // @ts-ignore
     for (const match of matches) {
       if (match.index != undefined) {
         const currentName = match[0].substring(1);
-        const newName = aCallback(currentName, aParameterValues[currentName]);
-        result += aSql.substring(start, match.index);
+        const newName = callback(currentName, parameterValues[currentName]);
+        result += sql.substring(start, match.index);
         result += newName;
         start = match.index + match[0].length;
       }
     }
-    result += aSql.substring(start);
+    result += sql.substring(start);
     return result;
   }
 

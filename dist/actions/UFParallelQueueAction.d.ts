@@ -83,25 +83,25 @@ export declare class UFParallelQueueAction extends UFQueueableAction {
      * Constructs an instance of {@link UFParallelQueueAction} that will run a certain number of {@link UFQueueableAction}
      * at the same time.
      *
-     * @param aConcurrentCount
+     * @param concurrentCount
      *   Maximum number of actions that should run at the same time.
-     * @param anActions
+     * @param actions
      *   One or more actions to run
      */
-    constructor(aConcurrentCount: number, ...anActions: IUFQueueableAction[]);
+    constructor(concurrentCount: number, ...actions: IUFQueueableAction[]);
     /**
      * Runs all stored actions at the same time.
      *
      * If the queue is already running, the method just returns true.
      *
-     * @param aToken
+     * @param token
      *   Token that can be cancelled to stop running.
      *
      * @return true if all actions run successful; false if one of the actions returned false or the token was cancelled.
      *
      * @throws an error if one or more actions threw an error.
      */
-    run(aToken: IUFCancellationToken): Promise<boolean>;
+    run(token: IUFCancellationToken): Promise<boolean>;
     /**
      * Gets all current running actions.
      */
@@ -121,7 +121,7 @@ export declare class UFParallelQueueAction extends UFQueueableAction {
     /**
      * Starts running actions until all actions have finished running or the token is requesting cancellation.
      *
-     * @param aTokenSource
+     * @param tokenSource
      *   Will be cancelled if an action returned false or generated an error.
      *
      * @private
@@ -138,7 +138,7 @@ export declare class UFParallelQueueAction extends UFQueueableAction {
      * Keep adding promises from {@link runAction} to the active list until the concurrent maximum is reached or there are
      * no more actions or the token is requesting a cancellation.
      *
-     * @param aTokenSource
+     * @param tokenSource
      */
     private addPromises;
     /**
@@ -146,9 +146,9 @@ export declare class UFParallelQueueAction extends UFQueueableAction {
      *
      * The returned promise will always resolve and never reject.
      *
-     * @param anIndex
+     * @param index
      *   Index to running action
-     * @param aTokenSource
+     * @param tokenSource
      *   Token source that will be cancelled if an error occurred or action returned false.
      *
      * @return a promise that will return the index of the action (same value as anIndex)

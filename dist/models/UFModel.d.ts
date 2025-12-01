@@ -49,6 +49,7 @@ export type UFPropertyChangedCallback = (sender: UFModel, property: string) => v
  * {@link UFModel} implements {@link IUFModel} and adds support change events and dirty state.
  */
 export declare class UFModel implements IUFModel {
+    [key: string]: any;
     /**
      * Current lock count
      *
@@ -103,42 +104,42 @@ export declare class UFModel implements IUFModel {
     /**
      * Adds a listener for data changes. If the listener was already added, nothing happens.
      *
-     * @param aCallback
+     * @param callback
      *   Callback to add
      *
      * @return a function that can be called to remove the listener. It just
      * calls {@link removeChangeListener} with aCallback.
      */
-    addChangeListener(aCallback: UFModelChangedCallback): UFCallback;
+    addChangeListener(callback: UFModelChangedCallback): UFCallback;
     /**
      * Removes a listener for data changes.
      *
-     * @param aCallback
+     * @param callback
      *   Callback to remove
      */
-    removeChangeListener(aCallback: UFModelChangedCallback): void;
+    removeChangeListener(callback: UFModelChangedCallback): void;
     /**
      * Adds a listener for changes to a certain property. If the listener was already added for
      * the property, nothing happens.
      *
-     * @param aProperty
+     * @param property
      *   Name of property
-     * @param aListener
+     * @param listener
      *   Callback function to call when property changes value
      *
      * @return a function that can be called to remove the listener. It just calls
      * {@link removePropertyChangeListener} with aProperty and aListener.
      */
-    addPropertyChangeListener(aProperty: string, aListener: UFPropertyChangedCallback): UFCallback;
+    addPropertyChangeListener(property: string, listener: UFPropertyChangedCallback): UFCallback;
     /**
      * Removes a listener for changes to a certain property.
      *
-     * @param aProperty
+     * @param property
      *   Name of property
-     * @param aListener
+     * @param listener
      *   Listener to remove
      */
-    removePropertyChangeListener(aProperty: string, aListener: UFPropertyChangedCallback): void;
+    removePropertyChangeListener(property: string, listener: UFPropertyChangedCallback): void;
     /**
      * Checks if there are changed properties. This method only is useful while the data is locked.
      * Else the method will always return false.
@@ -165,29 +166,29 @@ export declare class UFModel implements IUFModel {
     /**
      * @inheritDoc
      */
-    isValidPropertyValue(aPropertyName: string, aValue: any): boolean;
+    isValidPropertyValue(propertyName: string, value: any): boolean;
     /**
      * Gets a value of a property. The method checks if the property is a function.
      * If it is, the method returns the result of a call to that function. Else the method just
      * returns the value.
      *
-     * @param aName
+     * @param name
      *   Name of property
      *
      * @returns Value of property
      */
-    getPropertyValue<T>(aName: string): T;
+    getPropertyValue<T>(name: string): T;
     /**
      * Sets a property to a value. The method checks if the property is a function. If it is, the
      * method will call the function passing the value as parameter. Else the method will assign the
      * value directly and call {@link changed}.
      *
-     * @param aName
+     * @param name
      *   Property name
-     * @param aValue
+     * @param value
      *   Value to assign
      */
-    setPropertyValue<T>(aName: string, aValue: T): void;
+    setPropertyValue<T>(name: string, value: T): void;
     /**
      * Processes a possible property assignment. If aNewValue is not undefined, compare it to the
      * current value and when not equal call {@link changed} for the property.
@@ -198,32 +199,32 @@ export declare class UFModel implements IUFModel {
      *
      * @protected
      *
-     * @param aName
+     * @param name
      *   Property name
-     * @param aCurrentValue
+     * @param currentValue
      *   Current value of the property
-     * @param aNewValue
+     * @param newValue
      *   New value of the property or undefined if no new value needs to be set
-     * @param aSetterFunction
+     * @param setterFunction
      *   Function that is called to set the new changed value (if any)
-     * @param [aTransformFunction]
+     * @param [transformFunction]
      *   Function to transform aNewValue with before comparing and assigning it
-     * @param [anEqualFunction]
+     * @param [equalFunction]
      *   Custom compare function that should return true if objects are equal. When null, the method
      *   uses === to compare the values.
      *
      * @returns the current or new property value
      */
-    protected processPropertyValue<T>(aName: string, aCurrentValue: T, aNewValue: T, aSetterFunction: (value: T) => void, aTransformFunction?: (value: T) => T, anEqualFunction?: (value0: T, value1: T) => boolean): T;
+    protected processPropertyValue<T>(name: string, currentValue: T, newValue: T, setterFunction: (value: T) => void, transformFunction?: (value: T) => T, equalFunction?: (value0: T, value1: T) => boolean): T;
     /**
      * Adds a validator for a certain property.
      *
-     * @param aPropertyName
+     * @param propertyName
      *   Property name
-     * @param aValidator
+     * @param validator
      *   A validator for a value or property
      */
-    protected addValidation(aPropertyName: string, aValidator: IUFValueValidator | IUFPropertyValidator | IUFValidateValue): void;
+    protected addValidation(propertyName: string, validator: IUFValueValidator | IUFPropertyValidator | IUFValidateValue): void;
     /**
      * This method can be called when a property changes value. If the instance is locked
      * via {@link lock} the names are stored. Else the {@link onPropertiesChanged} method is
@@ -231,10 +232,10 @@ export declare class UFModel implements IUFModel {
      *
      * The function accepts a variable number of name parameters
      *
-     * @param aNames
+     * @param names
      *   One or more property names that changed
      */
-    protected changed(...aNames: string[]): void;
+    protected changed(...names: string[]): void;
     /**
      * This method is called whenever changed is called or the data structure is unlocked and there
      * are changed properties.
@@ -242,14 +243,14 @@ export declare class UFModel implements IUFModel {
      * The default implementation invokes all the registered listeners. Subclasses can override this
      * method to take additional actions.
      *
-     * @param aList
+     * @param list
      *   List of property names
      */
-    protected onPropertiesChanged(aList: Array<string>): void;
+    protected onPropertiesChanged(list: Array<string>): void;
     /**
      * Gets metadata for property name. Creates a metadata record if none exists for the property.
      *
-     * @param aPropertyName
+     * @param propertyName
      *   Name of property
      *
      * @returns Meta data
@@ -260,7 +261,7 @@ export declare class UFModel implements IUFModel {
     /**
      * Checks if property has validation data.
      *
-     * @param aPropertyName
+     * @param propertyName
      *   Name of property
      *
      * @return True when there is validation data for the property.
@@ -271,7 +272,7 @@ export declare class UFModel implements IUFModel {
     /**
      * Calls the listeners for a certain property.
      *
-     * @param aProperty
+     * @param property
      *   Property to call listeners for
      *
      * @private

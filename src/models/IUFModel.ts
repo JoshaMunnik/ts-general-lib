@@ -32,34 +32,34 @@ export interface IUFModel {
   /**
    * Gets a value of a property.
    *
-   * @param aName
+   * @param name
    *   Name of property
    *
    * @returns Value of property
    */
-  getPropertyValue<T>(aName: string): T;
+  getPropertyValue<T>(name: string): T;
 
   /**
    * Sets a property to a value.
    *
-   * @param aName
+   * @param name
    *   Property name
-   * @param aValue
+   * @param value
    *   Value to assign
    */
-  setPropertyValue<T>(aName: string, aValue: T): void;
+  setPropertyValue<T>(name: string, value: T): void;
 
   /**
    * Checks if a value is valid for a property.
    *
    * If the property is unknown or does not have any validator attached to it, the method returns true.
    *
-   * @param aPropertyName
+   * @param propertyName
    *   Property name
-   * @param aValue
+   * @param value
    *   Value to test
    *
    * @return True if the value is valid for property, otherwise false.
    */
-  isValidPropertyValue(aPropertyName: string, aValue: any): boolean;
+  isValidPropertyValue(propertyName: string, value: any): boolean;
 }

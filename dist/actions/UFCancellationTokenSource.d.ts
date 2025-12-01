@@ -50,12 +50,12 @@ export declare class UFCancellationTokenSource implements IUFCancellationToken {
     /**
      * Constructs an instance of {@link UFCancellationTokenSource}
      *
-     * @param anOtherTokens
+     * @param otherTokens
      *   Tokens to include when checking if the token is cancelled.
      *
      * @constructor
      */
-    constructor(...anOtherTokens: IUFCancellationToken[]);
+    constructor(...otherTokens: IUFCancellationToken[]);
     /**
      * Sets the state to cancel.
      */

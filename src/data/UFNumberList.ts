@@ -46,32 +46,32 @@ export class UFNumberList {
   /**
    * Creates an instance of {@link UFNumberList}
    */
-  public constructor(...aNumbers: number[]) {
-    this.m_numbers = [...aNumbers];
+  public constructor(...numbers: number[]) {
+    this.m_numbers = [...numbers];
   }
 
   /**
    * Adds one or more numbers to the end of the list.
    *
-   * @param aNumbers
+   * @param numbers
    *   One or more numbers to add
    */
-  public add(...aNumbers: number[]) {
-    this.m_numbers.push(...aNumbers);
+  public add(...numbers: number[]) {
+    this.m_numbers.push(...numbers);
   }
 
   /**
    * Adds a list of numbers to the end of the list.
    *
-   * @param aNumbers
+   * @param numbers
    *   Numbers to add (either an array or an instance of {@link UFNumberList})
    */
-  public addList(aNumbers: number[] | UFNumberList) {
-    if (Array.isArray(aNumbers)) {
-      this.m_numbers.push(...aNumbers);
+  public addList(numbers: number[] | UFNumberList) {
+    if (Array.isArray(numbers)) {
+      this.m_numbers.push(...numbers);
     }
     else {
-      this.m_numbers.push(...aNumbers.m_numbers);
+      this.m_numbers.push(...numbers.m_numbers);
     }
   }
 
@@ -85,16 +85,16 @@ export class UFNumberList {
   /**
    * Gets a number at a certain index.
    *
-   * @param anIndex
+   * @param index
    *   Index of number
    *
    * @throws an error if index is invalid
    */
-  public get(anIndex: number): number {
-    if ((anIndex < 0) || (anIndex >= this.size)) {
-      throw new Error(`Invalid index ${anIndex} (size = ${this.size})`);
+  public get(index: number): number {
+    if ((index < 0) || (index >= this.size)) {
+      throw new Error(`Invalid index ${index} (size = ${this.size})`);
     }
-    return this.m_numbers[anIndex];
+    return this.m_numbers[index];
   }
 
   /**

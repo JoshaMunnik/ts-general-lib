@@ -42,119 +42,119 @@ export class UFObject {
     /**
      * Gets a property or throws an error if the property is missing.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to get property from
-     * @param aPropertyName
+     * @param propertyName
      *   Property to get
      *
      * @return value of property
      *
      * @throws an error if the object does not contain the property
      */
-    static getOrFail(anObject, aPropertyName) {
-        if (aPropertyName in anObject) {
-            return anObject[aPropertyName];
+    static getOrFail(objectValue, propertyName) {
+        if (propertyName in objectValue) {
+            return objectValue[propertyName];
         }
-        throw new Error(`Missing ${aPropertyName} in object`);
+        throw new Error(`Missing ${propertyName} in object`);
     }
     /**
      * Gets a property as a certain type or throws an error if the property is missing.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to get property from
-     * @param aPropertyName
+     * @param propertyName
      *   Property to get
      *
      * @return value of property
      *
      * @throws an error if the object does not contain the property
      */
-    static getOrFailAs(anObject, aPropertyName) {
-        return UFObject.getOrFail(anObject, aPropertyName);
+    static getOrFailAs(objectValue, propertyName) {
+        return UFObject.getOrFail(objectValue, propertyName);
     }
     /**
      * Gets a property from an object.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to get property from
-     * @param aPropertyName
+     * @param propertyName
      *   Property to get
-     * @param aDefault
+     * @param defaultValue
      *   Default value to use
      *
      * @return value from property or aDefault if it does not exist
      */
-    static get(anObject, aPropertyName, aDefault) {
-        return aPropertyName in anObject ? anObject[aPropertyName] : aDefault;
+    static get(objectValue, propertyName, defaultValue) {
+        return propertyName in objectValue ? objectValue[propertyName] : defaultValue;
     }
     /**
      * Gets a property from an object and typecast it to a type.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to get property from
-     * @param aPropertyName
+     * @param propertyName
      *   Property to get
-     * @param aDefault
+     * @param defaultValue
      *   Default value to use
      *
      * @return value from property or aDefault if it does not exist
      */
-    static getAs(anObject, aPropertyName, aDefault) {
-        return aPropertyName in anObject ? anObject[aPropertyName] : aDefault;
+    static getAs(objectValue, propertyName, defaultValue) {
+        return propertyName in objectValue ? objectValue[propertyName] : defaultValue;
     }
     /**
      * Sets a property in an object to a value. If the property can not be found, the method does
      * nothing.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to get property from
-     * @param aPropertyName
+     * @param propertyName
      *   Property to set
-     * @param aValue
+     * @param value
      *   Value to set property with
      */
-    static set(anObject, aPropertyName, aValue) {
-        if (aPropertyName in anObject) {
-            anObject[aPropertyName] = aValue;
+    static set(objectValue, propertyName, value) {
+        if (propertyName in objectValue) {
+            objectValue[propertyName] = value;
         }
     }
     /**
      * Sets a property in an object to a value. If the property can not be found, the method throws
      * an error.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to get property from
-     * @param aPropertyName
+     * @param propertyName
      *   Property to set
-     * @param aValue
+     * @param value
      *   Value to set property with
      */
-    static setOrFail(anObject, aPropertyName, aValue) {
-        if (aPropertyName in anObject) {
-            anObject[aPropertyName] = aValue;
+    static setOrFail(objectValue, propertyName, value) {
+        if (propertyName in objectValue) {
+            objectValue[propertyName] = value;
         }
         else {
-            throw new Error(`Missing ${aPropertyName} in object`);
+            throw new Error(`Missing ${propertyName} in object`);
         }
     }
     /**
      * Gets a property from an object. If there is no property, create a new value and attach it
      * to the object.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to get property from
-     * @param aPropertyName
+     * @param propertyName
      *   Name of property to get
-     * @param aFactory
+     * @param factory
      *   Factory function to create a new value
      *
      * @return value from property
      */
-    static getAttachedAs(anObject, aPropertyName, aFactory) {
-        if (!(aPropertyName in anObject)) {
-            anObject[aPropertyName] = aFactory();
+    static getAttachedAs(objectValue, propertyName, factory) {
+        if (!(propertyName in objectValue)) {
+            objectValue[propertyName] = factory();
         }
-        return anObject[aPropertyName];
+        return objectValue[propertyName];
     }
     /**
      * See if all properties in aMatch can be found in aSource and are equal. If a property is
@@ -162,47 +162,47 @@ export class UFObject {
      *
      * Only properties defined in aMatch are checked.
      *
-     * @param aSource
+     * @param source
      *   Source object to test
-     * @param aMatch
+     * @param match
      *   Contains properties to match
-     * @param anIgnoreCase
+     * @param ignoreCase
      *   True: ignore case of string properties, false: casing must match for properties to be equal
      *
      * @return True: all properties found and matching in value
      */
-    static equalProperties(aSource, aMatch, anIgnoreCase = false) {
+    static equalProperties(source, match, ignoreCase = false) {
         // go through all properties in aMatch
-        for (let propertyName in aMatch) {
+        for (let propertyName in match) {
             // only test properties that are defined by aMatch
-            if (aMatch.hasOwnProperty(propertyName)) {
+            if (match.hasOwnProperty(propertyName)) {
                 // exit if source does not have that property
-                if (!aSource.hasOwnProperty(propertyName)) {
+                if (!source.hasOwnProperty(propertyName)) {
                     return false;
                 }
                 // handle certain types
-                switch (typeof (aMatch[propertyName])) {
+                switch (typeof (match[propertyName])) {
                     case 'object':
                         // match properties of both objects
-                        if (!UFObject.equalProperties(aSource[propertyName], aMatch[propertyName], anIgnoreCase)) {
+                        if (!UFObject.equalProperties(source[propertyName], match[propertyName], ignoreCase)) {
                             return false;
                         }
                         break;
                     case 'string':
                         // convert both to lower case if ignoring case
-                        let source = aSource[propertyName];
-                        let match = aMatch[propertyName];
-                        if (anIgnoreCase) {
-                            source = source.toLowerCase();
-                            match = match.toLowerCase();
+                        let sourceText = source[propertyName];
+                        let matchText = match[propertyName];
+                        if (ignoreCase) {
+                            sourceText = sourceText.toLowerCase();
+                            matchText = matchText.toLowerCase();
                         }
-                        if (source !== match) {
+                        if (sourceText !== matchText) {
                             return false;
                         }
                         break;
                     default:
                         // exit if source is not equal to match
-                        if (aSource[propertyName] !== aMatch[propertyName]) {
+                        if (source[propertyName] !== match[propertyName]) {
                             return false;
                         }
                         break;
@@ -222,9 +222,9 @@ export class UFObject {
      * If aSource is an Array instance, a new Array instance is created else a new Object
      * instance is used.
      *
-     * @param aSource
+     * @param source
      *   Source object to obtain values from
-     * @param aMap
+     * @param map
      *   An object with various properties
      *
      * @return A copy of aMap with values obtained from a Source.
@@ -244,17 +244,17 @@ export class UFObject {
      * // data.textField.backgroundColor = current background color
      * </listing>
      */
-    static backupProperties(aSource, aMap) {
-        const result = Array.isArray(aSource) ? [] : {};
-        for (const propertyName in aMap) {
-            if (aMap.hasOwnProperty(propertyName) &&
-                aSource.hasOwnProperty(propertyName)) {
-                let value = aMap[propertyName];
+    static backupProperties(source, map) {
+        const result = Array.isArray(source) ? [] : {};
+        for (const propertyName in map) {
+            if (map.hasOwnProperty(propertyName) &&
+                source.hasOwnProperty(propertyName)) {
+                let value = map[propertyName];
                 if (typeof value === 'object') {
-                    result[propertyName] = UFObject.backupProperties(aSource[propertyName], aMap[propertyName]);
+                    result[propertyName] = UFObject.backupProperties(source[propertyName], map[propertyName]);
                 }
                 else {
-                    result[propertyName] = aSource[propertyName];
+                    result[propertyName] = source[propertyName];
                 }
             }
         }
@@ -269,9 +269,9 @@ export class UFObject {
      * two parameters: anObject, property name. The function is responsible for assigning a value to
      * anObject.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to update properties
-     * @param aValues
+     * @param values
      *   Object to get parse and obtain values from
      *
      * @return Value of anObject
@@ -290,36 +290,36 @@ export class UFObject {
      * // restore original settings
      * UFObjectTools.applyProperties(SomeTextInput, originalProperties);
      */
-    static applyProperties(anObject, aValues) {
-        for (const propertyName in aValues) {
-            if (aValues.hasOwnProperty(propertyName) && anObject.hasOwnProperty(propertyName)) {
-                const value = aValues[propertyName];
+    static applyProperties(objectValue, values) {
+        for (const propertyName in values) {
+            if (values.hasOwnProperty(propertyName) && objectValue.hasOwnProperty(propertyName)) {
+                const value = values[propertyName];
                 if (typeof value === 'function') {
-                    value(anObject, propertyName);
+                    value(objectValue, propertyName);
                 }
                 else if (typeof value === 'object') {
-                    UFObject.applyProperties(anObject[propertyName], aValues[propertyName]);
+                    UFObject.applyProperties(objectValue[propertyName], values[propertyName]);
                 }
                 else {
-                    anObject[propertyName] = aValues[propertyName];
+                    objectValue[propertyName] = values[propertyName];
                 }
             }
         }
-        return anObject;
+        return objectValue;
     }
     /**
      * Copies the properties of an object. Recursively call this method for properties that are
      * object values.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to copy
      *
      * @return copy of an object
      */
-    static deepCopy(anObject) {
+    static deepCopy(objectValue) {
         const result = {};
-        Object.keys(anObject).forEach(key => {
-            const value = anObject[key];
+        Object.keys(objectValue).forEach(key => {
+            const value = objectValue[key];
             result[key] = typeof value === 'object' ? this.deepCopy(value) : value;
         });
         return result;
@@ -327,15 +327,15 @@ export class UFObject {
     /**
      * Checks if an object contains a certain key. It is possible to specify multiple values.
      *
-     * @param anObject
+     * @param objectValue
      *   An object (keys are checked)
-     * @param aKeys
+     * @param keys
      *   One or more key names to check
      *
      * @returns True if the object has a key that matches one of the aKeys values.
      */
-    static contains(anObject, ...aKeys) {
-        return aKeys.findIndex(key => anObject.hasOwnProperty(key)) >= 0;
+    static contains(objectValue, ...keys) {
+        return keys.findIndex(key => objectValue.hasOwnProperty(key)) >= 0;
     }
     /**
      * Combines multiple object instances.
@@ -352,19 +352,19 @@ export class UFObject {
      * If aCallInit is false, a new initialize method is attached to the created object that will call
      * all the other initialize methods with the correct function scope.
      *
-     * @param anObjects
+     * @param objects
      *   Object instances to combine
-     * @param aCallInitialize
+     * @param callInitialize
      *   When false do not call the initialize methods but create and attach a new initialize method
      *   that will call the initialize methods (if any of the other objects contains the initialize
      *   method).
-     * @param anInitializeName
+     * @param initializeName
      *   The name of the initialize method to call or null to skip.
      *
      * @return An instance being a combination of all arguments
      */
-    static combineObjects(anObjects, aCallInitialize = true, anInitializeName = '__init') {
-        if (anObjects.length === 0) {
+    static combineObjects(objects, callInitialize = true, initializeName = '__init') {
+        if (objects.length === 0) {
             return {};
         }
         // start with empty object
@@ -372,9 +372,9 @@ export class UFObject {
         // get all __init methods from all objects
         const initializeFunctions = [];
         // add each argument to result
-        anObjects.forEach(source => UFObject.copyProperties(source, result, anInitializeName, initializeFunctions));
+        objects.forEach(source => UFObject.copyProperties(source, result, initializeName, initializeFunctions));
         if (initializeFunctions.length) {
-            UFObject.callMethods(result, initializeFunctions, aCallInitialize ? undefined : anInitializeName);
+            UFObject.callMethods(result, initializeFunctions, callInitialize ? undefined : initializeName);
         }
         return result;
     }
@@ -382,23 +382,23 @@ export class UFObject {
      * Copies a property/method from one object to another. If the property is a getter or setter,
      * the method will redefine the property in the target object.
      *
-     * @param aName
+     * @param name
      *   Name of property
-     * @param aSource
+     * @param source
      *   Source to copy property from
-     * @param aTarget
+     * @param target
      *   Target to copy property to
      */
-    static copyProperty(aName, aSource, aTarget) {
+    static copyProperty(name, source, target) {
         // if there is a descriptor, and it defines a get and/or set field copy the property by
         // redefining it in the result object.
-        const descriptor = Object.getOwnPropertyDescriptor(aSource, aName);
+        const descriptor = Object.getOwnPropertyDescriptor(source, name);
         if (descriptor && (descriptor.get || descriptor.set)) {
-            Object.defineProperty(aTarget, aName, descriptor);
+            Object.defineProperty(target, name, descriptor);
         }
         else {
             // just copy field
-            aTarget[aName] = aSource[aName];
+            target[name] = source[name];
         }
     }
     /**
@@ -409,27 +409,27 @@ export class UFObject {
      *
      * @private
      *
-     * @param aSource
+     * @param source
      *   Source to copy from
-     * @param aTarget
+     * @param target
      *   Target to copy to
-     * @param aSeparatorName
+     * @param separatorName
      *   Optional name of property to place in aSeparatorList
-     * @param aSeparatorList
+     * @param separatorList
      *   Must be specified if aSeparatorName is specified.
      */
-    static copyProperties(aSource, aTarget, aSeparatorName, aSeparatorList) {
-        if (aSeparatorName && !aSeparatorList) {
+    static copyProperties(source, target, separatorName, separatorList) {
+        if (separatorName && !separatorList) {
             throw new Error('Missing separator list while a separator name was specified');
         }
         // only copy properties defined within the object itself
-        const names = Object.getOwnPropertyNames(aSource);
+        const names = Object.getOwnPropertyNames(source);
         names.forEach(name => {
-            if (aSeparatorName && (name === aSeparatorName)) {
-                aSeparatorList.push(aSource[name]);
+            if (separatorName && (name === separatorName)) {
+                separatorList.push(source[name]);
             }
             else {
-                UFObject.copyProperty(name, aSource, aTarget);
+                UFObject.copyProperty(name, source, target);
             }
         });
     }
@@ -438,19 +438,19 @@ export class UFObject {
      *
      * @private
      *
-     * @param {object} aTarget
+     * @param {object} target
      *   Object that acts as the function scope and might get an initialized function attached to it
      *   if aCallInit is false.
-     * @param aFunctions
+     * @param functions
      *   A list of functions to call using aTarget as function scope.
-     * @param aMethodName
+     * @param methodName
      *   When specified, instead of calling the functions a new method will be attached to aTarget
      *   using this name. The method will call all functions with aTarget as function scope.
      */
-    static callMethods(aTarget, aFunctions, aMethodName) {
-        const callFunctions = () => aFunctions.forEach(method => method.call(aTarget));
-        if (aMethodName) {
-            aTarget[aMethodName] = callFunctions;
+    static callMethods(target, functions, methodName) {
+        const callFunctions = () => functions.forEach(method => method.call(target));
+        if (methodName) {
+            target[methodName] = callFunctions;
         }
         else {
             callFunctions();
@@ -462,19 +462,19 @@ export class UFObject {
      *
      * The method will also return false if instanceOf fails with an exception.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to check
-     * @param aClass
+     * @param classType
      *   Class to check
      *
      * @return True if anObject is an instance of aClass; in all other cases false.
      */
-    static instanceOf(anObject, aClass) {
-        if (typeof aClass !== 'function') {
+    static instanceOf(objectValue, classType) {
+        if (typeof classType !== 'function') {
             return false;
         }
         try {
-            return anObject instanceof aClass;
+            return objectValue instanceof classType;
         }
         catch (_a) {
             return false;

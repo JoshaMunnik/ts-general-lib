@@ -40,21 +40,21 @@ export class UFProgressTools {
      * Checks if the object has a {@link IUFWeightedProgress.progressWeight} property and return the value; else return
      * a default value.
      *
-     * @param anObject
-     * @param aDefault
+     * @param objectValue
+     * @param defaultValue
      */
-    static getProgressWeight(anObject, aDefault = 1.0) {
-        return UFObject.getAs(anObject, 'progressWeight', aDefault);
+    static getProgressWeight(objectValue, defaultValue = 1.0) {
+        return UFObject.getAs(objectValue, 'progressWeight', defaultValue);
     }
     /**
      * Checks if the object has a {@link IUFProgress.progress} property and return the value; else return
      * a default value.
      *
-     * @param anObject
-     * @param aDefault
+     * @param objectValue
+     * @param defaultValue
      */
-    static getProgress(anObject, aDefault = 0.0) {
-        return UFObject.getAs(anObject, 'progress', aDefault);
+    static getProgress(objectValue, defaultValue = 0.0) {
+        return UFObject.getAs(objectValue, 'progress', defaultValue);
     }
 }
 //# sourceMappingURL=UFProgressTools.js.map

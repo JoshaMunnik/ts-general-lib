@@ -46,78 +46,79 @@ export class UFArray {
     /**
      * Swaps two elements in an array.
      *
-     * @param anArray
+     * @param array
      *   Array to update
-     * @param aFirst
+     * @param first
      *   Index to first element
-     * @param aSecond
+     * @param second
      *   Index to second element
      *
      * @returns value of anArray
      */
-    static swap(anArray, aFirst, aSecond) {
-        const temp = anArray[aFirst];
-        anArray[aFirst] = anArray[aSecond];
-        anArray[aSecond] = temp;
-        return anArray;
+    static swap(array, first, second) {
+        const temp = array[first];
+        array[first] = array[second];
+        array[second] = temp;
+        return array;
     }
     /**
      * Randomly swaps elements in array, shuffling the contents of the array.
      *
      * @template T
      *
-     * @param {T[]} anArray
+     * @param {T[]} array
      *   Array to shuffle
-     * @param [anIterations]
-     *   Number of times to perform swap. If the value is not set, it will be set to 1.5 * length of the array.
+     * @param [iterations]
+     *   Number of times to perform swap. If the value is not set, it will be set to 1.5 * length
+     *   of the array.
      *
      * @returns value of anArray
      */
-    static shuffle(anArray, anIterations) {
+    static shuffle(array, iterations) {
         // arrays with 0 or 1 elements do need shuffling
-        if (anArray.length < 2) {
-            return anArray;
+        if (array.length < 2) {
+            return array;
         }
         // default is 1.5 the length of the array
-        anIterations = anIterations || Math.ceil(anArray.length * 1.5);
+        iterations = iterations || Math.ceil(array.length * 1.5);
         // swap to random items
-        for (let index = anIterations; index >= 0; index--) {
+        for (let index = iterations; index >= 0; index--) {
             // get two random positions in array
-            let index0 = UFMath.randomInteger(anArray.length - 1);
-            let index1 = UFMath.randomInteger(anArray.length - 1);
+            let index0 = UFMath.randomInteger(array.length - 1);
+            let index1 = UFMath.randomInteger(array.length - 1);
             // repeat for second index in case the random indexes point to the same index assuming the chance
             // to get the same number for the third time is very low)
             if (index0 === index1) {
-                index1 = UFMath.randomInteger(anArray.length - 1);
+                index1 = UFMath.randomInteger(array.length - 1);
             }
             // swap items
-            UFArray.swap(anArray, index0, index1);
+            UFArray.swap(array, index0, index1);
         }
-        return anArray;
+        return array;
     }
     /**
      * Creates an array filled with a certain value.
      *
-     * @param anItem
+     * @param item
      *   Item to fill with or a function that returns a value of the correct type
-     * @param aCount
+     * @param count
      *   Number of items
-     * @param anArray
+     * @param array
      *   Array to use, when missing create a new array.
      *
      * @returns created array or the value of anArray.
      */
-    static createFilled(anItem, aCount, anArray) {
-        const result = anArray || new Array(aCount);
-        result.length = aCount;
-        if (typeof anItem !== 'function') {
-            for (let index = 0; index < aCount; index++) {
-                result[index] = anItem;
+    static createFilled(item, count, array) {
+        const result = array || new Array(count);
+        result.length = count;
+        if (typeof item !== 'function') {
+            for (let index = 0; index < count; index++) {
+                result[index] = item;
             }
         }
         else {
-            for (let index = 0; index < aCount; index++) {
-                result[index] = anItem();
+            for (let index = 0; index < count; index++) {
+                result[index] = item();
             }
         }
         return result;
@@ -125,160 +126,160 @@ export class UFArray {
     /**
      * Creates an array filled with a sequence of integer numbers.
      *
-     * @param aCount
+     * @param count
      *   Number of numbers to fill with
-     * @param aStart
+     * @param start
      *   Starting number (default 0)
-     * @param aStep
+     * @param step
      *   Stepping size (default 1)
-     * @param anArray
+     * @param array
      *   Array to use, when missing create a new array.
      *
      * @returns created array or the value of anArray filled with sequence of integer numbers
      */
-    static createNumberRange(aCount, aStart = 0, aStep = 1, anArray) {
-        const result = anArray || new Array(aCount);
-        result.length = aCount;
-        for (let index = 0; index < aCount; index++) {
-            result[index] = index * aStep + aStart;
+    static createNumberRange(count, start = 0, step = 1, array) {
+        const result = array || new Array(count);
+        result.length = count;
+        for (let index = 0; index < count; index++) {
+            result[index] = index * step + start;
         }
         return result;
     }
     /**
      * Returns a random item from an array.
      *
-     * @param anArray
+     * @param array
      *   Array to get item from
      *
      * @returns random item
      */
-    static randomItem(anArray) {
-        return anArray[UFMath.randomInteger(anArray.length - 1)];
+    static randomItem(array) {
+        return array[UFMath.randomInteger(array.length - 1)];
     }
     /**
      * Removes all occurrences of an item from an array.
      *
-     * @param anArray
+     * @param array
      *   Array to remove item from
-     * @param anItem
+     * @param item
      *   Item to remove
-     * @param [aFromIndex=0]
+     * @param [fromIndex=0]
      *   Remove items starting at from this index (0 is first item)
      *
      * @returns value of anArray
      */
-    static removeItem(anArray, anItem, aFromIndex = 0) {
+    static removeItem(array, item, fromIndex = 0) {
         // look for first occurrence and remove it, keep looking till no more occurrences are found
-        for (let index = anArray.indexOf(anItem, aFromIndex); index >= 0; index = anArray.indexOf(anItem, aFromIndex)) {
-            anArray.splice(index, 1);
-            aFromIndex = index;
+        for (let index = array.indexOf(item, fromIndex); index >= 0; index = array.indexOf(item, fromIndex)) {
+            array.splice(index, 1);
+            fromIndex = index;
         }
-        return anArray;
+        return array;
     }
     /**
      * Removes duplicate entries.
      *
-     * @param anArray
+     * @param array
      *   Array to go through
      *
      * @returns anArray with duplicates removed.
      */
-    static removeDuplicates(anArray) {
+    static removeDuplicates(array) {
         // don't cache length, since it might change with every loop
-        for (let index = 0; index < anArray.length; index++) {
-            UFArray.removeItem(anArray, anArray[index], index + 1);
+        for (let index = 0; index < array.length; index++) {
+            UFArray.removeItem(array, array[index], index + 1);
         }
-        return anArray;
+        return array;
     }
     /**
      * Removes one or more items from a certain index.
      *
-     * @param anArray
+     * @param array
      *   Array to remove item(s) from
-     * @param anIndex
+     * @param index
      *   Index to start removing at
-     * @param aCount
+     * @param count
      *   Number of items
      *
      * @returns Value of anArray.
      */
-    static removeAt(anArray, anIndex, aCount = 1) {
-        anArray.splice(anIndex, aCount);
-        return anArray;
+    static removeAt(array, index, count = 1) {
+        array.splice(index, count);
+        return array;
     }
     /**
      * Finds an item in the array that matched all properties in the aMatch object.
      *
      * This method uses the UF.tools.UFObject.equalProperties to compare properties.
      *
-     * @param anArray
+     * @param array
      *   Array to look trough
-     * @param aMatch
+     * @param match
      *   An object with one or more properties that must be matched.
-     * @param anIgnoreCase
+     * @param ignoreCase
      *   When true with string types ignore casing when comparing, false casing should match
      *
      * @returns index of entry or -1 if none was found
      */
-    static findByProperty(anArray, aMatch, anIgnoreCase = false) {
-        return anArray.findIndex(item => UFObject.equalProperties(item, aMatch, anIgnoreCase));
+    static findByProperty(array, match, ignoreCase = false) {
+        return array.findIndex(item => UFObject.equalProperties(item, match, ignoreCase));
     }
     /**
      * Gets an item in an array for a certain index. If the index is outside the array boundary, return
      * a default value instead.
      *
-     * @param anArray
+     * @param array
      *   Array to get item from
-     * @param anIndex
+     * @param index
      *   Index of item
-     * @param aDefault
+     * @param defaultValue
      *   Default value to return if anIndex is outside the valid boundary.
      *
      * @returns item or aDefault if anIndex is invalid.
      */
-    static getItem(anArray, anIndex, aDefault) {
-        return ((anIndex >= 0) && (anIndex < anArray.length)) ? anArray[anIndex] : aDefault;
+    static getItem(array, index, defaultValue) {
+        return ((index >= 0) && (index < array.length)) ? array[index] : defaultValue;
     }
     /**
      * Replaces all values that matches aSearchValue with aNewValue.
      *
-     * @param anArray
+     * @param array
      *   Array to search trough
-     * @param aSearchValue
+     * @param searchValue
      *   Value to match
-     * @param aNewValue
+     * @param newValue
      *   Value to replace matching value's with
-     * @param [aFromIndex=0]
+     * @param [fromIndex=0]
      *   Starting index
      *
      * @returns anArray value
      */
-    static replace(anArray, aSearchValue, aNewValue, aFromIndex = 0) {
-        for (let index = anArray.indexOf(aSearchValue, aFromIndex); index >= 0; index = anArray.indexOf(aSearchValue, aFromIndex)) {
-            anArray[index] = aNewValue;
-            aFromIndex = index + 1;
+    static replace(array, searchValue, newValue, fromIndex = 0) {
+        for (let index = array.indexOf(searchValue, fromIndex); index >= 0; index = array.indexOf(searchValue, fromIndex)) {
+            array[index] = newValue;
+            fromIndex = index + 1;
         }
-        return anArray;
+        return array;
     }
     /**
      * Replaces an item at a certain index with a new value.
      *
-     * @param anArray
+     * @param array
      *   Array to replace item in
-     * @param anIndex
+     * @param index
      *   Index of item
-     * @param aNewValue
+     * @param newValue
      *   New value to use
-     * @param aCopy
+     * @param copy
      *   When true make a copy of the array and then replace the value
      * @return The value of anArray
      */
-    static replaceAt(anArray, anIndex, aNewValue, aCopy = false) {
-        if (aCopy) {
-            anArray = [...anArray];
+    static replaceAt(array, index, newValue, copy = false) {
+        if (copy) {
+            array = [...array];
         }
-        anArray[anIndex] = aNewValue;
-        return anArray;
+        array[index] = newValue;
+        return array;
     }
     /**
      * Replaces multiple search values with a new value. If a value from aSearchValues is found, it is
@@ -286,136 +287,125 @@ export class UFArray {
      * a matching new value (in other words aNewValues contains the same number of
      * elements as aSearchValues).
      *
-     * @param anArray
+     * @param array
      *   Array to search trough
-     * @param aSearchValues
+     * @param searchValues
      *   Array of values to find
-     * @param aNewValues
+     * @param newValues
      *   Array of new values to replace found values with.
      *
      * @returns anArray value
      */
-    static replaceMultiple(anArray, aSearchValues, aNewValues) {
-        const isArray = Array.isArray(aNewValues);
-        for (let index = anArray.length - 1; index >= 0; index--) {
-            const findIndex = aSearchValues.indexOf(anArray[index]);
+    static replaceMultiple(array, searchValues, newValues) {
+        const isArray = Array.isArray(newValues);
+        for (let index = array.length - 1; index >= 0; index--) {
+            const findIndex = searchValues.indexOf(array[index]);
             if (findIndex >= 0) {
                 if (isArray) {
-                    anArray[index] = aNewValues[findIndex];
+                    array[index] = newValues[findIndex];
                 }
                 else {
-                    anArray[index] = aNewValues;
+                    array[index] = newValues;
                 }
             }
         }
-        return anArray;
+        return array;
     }
     /**
      * Adds elements from one array to another.
      *
-     * @param aTarget
+     * @param target
      *   Array to add to
-     * @param aSource
+     * @param source
      *   Array to add from
      *
      * @returns value of aTarget
      */
-    static add(aTarget, aSource) {
-        aTarget.push(...aSource);
-        return aTarget;
+    static add(target, source) {
+        target.push(...source);
+        return target;
     }
     /**
      * Converts all values to int.
      *
-     * @param anArray
+     * @param array
      *   Array to update
      *
      * @returns anArray value
      */
-    static toInt(anArray) {
-        for (let index = anArray.length - 1; index >= 0; index--) {
-            anArray[index] = parseInt(anArray[index], 10);
+    static toInt(array) {
+        for (let index = array.length - 1; index >= 0; index--) {
+            array[index] = parseInt(array[index], 10);
         }
-        return anArray;
+        return array;
     }
     /**
      * Converts all values to Number.
      *
-     * @param anArray
+     * @param array
      *   Array to update
      *
      * @returns anArray value
      */
-    static toNumber(anArray) {
-        for (let index = anArray.length - 1; index >= 0; index--) {
-            anArray[index] = parseFloat(anArray[index]);
+    static toNumber(array) {
+        for (let index = array.length - 1; index >= 0; index--) {
+            array[index] = parseFloat(array[index]);
         }
-        return anArray;
+        return array;
     }
     /**
      * Checks if an array contains a certain value or an object contains a certain key. It is possible to
      * specify multiple values.
      *
-     * @param aList
+     * @param list
      *   An array (values are checked) or an object (keys are checked)
-     * @param aValue
+     * @param values
      *   One or more values to check
      *
      * @returns {boolean} True if the array contains one of the values or the object has a key that
      *   matches one of the values.
      */
-    static contains(aList, ...aValue) {
-        // default is not found
-        let result = false;
+    static contains(list, ...values) {
+        // return false if no value is specified
+        if (values.length === 0) {
+            return false;
+        }
         // process all values in aList
-        if (Array.isArray(aList)) {
-            aList.every(function (value) {
-                result = aValue.indexOf(value) >= 0;
-                return !result;
-            });
+        if (Array.isArray(list)) {
+            return values.some(value => list.indexOf(value) >= 0);
         }
-        else {
-            for (let propertyName in aList) {
-                if (aList.hasOwnProperty(propertyName)) {
-                    result = aValue.indexOf(propertyName) >= 0;
-                }
-                if (!result) {
-                    break;
-                }
-            }
-        }
-        return result;
+        return values.some(value => list.hasOwnProperty(value));
     }
     /**
      * Assumes an array contains only numeric values, sorts the array based on the value.
      *
-     * @param anArray
+     * @param array
      *   Array of numbers
-     * @param [aReverse=false]
+     * @param [reverse=false]
      *   When true sort in reverse order.
      *
      * @returns {number[]} anArray with sorted items
      */
-    static sortNumeric(anArray, aReverse = false) {
-        return anArray.sort((item0, item1) => aReverse ? item1 - item0 : item0 - item1);
+    static sortNumeric(array, reverse = false) {
+        return array.sort((item0, item1) => reverse ? item1 - item0 : item0 - item1);
     }
     /**
      * Returns the sum of all values in the number array.
      *
-     * @param anArray
+     * @param array
      *   Array of numbers
-     * @param aStart
+     * @param start
      *   Starting index, default is 0
-     * @param aCount
+     * @param count
      *   Count, when missing process all entries in the array
      *
      * @returns sum of all values in the array
      */
-    static sum(anArray, aStart = 0, aCount) {
+    static sum(array, start = 0, count) {
         let result = 0;
-        aCount = aCount || anArray.length;
-        for (let index = aStart + aCount - 1; index >= aStart; index--) {
-            result += anArray[index];
+        count = count || array.length;
+        for (let index = start + count - 1; index >= start; index--) {
+            result += array[index];
         }
         return result;
     }

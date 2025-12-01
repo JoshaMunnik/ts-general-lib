@@ -45,14 +45,14 @@ export declare class UFCallbackAction extends UFQueueableAction {
     /**
      * Constructs an instance of {@link UFCallbackAction}.
      *
-     * @param aCallback
+     * @param callback
      *   Callback to call when the action is run.
      */
-    constructor(aCallback: () => any);
+    constructor(callback: () => any);
     /**
      * @inheritDoc
      */
-    run(aToken: IUFCancellationToken): Promise<boolean>;
+    run(token: IUFCancellationToken): Promise<boolean>;
     /**
      * @inheritDoc
      */

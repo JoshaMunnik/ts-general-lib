@@ -61,183 +61,185 @@ export class UFMath {
     /**
      * Convert angle to radians, use angleUnit to determine unit of input parameter.
      *
-     * @param anAngle
+     * @param angle
      *   Angle to convert
      *
      * @returns Converted angle.
      */
-    static toRadians(anAngle) {
-        return (UFMath.angleUnit === UFAngleUnit.degrees) ? anAngle * Math.PI / 180 : anAngle;
+    static toRadians(angle) {
+        return (UFMath.angleUnit === UFAngleUnit.degrees) ? angle * Math.PI / 180 : angle;
     }
     /**
      * Convert angle from radians to unit as specified by m_angleUnit
      *
-     * @param anAngle
+     * @param angle
      *   Angle to convert
      *
      * @returns Converted angle.
      */
-    static fromRadians(anAngle) {
-        return (UFMath.angleUnit === UFAngleUnit.degrees) ? anAngle * 180 / Math.PI : anAngle;
+    static fromRadians(angle) {
+        return (UFMath.angleUnit === UFAngleUnit.degrees) ? angle * 180 / Math.PI : angle;
     }
     // endregion
     // region public methods
     /**
      * Rotates a 2D coordinate around a certain point.
      *
-     * @param anAngle
+     * @param angle
      *   Angle
-     * @param aX
+     * @param x
      *   X coordinate of point to rotate
-     * @param aY
+     * @param y
      *   Y coordinate of point to rotate
-     * @param anOriginX
+     * @param originX
      *   X coordinate of point to rotate around
-     * @param anOriginY
+     * @param originY
      *   Y coordinate of point to rotate around
      *
      * @returns {{x,y}} An object with x and y property.
      */
-    static rotate(anAngle, aX, aY, anOriginX = 0, anOriginY = 0) {
-        anAngle = UFMath.toRadians(anAngle);
-        const transX = aX - anOriginX;
-        const transY = aY - anOriginY;
-        const sin = Math.sin(anAngle);
-        const cos = Math.cos(anAngle);
+    static rotate(angle, x, y, originX = 0, originY = 0) {
+        angle = UFMath.toRadians(angle);
+        const transX = x - originX;
+        const transY = y - originY;
+        const sin = Math.sin(angle);
+        const cos = Math.cos(angle);
         return {
-            x: transX * cos - transY * sin + anOriginX,
-            y: transX * sin + transY * cos + anOriginY
+            x: transX * cos - transY * sin + originX,
+            y: transX * sin + transY * cos + originY
         };
     }
     /**
      * Calculates the angle between two points
      *
-     * @param aX1
+     * @param x1
      *  First X coordinate of point
-     * @param aY1
+     * @param y1
      *  First Y coordinate of point
-     * @param aX2
+     * @param x2
      *  Second X coordinate of point
-     * @param aY2
+     * @param y2
      *  Second Y coordinate of point
      *
      * @returns Angle in degrees (0..360)
      */
-    static angle(aX1, aY1, aX2, aY2) {
-        return UFMath.fromRadians(Math.atan2(aY2 - aY1, aX2 - aX1));
+    static angle(x1, y1, x2, y2) {
+        return UFMath.fromRadians(Math.atan2(y2 - y1, x2 - x1));
     }
     /**
      * Calculates distance between two points.
      *
-     * @param aX1
+     * @param x1
      *  First X coordinate of point
-     * @param aY1
+     * @param y1
      *  First Y coordinate of point
-     * @param aX2
+     * @param x2
      *  Second X coordinate of point
-     * @param aY2
+     * @param y2
      *  Second Y coordinate of point
      *
      * @returns Distance between two points
      */
-    static distance(aX1, aY1, aX2, aY2) {
-        const dX = aX1 - aX2;
-        const dY = aY1 - aY2;
+    static distance(x1, y1, x2, y2) {
+        const dX = x1 - x2;
+        const dY = y1 - y2;
         return Math.sqrt(dX * dX + dY * dY);
     }
     /**
      * Returns a random integer.
      *
-     * @param aMinOrMax
+     * @param minOrMaxValue
      *   Minimal or maximum value (if aMax is not specified)
-     * @param aMax
+     * @param maxValue
      *   Maximal value
      *
      * @return {number} random integer between aMin and aMax (inclusive)
      */
-    static randomInteger(aMinOrMax, aMax) {
-        if (aMax === undefined) {
-            aMax = aMinOrMax;
-            aMinOrMax = 0;
+    static randomInteger(minOrMaxValue, maxValue) {
+        if (maxValue === undefined) {
+            maxValue = minOrMaxValue;
+            minOrMaxValue = 0;
         }
-        return Math.floor(aMinOrMax + Math.random() * (aMax - aMinOrMax + 1));
+        return Math.floor(minOrMaxValue + Math.random() * (maxValue - minOrMaxValue + 1));
     }
     /**
      * Increases or decreases value, so it gets nearer to a target value.
      *
-     * @param aTarget
+     * @param target
      *   Value to reach
-     * @param aCurrent
+     * @param current
      *   Current value
-     * @param aStepSize
+     * @param stepSize
      *   Value to move with
      *
      * @returns aCurrent +/- aStep or aTarget if aCurrent was closer to aTarget then aStep distance
      */
-    static moveTo(aTarget, aCurrent, aStepSize) {
-        return (aTarget > aCurrent) ? Math.min(aTarget, aCurrent + aStepSize) : Math.max(aTarget, aCurrent - aStepSize);
+    static moveTo(target, current, stepSize) {
+        return (target > current)
+            ? Math.min(target, current + stepSize)
+            : Math.max(target, current - stepSize);
     }
     /**
      * Calculates a position based on movement over time. The method makes sure the returned value is between the
      * specified target and starting values.
      *
-     * @param aTarget
+     * @param target
      *   Target to move to
-     * @param aStart
+     * @param start
      *   Starting position moving from
-     * @param aCurrentTime
+     * @param currentTime
      *   Current time
-     * @param aTotalTime
+     * @param totalTime
      *   Total time movement should take place
      * @returns value between aStart and aTarget (both inclusive)
      */
-    static moveOverTime(aTarget, aStart, aCurrentTime, aTotalTime) {
-        return aStart + (aTarget - aStart) *
-            Math.max(0, Math.min(aCurrentTime, aTotalTime)) / aTotalTime;
+    static moveOverTime(target, start, currentTime, totalTime) {
+        return start + (target - start) *
+            Math.max(0, Math.min(currentTime, totalTime)) / totalTime;
     }
     /**
      * Makes sure a value is within a range.
      *
-     * @param aMin
+     * @param minValue
      *   Minimum value
-     * @param aMax
+     * @param maxValue
      *   Maximum value
-     * @param aValue
+     * @param value
      *   Value to test
      *
      * @returns aValue if it is within range or aMin or aMax
      */
-    static minmax(aMin, aMax, aValue) {
-        return Math.max(aMin, Math.min(aMax, aValue));
+    static minmax(minValue, maxValue, value) {
+        return Math.max(minValue, Math.min(maxValue, value));
     }
     /**
      * Checks if two rectangles overlap.
      *
-     * @param aX0
+     * @param x0
      *   Left of first rectangle
-     * @param aY0
+     * @param y0
      *   Left of first rectangle
-     * @param aWidth0
+     * @param width0
      *   Left of first rectangle
-     * @param anHeight0
+     * @param height0
      *   Left of first rectangle
-     * @param aX1
+     * @param x1
      *   Left of second rectangle
-     * @param aY1
+     * @param y1
      *   Left of second rectangle
-     * @param aWidth1
+     * @param width1
      *   Left of second rectangle
-     * @param anHeight1
+     * @param height1
      *   Left of second rectangle
      *
      * @returns {boolean} True if two rectangles overlap
      */
-    static isOverlapping(aX0, aY0, aWidth0, anHeight0, aX1, aY1, aWidth1, anHeight1) {
+    static isOverlapping(x0, y0, width0, height0, x1, y1, width1, height1) {
         // just check if minimum value in one direction is equal or larger than the maximum value in that direction
-        return !((aX0 >= aX1 + aWidth1) ||
-            (aX1 >= aX0 + aWidth0) ||
-            (aY0 >= aY1 + anHeight1) ||
-            (aY1 >= aY0 + anHeight0));
+        return !((x0 >= x1 + width1) ||
+            (x1 >= x0 + width0) ||
+            (y0 >= y1 + height1) ||
+            (y1 >= y0 + height0));
     }
     /**
      * Checks if a value is a number.
@@ -245,46 +247,46 @@ export class UFMath {
      * Copy from:
      * https://github.com/ReactiveX/rxjs/blob/master/src/internal/util/isNumeric.ts
      *
-     * @param aValue
+     * @param value
      *   Value to check
      *
      * @returns true if value is a valid, otherwise false
      */
-    static isNumeric(aValue) {
+    static isNumeric(value) {
         // parseFloat NaNs numeric-cast false positives (null|true|false|"")
         // ...but misinterprets leading-number strings, particularly hex literals ("0x...")
         // subtraction forces infinities to NaN
         // adding 1 corrects loss of precision from parseFloat (#15100)
-        return !Array.isArray(aValue) && (aValue - parseFloat(aValue) + 1) >= 0;
+        return !Array.isArray(value) && (value - parseFloat(value) + 1) >= 0;
     }
     /**
      * Checks if a value is a valid number, if not return a default value instead.
      *
-     * @param aValue
+     * @param value
      *   Value to check
-     * @param aDefault
+     * @param defaultNumber
      *   Default value to use if aValue is not a valid number
      *
      * @returns either aValue as a number or aDefault
      */
-    static getNumber(aValue, aDefault) {
-        return this.isNumeric(aValue) ? aValue : aDefault;
+    static getNumber(value, defaultNumber) {
+        return this.isNumeric(value) ? value : defaultNumber;
     }
     /**
      * Performs a logical xor on two values.
      *
      * Reference: {@link http://www.howtocreate.co.uk/xor.html}
      *
-     * @param aValue0
+     * @param value0
      *   First value
-     * @param aValue1
+     * @param value1
      *   Second value
      * @returns `True` if either aValue0 or aValue1 evaluates to a truthy but not both;
      *   otherwise `false` if both values evaluate to a truthy or falsy.
      */
-    static xor(aValue0, aValue1) {
+    static xor(value0, value1) {
         // use !! to make sure with two falsy values, the result is still a boolean
-        return !!((aValue0 || aValue1) && !(aValue0 && aValue1));
+        return !!((value0 || value1) && !(value0 && value1));
     }
 }
 // endregion

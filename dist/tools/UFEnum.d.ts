@@ -40,10 +40,10 @@ export declare class UFEnum {
      * Code based on answer:
      * https://stackoverflow.com/a/72284659/968451
      *
-     * @param anEnum
+     * @param enumType
      *   Enum using values mapped to a number.
      *
      * @return a tuple of two numbers, the first is the minimum and the second the maximum
      */
-    static getMinMax(anEnum: object): [number, number];
+    static getMinMax(enumType: object): [number, number];
 }

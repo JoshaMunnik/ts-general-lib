@@ -49,14 +49,14 @@ export class UFTypescript {
     /**
      * A helper method for use with async/await to wait for a certain amount of time.
      *
-     * @param aTime
+     * @param time
      *   Time to wait in milliseconds.
      *
      * @returns empty promise
      */
-    static delay(aTime) {
+    static delay(time) {
         return __awaiter(this, void 0, void 0, function* () {
-            return new Promise(resolve => setTimeout(resolve, aTime));
+            return new Promise(resolve => setTimeout(resolve, time));
         });
     }
 }

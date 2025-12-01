@@ -65,7 +65,7 @@ export abstract class UFQueueableAction implements IUFQueueableAction, IUFWeight
   /**
    * @inheritDoc
    */
-  abstract run(aToken: IUFCancellationToken): Promise<boolean>;
+  abstract run(token: IUFCancellationToken): Promise<boolean>;
 
   // endregion
 }

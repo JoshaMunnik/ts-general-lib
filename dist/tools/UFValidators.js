@@ -57,15 +57,15 @@ export class UFValidators {
     /**
      * Checks if a text contains at least one non space character.
      *
-     * @param aValue
+     * @param text
      *   Value to validate
      *
      * @returns True if the value contains one or more non-space chars; false if the string is null, empty or
      *   contains only spaces.
      */
-    static isNonEmptyText(aValue) {
-        if (aValue) {
-            const value = aValue.toString().trim();
+    static isNonEmptyText(text) {
+        if (text) {
+            const value = text.toString().trim();
             return value.length > 0;
         }
         return false;
@@ -73,217 +73,219 @@ export class UFValidators {
     /**
      * Checks if a value is valid number.
      *
-     * @param aValue
+     * @param value
      *   Value to test
      *
      * @returns the result of !isNaN(aValue)
      */
-    static isNumber(aValue) {
-        return !isNaN(aValue);
+    static isNumber(value) {
+        return !isNaN(value);
     }
     /**
      * Checks if a value is a valid integer.
      *
-     * @param aValue
+     * @param value
      *   Value to test
      *
      * @returns true if aValue is a valid integer.
      */
-    static isInteger(aValue) {
-        return /^\s*(\+|-)?\d+\s*$/.test(aValue.toString());
+    static isInteger(value) {
+        return /^\s*(\+|-)?\d+\s*$/.test(value.toString());
     }
     /**
      * Checks if a value is a valid email address.
      *
-     * @param aValue
+     * @param value
      *   Value to test
      *
      * @returns true if aValue is a valid email address.
      */
-    static isEmail(aValue) {
-        return /(\w|[_.\-])+@((\w|-)+\.)+\w{2,32}/.test(aValue.toString());
+    static isEmail(value) {
+        return /(\w|[_.\-])+@((\w|-)+\.)+\w{2,32}/.test(value.toString());
     }
     /**
      * Checks if a value is a valid dutch zip code.
      *
-     * @param aValue
+     * @param value
      *   Value to test
      *
      * @returns true if aValue is a valid dutch zip code.
      */
-    static isZipCodeDutch(aValue) {
-        return /\d\d\d\d\s?[A-Za-z][A-Za-z]/.test(aValue.toString());
+    static isZipCodeDutch(value) {
+        return /\d\d\d\d\s?[A-Za-z][A-Za-z]/.test(value.toString());
     }
     /**
      * Checks if a value is a valid city name.
      *
-     * @param aValue
+     * @param value
      *   Value to test
      *
      * @returns true if aValue is a valid city name.
      */
-    static isCityName(aValue) {
-        return /[A-Za-z\-\s'"\.]+/.test(aValue.toString());
+    static isCityName(value) {
+        return /[A-Za-z\-\s'"\.]+/.test(value.toString());
     }
     /**
      * Checks if a value is an array.
      *
-     * @param aValue
+     * @param value
      *   Value to test
      *
      * @returns true if aValue is a valid city name.
      */
-    static isArray(aValue) {
-        return Array.isArray(aValue);
+    static isArray(value) {
+        return Array.isArray(value);
     }
     // endregion
     // region validator creation functions
     /**
      * Creates a validator function that checks if a value matches a regular expression.
      *
-     * @param aRegExp
+     * @param regExp
      *   Regular expression to use for testing
      *
      * @returns validator function.
      */
-    static createRegExp(aRegExp) {
-        return aValue => aRegExp.test(aValue.toString());
+    static createRegExp(regExp) {
+        return aValue => regExp.test(aValue.toString());
     }
     /**
      * Creates a validator function that checks if a value is string with a certain length.
      *
-     * @param aMin
+     * @param min
      *   Minimal number of characters allowed
-     * @param [aMax=Number.MAX_VALUE]
+     * @param [max=Number.MAX_VALUE]
      *   Maximum number of characters allowed
      *
      * @returns validator function.
      */
-    createTextLength(aMin, aMax = Number.MAX_VALUE) {
+    createTextLength(min, max = Number.MAX_VALUE) {
         return aValue => {
             const charCount = aValue.toString().length;
-            return (charCount >= aMin) && (charCount <= aMax);
+            return (charCount >= min) && (charCount <= max);
         };
     }
     /**
      * Creates a validator that checks if a value is a valid number and within a certain value range.
      *
-     * @param aMin
+     * @param min
      *   Minimum value allowed (including this value)
-     * @param [aMax=Number.MAX_VALUE]
+     * @param [max=Number.MAX_VALUE]
      *   Maximum value allowed (including this value)
      *
      * @returns validator function.
      */
-    createNumberRange(aMin, aMax = Number.MAX_VALUE) {
+    createNumberRange(min, max = Number.MAX_VALUE) {
         return aValue => {
             if (!UFValidators.isNumber(aValue)) {
                 return false;
             }
             const value = parseFloat(aValue + "");
-            return (value >= aMin) && (value <= aMax);
+            return (value >= min) && (value <= max);
         };
     }
     /**
      * Creates a validator that checks if a value is a valid integer and within a certain value range.
      *
-     * @param aMin
+     * @param min
      *   Minimum value allowed (including this value)
-     * @param [aMax=Number.MAX_VALUE]
+     * @param [max=Number.MAX_VALUE]
      *   Maximum value allowed (including this value)
      *
      * @returns validator function.
      */
-    createIntegerRange(aMin, aMax = Number.MAX_VALUE) {
+    createIntegerRange(min, max = Number.MAX_VALUE) {
         return aValue => {
             if (!UFValidators.isInteger(aValue)) {
                 return false;
             }
             const value = parseInt(aValue + "", 10);
-            return (value >= aMin) && (value <= aMax);
+            return (value >= min) && (value <= max);
         };
     }
     /**
      * Creates a validator that checks if a value is a valid integer and within a certain value range.
      *
-     * @param aMin
+     * @param min
      *   Minimum value allowed (including this value)
-     * @param [aMax=Number.MAX_VALUE]
+     * @param [max=Number.MAX_VALUE]
      *   Maximum value allowed (including this value)
      *
      * @returns validator function.
      */
-    createArrayRange(aMin, aMax = Number.MAX_VALUE) {
+    createArrayRange(min, max = Number.MAX_VALUE) {
         return aValue => {
             if (!UFValidators.isArray(aValue)) {
                 return false;
             }
-            return (aValue.length >= aMin) && (aValue.length <= aMax);
+            return (aValue.length >= min) && (aValue.length <= max);
         };
     }
     /**
      * Creates a validator that checks if a value matches a boolean value.
      *
-     * @param aValidValue
+     * @param validValue
      *   Value to match
      *
      * @returns validator function.
      */
-    static createBoolean(aValidValue) {
-        return aValue => aValue === aValidValue;
+    static createBoolean(validValue) {
+        return aValue => aValue === validValue;
     }
     /**
      * Creates a validator that checks if a property contains a valid value. The validator does not do
      * anything with the passed value.
      *
-     * @param aProperty
+     * @param property
      *   Property name
-     * @param aData
+     * @param data
      *   Data instance
      *
      * @returns validator function.
      */
-    static createAnotherProperty(aProperty, aData) {
-        return () => aData.isValidPropertyValue(aProperty, aData.getPropertyValue(aProperty));
+    static createAnotherProperty(property, data) {
+        return () => data.isValidPropertyValue(property, data.getPropertyValue(property));
     }
     /**
      * Creates a validator that checks if a value is equal to a property.
      *
-     * @param aProperty
+     * @param property
      *   Property name
-     * @param aData
+     * @param data
      *   Data instance
      *
      * @returns validator function.
      */
-    static createEqualToProperty(aProperty, aData) {
-        return aValue => aValue === aData.getPropertyValue(aProperty);
+    static createEqualToProperty(property, data) {
+        return aValue => aValue === data.getPropertyValue(property);
     }
     /**
      * Creates a validator that optionally validates a value. If a value is empty or '' then the validator
      * will return true else it will pass the value to another validator.
      *
-     * @param aValidator
+     * @param validator
      *   Validator to use for non empty values.
      *
      * @returns validator function.
      */
-    static createOptional(aValidator) {
-        return aValue => aValue && aValue.toString().length ? UFValidators.isValidValue(aValue, aValidator) : true;
+    static createOptional(validator) {
+        return aValue => aValue && aValue.toString().length
+            ? UFValidators.isValidValue(aValue, validator)
+            : true;
     }
     /**
      * Creates a validator to validate a day value.
      *
-     * @param aMonthProperty
+     * @param monthProperty
      *   Property name for month
-     * @param aYearProperty
+     * @param yearProperty
      *   Property name for year
-     * @param aData
+     * @param data
      *   UFModel instance
      *
      * @returns validator function.
      */
-    createDay(aMonthProperty, aYearProperty, aData) {
+    createDay(monthProperty, yearProperty, data) {
         return aValue => {
             const value = aValue + "";
             if (!INT_NUMBER.test(value)) {
@@ -295,8 +297,8 @@ export class UFValidators {
                 return false;
             }
             let maxDay = 31;
-            const yearValue = aData.getPropertyValue(aYearProperty).toString();
-            const monthValue = aData.getPropertyValue(aMonthProperty).toString();
+            const yearValue = data.getPropertyValue(yearProperty).toString();
+            const monthValue = data.getPropertyValue(monthProperty).toString();
             if (INT_NUMBER.test(monthValue) && INT_NUMBER.test(yearValue)) {
                 const year = parseInt(yearValue, 10);
                 const month = parseInt(monthValue, 10);
@@ -319,22 +321,22 @@ export class UFValidators {
     /**
      * Checks if value is valid.
      *
-     * @param aValue
+     * @param value
      *   Value to validate
-     * @param aValidator
+     * @param validator
      *   Validator to use
      *
      * @returns result from validator or true if validator is not
      *   supported.
      */
-    static isValidValue(aValue, aValidator) {
+    static isValidValue(value, validator) {
         // use validation function
-        if (typeof aValidator === 'function') {
-            return aValidator(aValue);
+        if (typeof validator === 'function') {
+            return validator(value);
         }
         // use value validation
-        if (aValidator.hasOwnProperty('isValidValue') && (typeof aValidator.isValidValue === 'function')) {
-            return aValidator.isValidValue(aValue);
+        if (validator.hasOwnProperty('isValidValue') && (typeof validator.isValidValue === 'function')) {
+            return validator.isValidValue(value);
         }
         // unsupported validator, so value is always valid
         return true;
@@ -342,38 +344,38 @@ export class UFValidators {
     /**
      * Checks if a property has a valid value.
      *
-     * @param aData
+     * @param data
      *   Data to get property value from
-     * @param aPropertyName
+     * @param propertyName
      *   Name of property
-     * @param aValidator
+     * @param validator
      *   Validator to use
-     * @param [aValue]
+     * @param [value]
      *   Value to validate, when missing use the value of the property.
      *
      * @returns result from validator or true if validator is not
      *   supported.
      */
-    static isValidProperty(aData, aPropertyName, aValidator, aValue) {
+    static isValidProperty(data, propertyName, validator, value) {
         // get value from property if none was specified
-        if (aValue === undefined) {
-            aValue = aData.getPropertyValue(aPropertyName);
+        if (value === undefined) {
+            value = data.getPropertyValue(propertyName);
         }
         // use validation function
-        if (typeof aValidator === 'function') {
-            return aValidator(aValue);
+        if (typeof validator === 'function') {
+            return validator(value);
         }
         // use property validation
         // @ts-ignore
-        if (aValidator.hasOwnProperty('isValidPropertyValue') && (typeof aValidator.isValidPropertyValue === 'function')) {
+        if (validator.hasOwnProperty('isValidPropertyValue') && (typeof validator.isValidPropertyValue === 'function')) {
             // @ts-ignore
-            return aValidator.isValidPropertyValue(aPropertyName, aData, aValue);
+            return validator.isValidPropertyValue(propertyName, data, value);
         }
         // use value validation
         // @ts-ignore
-        if (typeof aValidator.isValidValue === 'function') {
+        if (typeof validator.isValidValue === 'function') {
             // @ts-ignore
-            return aValidator.isValidValue(aValue);
+            return validator.isValidValue(value);
         }
         // unsupported validator, so value is always valid
         return true;

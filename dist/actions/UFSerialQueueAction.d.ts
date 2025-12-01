@@ -36,10 +36,10 @@ export declare class UFSerialQueueAction extends UFParallelQueueAction {
     /**
      * Constructs an instance of {@link UFSerialQueueAction}.
      *
-     * @param anActions
+     * @param actions
      *   One or more actions to run.
      */
-    constructor(...anActions: IUFQueueableAction[]);
+    constructor(...actions: IUFQueueableAction[]);
     /**
      * Gets the current running action or null if there is none.
      */

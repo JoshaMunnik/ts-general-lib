@@ -34,43 +34,43 @@ export interface IUFDatabase {
      *
      * @template T
      *
-     * @param aSql
+     * @param sql
      *   Sql statement to perform
-     * @param aParameterValues
+     * @param parameterValues
      *   Values to use in case the statement contains parameters
-     * @param aDefault
+     * @param defaultValue
      *   Default value to return if the sql statement did not have any results
      *
      * @return result from sql statement or aDefault
      */
-    fieldAs<T>(aSql: string, aParameterValues: UFDynamicObject, aDefault: T): Promise<T>;
+    fieldAs<T>(sql: string, parameterValues: UFDynamicObject, defaultValue: T): Promise<T>;
     /**
      * Execute a sql to get a single value as a certain type. If no value can be found, the method
      * will throw an error.
      *
      * @template T
      *
-     * @param aSql
+     * @param sql
      *   Sql statement to perform
-     * @param aParameterValues
+     * @param parameterValues
      *   Values to use in case the statement contains parameters
      *
      * @return result from sql statement
      *
      * @throws if no row (and thus field) can be found
      */
-    fieldOrFailAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T>;
+    fieldOrFailAs<T>(sql: string, parameterValues?: UFDynamicObject): Promise<T>;
     /**
      * Performs an insert and returns the id of the created record.
      *
-     * @param aSql
+     * @param sql
      *   Sql insert statement
-     * @param aParameterValues
+     * @param parameterValues
      *   Values to use in case the statement contains parameters
      *
      * @return id of created record or 0 if there is no id.
      */
-    insert(aSql: string, aParameterValues?: UFDynamicObject): Promise<number>;
+    insert(sql: string, parameterValues?: UFDynamicObject): Promise<number>;
     /**
      * Inserts a data from an object. The method creates an insert into statement using the property
      * names inside the object.
@@ -81,122 +81,122 @@ export interface IUFDatabase {
      *
      * @template T should be an object type not a class; since the method might create a new object
      *
-     * @param aTable
+     * @param table
      *   Name of table
-     * @param aData
+     * @param data
      *   Data to insert (should be some form of object)
-     * @param aPrimaryKey
+     * @param primaryKey
      *   Name of primary key field
-     * @param anIgnoreFields
+     * @param ignoreFields
      *   Fields to ignore in aData
      *
      * @return Either aData if there is no primary key or a new object with values copied from aData
      * with the new primary key value.
      */
-    insertObject<T extends object>(aTable: string, aData: T, aPrimaryKey?: string, anIgnoreFields?: string[]): Promise<T>;
+    insertObject<T extends object>(table: string, data: T, primaryKey?: string, ignoreFields?: string[]): Promise<T>;
     /**
      * Execute a sql to get a row as a certain type.
      *
      * @template T
      *
-     * @param aSql
+     * @param sql
      *   Sql statement to perform
-     * @param aParameterValues
+     * @param parameterValues
      *   Values to use in case the statement contains parameters
      *
      * @return result from sql statement; undefined when no row could be found
      */
-    rowAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T | undefined>;
+    rowAs<T>(sql: string, parameterValues?: UFDynamicObject): Promise<T | undefined>;
     /**
      * Execute a sql to get a row as a certain type. If no row can be found, the method will throw an
      * error.
      *
      * @template T
      *
-     * @param aSql
+     * @param sql
      *   Sql statement to perform
-     * @param aParameterValues
+     * @param parameterValues
      *   Values to use in case the statement contains parameters
      *
      * @return result from sql statement
      *
      * @throws error if no row can be found
      */
-    rowOrFailAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T>;
+    rowOrFailAs<T>(sql: string, parameterValues?: UFDynamicObject): Promise<T>;
     /**
      * Execute a sql to get multiple rows as a certain type.
      *
      * @template T
      *
-     * @param aSql
+     * @param sql
      *   Sql statement to perform
-     * @param aParameterValues
+     * @param parameterValues
      *   Values to use in case the statement contains parameters
      *
      * @return result from sql statement
      */
-    rowsAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T[]>;
+    rowsAs<T>(sql: string, parameterValues?: UFDynamicObject): Promise<T[]>;
     /**
      * Execute a function within a transaction.
      *
-     * @param aCallback
+     * @param callback
      *   A function that will be called with await. It will be called with a single parameter, which
      *   can be used to communicate with the database. The parameter might be a different instance
      *   then the instance the transaction call originated from.
      *
      * @throws any exception that occurred while calling aCallback
      */
-    transaction(aCallback: (aDatabase: IUFDatabase) => Promise<void>): Promise<void>;
+    transaction(callback: (database: IUFDatabase) => Promise<void>): Promise<void>;
     /**
      * Performs an update and returns the number of changed records.
      *
-     * @param aSql
+     * @param sql
      *   Sql update statement
-     * @param aParameterValues
+     * @param parameterValues
      *   Values to use in case the statement contains parameters
      *
      * @return number of changed records.
      */
-    update(aSql: string, aParameterValues?: UFDynamicObject): Promise<number>;
+    update(sql: string, parameterValues?: UFDynamicObject): Promise<number>;
     /**
      * Updates a record in a table assuming it has a single primary key column.
      *
      * @template T
      *
-     * @param aTable
+     * @param table
      *   Name of table
-     * @param aPrimaryValue
+     * @param primaryValue
      *   Primary key vale
-     * @param aData
+     * @param data
      *   Object containing field names and their new values.
-     * @param aPrimaryKey
+     * @param primaryKey
      *   Name of primary key
-     * @param anIgnoreFields
+     * @param ignoreFields
      *   Fields to ignore in aData
      */
-    updateObject<T extends object>(aTable: string, aPrimaryValue: any, aData: T, aPrimaryKey?: string, anIgnoreFields?: string[]): Promise<void>;
+    updateObject<T extends object>(table: string, primaryValue: any, data: T, primaryKey?: string, ignoreFields?: string[]): Promise<void>;
     /**
      * Performs a database delete and returns the number of deleted records.
      *
-     * @param aSql
+     * @param sql
      *   Sql delete statement
-     * @param aParameterValues
+     * @param parameterValues
      *   Values to use in case the statement contains parameters
      *
      * @return number of deleted records.
      */
-    delete(aSql: string, aParameterValues?: UFDynamicObject): Promise<number>;
+    delete(sql: string, parameterValues?: UFDynamicObject): Promise<number>;
     /**
      * Generates a unique code with {@link UFText.generateCode} to be used in some table.
      *
-     * @param aTable
+     * @param table
      *   Table to use unique code with
-     * @param aColumn
+     * @param column
      *   Name of column in table that contains the unique code
-     * @param aLength
+     * @param length
      *   Number of characters the code should exist of
      *
      * @return an unique code
      */
-    getUniqueCode(aTable: string, aColumn: string, aLength: number): Promise<string>;
+    getUniqueCode(table: string, column: string, length: number): Promise<string>;
 }

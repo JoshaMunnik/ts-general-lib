@@ -46,10 +46,10 @@ export class UFCallbackAction extends UFQueueableAction {
     /**
      * Constructs an instance of {@link UFCallbackAction}.
      *
-     * @param aCallback
+     * @param callback
      *   Callback to call when the action is run.
      */
-    constructor(aCallback) {
+    constructor(callback) {
         super();
         /**
          * See {@link progress}
@@ -57,14 +57,14 @@ export class UFCallbackAction extends UFQueueableAction {
          * @private
          */
         this.m_progress = 0.0;
-        this.m_callback = aCallback;
+        this.m_callback = callback;
     }
     // endregion
     // region IUFQueueableAction
     /**
      * @inheritDoc
      */
-    run(aToken) {
+    run(token) {
         return __awaiter(this, void 0, void 0, function* () {
             this.m_progress = 0.0;
             this.m_callback();

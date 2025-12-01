@@ -37,239 +37,240 @@ export declare class UFArray {
     /**
      * Swaps two elements in an array.
      *
-     * @param anArray
+     * @param array
      *   Array to update
-     * @param aFirst
+     * @param first
      *   Index to first element
-     * @param aSecond
+     * @param second
      *   Index to second element
      *
      * @returns value of anArray
      */
-    static swap<T>(anArray: T[], aFirst: number, aSecond: number): T[];
+    static swap<T>(array: T[], first: number, second: number): T[];
     /**
      * Randomly swaps elements in array, shuffling the contents of the array.
      *
      * @template T
      *
-     * @param {T[]} anArray
+     * @param {T[]} array
      *   Array to shuffle
-     * @param [anIterations]
-     *   Number of times to perform swap. If the value is not set, it will be set to 1.5 * length of the array.
+     * @param [iterations]
+     *   Number of times to perform swap. If the value is not set, it will be set to 1.5 * length
+     *   of the array.
      *
      * @returns value of anArray
      */
-    static shuffle<T>(anArray: T[], anIterations?: number): T[];
+    static shuffle<T>(array: T[], iterations?: number): T[];
     /**
      * Creates an array filled with a certain value.
      *
-     * @param anItem
+     * @param item
      *   Item to fill with or a function that returns a value of the correct type
-     * @param aCount
+     * @param count
      *   Number of items
-     * @param anArray
+     * @param array
      *   Array to use, when missing create a new array.
      *
      * @returns created array or the value of anArray.
      */
-    static createFilled<T>(anItem: T | (() => T), aCount: number, anArray?: T[]): T[];
+    static createFilled<T>(item: T | (() => T), count: number, array?: T[]): T[];
     /**
      * Creates an array filled with a sequence of integer numbers.
      *
-     * @param aCount
+     * @param count
      *   Number of numbers to fill with
-     * @param aStart
+     * @param start
      *   Starting number (default 0)
-     * @param aStep
+     * @param step
      *   Stepping size (default 1)
-     * @param anArray
+     * @param array
      *   Array to use, when missing create a new array.
      *
      * @returns created array or the value of anArray filled with sequence of integer numbers
      */
-    static createNumberRange(aCount: number, aStart?: number, aStep?: number, anArray?: number[]): number[];
+    static createNumberRange(count: number, start?: number, step?: number, array?: number[]): number[];
     /**
      * Returns a random item from an array.
      *
-     * @param anArray
+     * @param array
      *   Array to get item from
      *
      * @returns random item
      */
-    static randomItem<T>(anArray: T[]): T;
+    static randomItem<T>(array: T[]): T;
     /**
      * Removes all occurrences of an item from an array.
      *
-     * @param anArray
+     * @param array
      *   Array to remove item from
-     * @param anItem
+     * @param item
      *   Item to remove
-     * @param [aFromIndex=0]
+     * @param [fromIndex=0]
      *   Remove items starting at from this index (0 is first item)
      *
      * @returns value of anArray
      */
-    static removeItem<T>(anArray: T[], anItem: T, aFromIndex?: number): T[];
+    static removeItem<T>(array: T[], item: T, fromIndex?: number): T[];
     /**
      * Removes duplicate entries.
      *
-     * @param anArray
+     * @param array
      *   Array to go through
      *
      * @returns anArray with duplicates removed.
      */
-    static removeDuplicates<T>(anArray: T[]): T[];
+    static removeDuplicates<T>(array: T[]): T[];
     /**
      * Removes one or more items from a certain index.
      *
-     * @param anArray
+     * @param array
      *   Array to remove item(s) from
-     * @param anIndex
+     * @param index
      *   Index to start removing at
-     * @param aCount
+     * @param count
      *   Number of items
      *
      * @returns Value of anArray.
      */
-    static removeAt<T>(anArray: T[], anIndex: number, aCount?: number): T[];
+    static removeAt<T>(array: T[], index: number, count?: number): T[];
     /**
      * Finds an item in the array that matched all properties in the aMatch object.
      *
      * This method uses the UF.tools.UFObject.equalProperties to compare properties.
      *
-     * @param anArray
+     * @param array
      *   Array to look trough
-     * @param aMatch
+     * @param match
      *   An object with one or more properties that must be matched.
-     * @param anIgnoreCase
+     * @param ignoreCase
      *   When true with string types ignore casing when comparing, false casing should match
      *
      * @returns index of entry or -1 if none was found
      */
-    static findByProperty(anArray: object[], aMatch: object, anIgnoreCase?: boolean): number;
+    static findByProperty(array: object[], match: object, ignoreCase?: boolean): number;
     /**
      * Gets an item in an array for a certain index. If the index is outside the array boundary, return
      * a default value instead.
      *
-     * @param anArray
+     * @param array
      *   Array to get item from
-     * @param anIndex
+     * @param index
      *   Index of item
-     * @param aDefault
+     * @param defaultValue
      *   Default value to return if anIndex is outside the valid boundary.
      *
      * @returns item or aDefault if anIndex is invalid.
      */
-    static getItem<T>(anArray: T[], anIndex: number, aDefault: T): T;
+    static getItem<T>(array: T[], index: number, defaultValue: T): T;
     /**
      * Replaces all values that matches aSearchValue with aNewValue.
      *
-     * @param anArray
+     * @param array
      *   Array to search trough
-     * @param aSearchValue
+     * @param searchValue
      *   Value to match
-     * @param aNewValue
+     * @param newValue
      *   Value to replace matching value's with
-     * @param [aFromIndex=0]
+     * @param [fromIndex=0]
      *   Starting index
      *
      * @returns anArray value
      */
-    static replace<T>(anArray: T[], aSearchValue: T, aNewValue: T, aFromIndex?: number): T[];
+    static replace<T>(array: T[], searchValue: T, newValue: T, fromIndex?: number): T[];
     /**
      * Replaces an item at a certain index with a new value.
      *
-     * @param anArray
+     * @param array
      *   Array to replace item in
-     * @param anIndex
+     * @param index
      *   Index of item
-     * @param aNewValue
+     * @param newValue
      *   New value to use
-     * @param aCopy
+     * @param copy
      *   When true make a copy of the array and then replace the value
      * @return The value of anArray
      */
-    static replaceAt<T>(anArray: T[], anIndex: number, aNewValue: T, aCopy?: boolean): T[];
+    static replaceAt<T>(array: T[], index: number, newValue: T, copy?: boolean): T[];
     /**
      * Replaces multiple search values with a new value. If a value from aSearchValues is found, it is
      * replaced with the value from aNewValues. For each value in aSearchValues, aNewValues must contain
      * a matching new value (in other words aNewValues contains the same number of
      * elements as aSearchValues).
      *
-     * @param anArray
+     * @param array
      *   Array to search trough
-     * @param aSearchValues
+     * @param searchValues
      *   Array of values to find
-     * @param aNewValues
+     * @param newValues
      *   Array of new values to replace found values with.
      *
      * @returns anArray value
      */
-    static replaceMultiple<T>(anArray: T[], aSearchValues: T[], aNewValues: T[] | T): T[];
+    static replaceMultiple<T>(array: T[], searchValues: T[], newValues: T[] | T): T[];
     /**
      * Adds elements from one array to another.
      *
-     * @param aTarget
+     * @param target
      *   Array to add to
-     * @param aSource
+     * @param source
      *   Array to add from
      *
      * @returns value of aTarget
      */
-    static add<T>(aTarget: T[], aSource: T[]): T[];
+    static add<T>(target: T[], source: T[]): T[];
     /**
      * Converts all values to int.
      *
-     * @param anArray
+     * @param array
      *   Array to update
      *
      * @returns anArray value
      */
-    static toInt(anArray: any[]): number[];
+    static toInt(array: any[]): number[];
     /**
      * Converts all values to Number.
      *
-     * @param anArray
+     * @param array
      *   Array to update
      *
      * @returns anArray value
      */
-    static toNumber(anArray: any[]): number[];
+    static toNumber(array: any[]): number[];
     /**
      * Checks if an array contains a certain value or an object contains a certain key. It is possible to
      * specify multiple values.
      *
-     * @param aList
+     * @param list
      *   An array (values are checked) or an object (keys are checked)
-     * @param aValue
+     * @param values
      *   One or more values to check
      *
      * @returns {boolean} True if the array contains one of the values or the object has a key that
      *   matches one of the values.
      */
-    static contains(aList: (object | []), ...aValue: any[]): boolean;
+    static contains(list: (object | any[]), ...values: any[]): boolean;
     /**
      * Assumes an array contains only numeric values, sorts the array based on the value.
      *
-     * @param anArray
+     * @param array
      *   Array of numbers
-     * @param [aReverse=false]
+     * @param [reverse=false]
      *   When true sort in reverse order.
      *
      * @returns {number[]} anArray with sorted items
      */
-    static sortNumeric(anArray: number[], aReverse?: boolean): number[];
+    static sortNumeric(array: number[], reverse?: boolean): number[];
     /**
      * Returns the sum of all values in the number array.
      *
-     * @param anArray
+     * @param array
      *   Array of numbers
-     * @param aStart
+     * @param start
      *   Starting index, default is 0
-     * @param aCount
+     * @param count
      *   Count, when missing process all entries in the array
      *
      * @returns sum of all values in the array
      */
-    static sum(anArray: number[], aStart?: number, aCount?: number): number;
+    static sum(array: number[], start?: number, count?: number): number;
 }

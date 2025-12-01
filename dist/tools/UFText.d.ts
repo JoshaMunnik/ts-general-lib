@@ -45,200 +45,209 @@ export declare class UFText {
      * Appends a text to another text using a separator. If either texts are empty, the method
      * just returns the other text without the separator.
      *
-     * @param aSource
+     * @param source
      *   Source to add to
-     * @param aValue
+     * @param value
      *   Value to append
-     * @param aSeparator
+     * @param separator
      *   Separator to use
      *
      * @return aValue added to aSource with aSeparator if both aValue and aSource are not empty.
      */
-    static append(aSource: string, aValue: string, aSeparator: string): string;
+    static append(source: string, value: string, separator: string): string;
     /**
      * Converts plain text to html by replacing certain characters with their entity equivalent and
      * replacing \n with <br/> tags.
      *
      * Based on code from answer: https://stackoverflow.com/a/4835406/968451
      *
-     * @param aText
+     * @param text
      *   Text to convert
      *
      * @return Html formatted plain text
      */
-    static escapeHtml(aText: string): string;
+    static escapeHtml(text: string): string;
+    /**
+     * Escapes special characters in a string to be used in a regular expression.
+     *
+     * @param text
+     *   Text to convert
+     *
+     * @return Escaped string with special characters prefixed with a backslash.
+     */
+    static escapeRegExp(text: string): string;
     /**
      * Generate a code existing of a random sequence of upper and lowercase and numbers.
      *
-     * @param aLength
+     * @param length
      *   Number of characters the code exists of
      *
      * @return The generated code.
      */
-    static generateCode(aLength: number): string;
+    static generateCode(length: number): string;
     /**
      * Converts a number to a string of 2 digits
      *
-     * @param aNumber
+     * @param numberValue
      *   A number between 0 and 99
      *
      * @return aNumber as string, prefixed with a 0 if number exists of 1 digit
      *
      * @private
      */
-    static twoDigits(aNumber: number): string;
+    static twoDigits(numberValue: number): string;
     /**
      * Converts a number to a string of 3 digits
      *
-     * @param aNumber
+     * @param numberValue
      *   A number between 0 and 999
      *
      * @return aNumber as string, prefixed with a 0 if number exists of 1 digit
      *
      * @private
      */
-    static threeDigits(aNumber: number): string;
+    static threeDigits(numberValue: number): string;
     /**
      * Replace all keys by their value in a string.
      *
-     * @param aText
+     * @param text
      *   Text to update
-     * @param aMap
+     * @param map
      *   Replace keys with their values
      *
      * @return Updated aText
      */
-    static replace(aText: string, aMap: object): string;
+    static replace(text: string, map: object): string;
     /**
      * Returns a number converted to a hex number of two digits.
      *
-     * @param aNumber
+     * @param numberValue
      *   Number to convert (will be clamped between 0 and 255)
      *
      * @return hexadecimal string of 2 digits
      */
-    static hexTwoDigits(aNumber: number): string;
+    static hexTwoDigits(numberValue: number): string;
     /**
      * Returns a number converted to a hex number of four digits.
      *
-     * @param aNumber
+     * @param numberValue
      *   Number to convert (will be clamped between 0 and 65535)
      *
      * @return hexadecimal string of 4 digits
      */
-    static hexFourDigits(aNumber: number): string;
+    static hexFourDigits(numberValue: number): string;
     /**
      * Joins strings making sure there is one delimiter string between them.
      *
-     * @param aDelimiter
+     * @param delimiter
      *   Delimiter to use
-     * @param aTexts
+     * @param texts
      *   Texts to join
      *
      * @return aTexts joined together
      */
-    static join(aDelimiter: string, ...aTexts: string[]): string;
+    static join(delimiter: string, ...texts: string[]): string;
     /**
      * Joins strings together using '/' as a delimiter.
      *
-     * @param aTexts
+     * @param texts
      *   Texts to join
      *
      * @return aTexts joined together
      */
-    static joinPath(...aTexts: string[]): string;
+    static joinPath(...texts: string[]): string;
     /**
      * Gets the text to convert a number to an English ordinal number.
      *
-     * @param aNumber
+     * @param numberValue
      *   Number to convert.
      *
      * @return Text to add to the number.
      */
-    static getOrdinalPost(aNumber: number): string;
+    static getOrdinalPost(numberValue: number): string;
     /**
      * Converts a number to an English ordinal number.
      *
-     * @param aNumber
+     * @param numberValue
      *   Number to convert.
      *
      * @return number with shortened ordinal text added to it.
      */
-    static getOrdinalNumber(aNumber: number): string;
+    static getOrdinalNumber(numberValue: number): string;
     /**
      * Gets a value as string.
      *
-     * @param aValue
+     * @param value
      *   Value to get
-     * @param aDefault
+     * @param defaultText
      *   Default is used if aValue can not be converted to a string (in case of null, undefined, NaN)
      *
      * @return aValue as string (via toString() call) or aDefault.
      */
-    static asString(aValue: any, aDefault?: string): string;
+    static asString(value: any, defaultText?: string): string;
     /**
      * Formats a file size adding unit (bytes, KB, MB or GB).
      *
-     * @param aSize
+     * @param size
      *   Size to format
      *
      * @returns formatted size
      */
-    static formatFileSize(aSize: number): string;
+    static formatFileSize(size: number): string;
     /**
      * Gets the extension of file by returning the part after the last '.' in the name.
      *
-     * @param aFileName
+     * @param fileName
      *   Filename to get extension of (may include path parts)
      *
      * @returns extension (without '.' and in lowercase) or false if no '.' could be
      *   located in the name.
      */
-    static getFileExtension(aFileName: string): string | false;
+    static getFileExtension(fileName: string): string | false;
     /**
      * Add a number of padding chars on the left (in front) until a string reaches a certain
      * minimal size.
      *
-     * @param aText
+     * @param text
      *   Text to pad
-     * @param aMinSize
+     * @param minSize
      *   Minimal size
-     * @param aPadChar
+     * @param padChar
      *   Char to add
      *
      * @return {string} aText padded with aPadChar, if aTexts length >= aMinSize then aText
      *   is just returned
      */
-    static lpad(aText: string, aMinSize: number, aPadChar?: string): string;
+    static lpad(text: string, minSize: number, padChar?: string): string;
     /**
      * Add a number of padding chars on the right until a string reaches a certain minimal size.
      *
-     * @param aText
+     * @param text
      *   Text to pad
-     * @param aMinSize
+     * @param minSize
      *   Minimal size
-     * @param aPadChar
+     * @param padChar
      *   Char to add
      *
      * @return {string} aText padded with aPadChar, if aTexts length >= aMinSize then aText is
      * just returned
      */
-    static rpad(aText: string, aMinSize: number, aPadChar?: string): string;
+    static rpad(text: string, minSize: number, padChar?: string): string;
     /**
      * Adds a parameter to an url. The method checks if the url already contains parameters
      * (by containing a ? character). If it does the parameter is added to the end with a '&'
      * character. Else the parameter is added to the end with a '?' character.
      *
-     * @param anUrl
+     * @param url
      *   Filename to add parameter to
-     * @param aParameter
+     * @param parameter
      *   Parameter to add
-     * @param aValue
+     * @param value
      *   When specified the value to add to the parameter using '='
      *
      * @return anUrl with '?aParameter[=aValue]' or '&aParameter[=aValue]' added to it.
      */
-    static addParameter(anUrl: string, aParameter: string, aValue?: string): string;
+    static addParameter(url: string, parameter: string, value?: string): string;
     /**
      * Format a string using format specifiers and additional parameters. Next to formatting primitive
      * values the method can also format a property within an object.
@@ -303,9 +312,9 @@ export declare class UFText {
      * If no argument index is used and there are no more arguments to map to, the method will
      * not process the string and just keep it.
      *
-     * @param {string} aFormat
+     * @param {string} format
      *   A string including format specifiers.
-     * @param {...*} anArguments
+     * @param {...*} argumentList
      *   Various arguments to format within the string
      *
      * @return {string} formatted string
@@ -369,14 +378,14 @@ export declare class UFText {
      * console.log(UFText.sprintf('%%%.2f percentage', 33.5));
      * // %33.50 percentage
      */
-    static sprintf(aFormat: string, ...anArguments: any[]): string;
+    static sprintf(format: string, ...argumentList: any[]): string;
     /**
      * This method performs: `console.log(UFStringTools.sprintf(aFormat, ...));`.
      *
-     * @param aFormat
+     * @param format
      *   String to format
-     * @param anArguments
+     * @param argumentList
      *   Various parameters to format within the string
      */
-    static printf(aFormat: string, ...anArguments: any[]): void;
+    static printf(format: string, ...argumentList: any[]): void;
 }

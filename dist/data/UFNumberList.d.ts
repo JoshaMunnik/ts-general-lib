@@ -37,21 +37,21 @@ export declare class UFNumberList {
     /**
      * Creates an instance of {@link UFNumberList}
      */
-    constructor(...aNumbers: number[]);
+    constructor(...numbers: number[]);
     /**
      * Adds one or more numbers to the end of the list.
      *
-     * @param aNumbers
+     * @param numbers
      *   One or more numbers to add
      */
-    add(...aNumbers: number[]): void;
+    add(...numbers: number[]): void;
     /**
      * Adds a list of numbers to the end of the list.
      *
-     * @param aNumbers
+     * @param numbers
      *   Numbers to add (either an array or an instance of {@link UFNumberList})
      */
-    addList(aNumbers: number[] | UFNumberList): void;
+    addList(numbers: number[] | UFNumberList): void;
     /**
      * Clears the list.
      */
@@ -59,12 +59,12 @@ export declare class UFNumberList {
     /**
      * Gets a number at a certain index.
      *
-     * @param anIndex
+     * @param index
      *   Index of number
      *
      * @throws an error if index is invalid
      */
-    get(anIndex: number): number;
+    get(index: number): number;
     /**
      * Gets the maximum number.
      *

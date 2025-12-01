@@ -35,16 +35,16 @@ export declare class UFProgressTools {
      * Checks if the object has a {@link IUFWeightedProgress.progressWeight} property and return the value; else return
      * a default value.
      *
-     * @param anObject
-     * @param aDefault
+     * @param objectValue
+     * @param defaultValue
      */
-    static getProgressWeight(anObject: object, aDefault?: number): number;
+    static getProgressWeight(objectValue: object, defaultValue?: number): number;
     /**
      * Checks if the object has a {@link IUFProgress.progress} property and return the value; else return
      * a default value.
      *
-     * @param anObject
-     * @param aDefault
+     * @param objectValue
+     * @param defaultValue
      */
-    static getProgress(anObject: object, aDefault?: number): number;
+    static getProgress(objectValue: object, defaultValue?: number): number;
 }

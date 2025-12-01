@@ -46,11 +46,11 @@ export class UFSerialQueueAction extends UFParallelQueueAction {
   /**
    * Constructs an instance of {@link UFSerialQueueAction}.
    *
-   * @param anActions
+   * @param actions
    *   One or more actions to run.
    */
-  constructor(...anActions: IUFQueueableAction[]) {
-    super(1, ...anActions);
+  constructor(...actions: IUFQueueableAction[]) {
+    super(1, ...actions);
   }
 
   // endregion

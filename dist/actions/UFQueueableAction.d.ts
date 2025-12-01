@@ -45,5 +45,5 @@ export declare abstract class UFQueueableAction implements IUFQueueableAction, I
     /**
      * @inheritDoc
      */
-    abstract run(aToken: IUFCancellationToken): Promise<boolean>;
+    abstract run(token: IUFCancellationToken): Promise<boolean>;
 }

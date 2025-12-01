@@ -56,17 +56,17 @@ export class UFDatabase {
     /**
      * @inheritDoc
      */
-    fieldAs(aSql, aParameterValues, aDefault) {
+    fieldAs(sql, parameterValues, defaultValue) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.field(aSql, aParameterValues, aDefault);
+            return yield this.field(sql, parameterValues, defaultValue);
         });
     }
     /**
      * @inheritDoc
      */
-    fieldOrFailAs(aSql, aParameterValues) {
+    fieldOrFailAs(sql, parameterValues) {
         return __awaiter(this, void 0, void 0, function* () {
-            const field = yield this.field(aSql, aParameterValues);
+            const field = yield this.field(sql, parameterValues);
             if (field === undefined) {
                 throw new Error('no field for query');
             }
@@ -76,42 +76,42 @@ export class UFDatabase {
     /**
      * @inheritDoc
      */
-    insertObject(aTable_1, aData_1) {
-        return __awaiter(this, arguments, void 0, function* (aTable, aData, aPrimaryKey = 'id', anIgnoreFields = []) {
+    insertObject(table_1, data_1) {
+        return __awaiter(this, arguments, void 0, function* (table, data, primaryKey = 'id', ignoreFields = []) {
             let columns = '';
             let values = '';
-            const data = {};
-            Object.entries(aData).forEach(([key, value]) => {
-                if ((key !== aPrimaryKey) && !anIgnoreFields.includes(key)) {
+            const parameters = {};
+            Object.entries(data).forEach(([key, value]) => {
+                if ((key !== primaryKey) && !ignoreFields.includes(key)) {
                     columns = UFText.append(columns, key, ',');
                     values = UFText.append(values, ':' + key, ',');
-                    data[key] = value;
+                    parameters[key] = value;
                 }
             });
-            const id = yield this.insert(`insert into ${aTable} (${columns}) values (${values})`, data);
+            const id = yield this.insert(`insert into ${table} (${columns}) values (${values})`, parameters);
             if (id > 0) {
-                return Object.assign(Object.assign({}, aData), { [aPrimaryKey]: id });
+                return Object.assign(Object.assign({}, data), { [primaryKey]: id });
             }
-            return aData;
+            return data;
         });
     }
     /**
      * @inheritDoc
      */
-    rowAs(aSql, aParameterValues) {
+    rowAs(sql, parameterValues) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.row(aSql, aParameterValues);
+            const result = yield this.row(sql, parameterValues);
             return result == undefined ? undefined : this.convertRow(result);
         });
     }
     /**
      * @inheritDoc
      */
-    rowOrFailAs(aSql, aParameterValues) {
+    rowOrFailAs(sql, parameterValues) {
         return __awaiter(this, void 0, void 0, function* () {
-            const row = yield this.rowAs(aSql, aParameterValues);
+            const row = yield this.rowAs(sql, parameterValues);
             if (row == undefined) {
-                throw new Error('no row for query ' + aSql + ' ' + JSON.stringify(aParameterValues));
+                throw new Error('no row for query ' + sql + ' ' + JSON.stringify(parameterValues));
             }
             return row;
         });
@@ -119,52 +119,52 @@ export class UFDatabase {
     /**
      * @inheritDoc
      */
-    rowsAs(aSql, aParameterValues) {
+    rowsAs(sql, parameterValues) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.rows(aSql, aParameterValues);
+            const result = yield this.rows(sql, parameterValues);
             return result.map(row => this.convertRow(row));
         });
     }
     /**
      * @inheritDoc
      */
-    updateObject(aTable_1, aPrimaryValue_1, aData_1) {
-        return __awaiter(this, arguments, void 0, function* (aTable, aPrimaryValue, aData, aPrimaryKey = 'id', anIgnoreFields = []) {
+    updateObject(table_1, primaryValue_1, data_1) {
+        return __awaiter(this, arguments, void 0, function* (table, primaryValue, data, primaryKey = 'id', ignoreFields = []) {
             let fields = '';
-            const data = {};
-            Object.entries(aData).forEach(([key, value]) => {
-                if ((key !== aPrimaryKey) && !anIgnoreFields.includes(key)) {
+            const parameters = {};
+            Object.entries(data).forEach(([key, value]) => {
+                if ((key !== primaryKey) && !ignoreFields.includes(key)) {
                     fields = UFText.append(fields, key + '=' + ':' + key, ',');
-                    data[key] = value;
+                    parameters[key] = value;
                 }
             });
             if (fields.length) {
-                const sql = 'update ' + aTable + ' set ' + fields + ' where ' + aPrimaryKey + ' = :' + aPrimaryKey;
-                data[aPrimaryKey] = aPrimaryValue;
-                yield this.update(sql, data);
+                const sql = 'update ' + table + ' set ' + fields + ' where ' + primaryKey + ' = :' + primaryKey;
+                parameters[primaryKey] = primaryValue;
+                yield this.update(sql, parameters);
             }
         });
     }
     /**
      * @inheritDoc
      */
-    delete(aSql, aParameterValues) {
+    delete(sql, parameterValues) {
         return __awaiter(this, void 0, void 0, function* () {
             // The default implementation calls update assuming it is handled in the same way by the database
             // implementation.
-            return yield this.update(aSql, aParameterValues);
+            return yield this.update(sql, parameterValues);
         });
     }
     /**
      * @inheritDoc
      */
-    getUniqueCode(aTable, aColumn, aLength) {
+    getUniqueCode(table, column, length) {
         return __awaiter(this, void 0, void 0, function* () {
             while (true) {
                 const values = {
-                    code: UFText.generateCode(aLength)
+                    code: UFText.generateCode(length)
                 };
-                if ((yield this.fieldAs(`select count(*) from ${aTable} where ${aColumn} = :code`, values, 0)) === 0) {
+                if ((yield this.fieldAs(`select count(*) from ${table} where ${column} = :code`, values, 0)) === 0) {
                     return values.code;
                 }
             }
@@ -177,41 +177,41 @@ export class UFDatabase {
      * @template T
      * @template TRow
      *
-     * @param aRow
+     * @param row
      *   Row to convert.
      *
      * @return The data from aRow as new type.
      */
-    convertRow(aRow) {
-        return aRow;
+    convertRow(row) {
+        return row;
     }
     /**
      * Processes a sql with named parameters and replaces the named parameters with values returned by the callback.
      *
-     * @param aSql
+     * @param sql
      *   Sql statement to process.
-     * @param aParameterValues
+     * @param parameterValues
      *   An object that contains properties whose name match the named parameters
-     * @param aCallback
+     * @param callback
      *   This callback is invoked for every found named parameter. The result will be used to replace the named parameter.
      *
      * @return an updated SQL statement
      */
-    processSqlParameters(aSql, aParameterValues, aCallback) {
-        const matches = aSql.matchAll(/(:[\w\d_]+)/g);
+    processSqlParameters(sql, parameterValues, callback) {
+        const matches = sql.matchAll(/(:[\w\d_]+)/g);
         let start = 0;
         let result = '';
         // @ts-ignore
         for (const match of matches) {
             if (match.index != undefined) {
                 const currentName = match[0].substring(1);
-                const newName = aCallback(currentName, aParameterValues[currentName]);
-                result += aSql.substring(start, match.index);
+                const newName = callback(currentName, parameterValues[currentName]);
+                result += sql.substring(start, match.index);
                 result += newName;
                 start = match.index + match[0].length;
             }
         }
-        result += aSql.substring(start);
+        result += sql.substring(start);
         return result;
     }
 }

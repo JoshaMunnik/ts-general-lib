@@ -54,47 +54,47 @@ export class UFDate {
   /**
    * Gets the date formatted for use with mysql: "yyyy-mm-dd hh:mm:ss"
    *
-   * @param {Date | null | undefined} aDate
+   * @param {Date | null | undefined} date
    *   Date to format
-   * @param {string} aDefault
+   * @param {string} defaultValue
    *   Default to return if aData is not a date.
    *
    * @returns {string} Formatted date or aDefault if data is null or undefined
    */
-  static mysql(aDate: (Date | null | undefined), aDefault: string = ''): string {
-    if (!aDate) {
-      return aDefault;
+  static mysql(date: (Date | null | undefined), defaultValue: string = ''): string {
+    if (!date) {
+      return defaultValue;
     }
-    return aDate.getFullYear().toString() + '-'
-      + UFText.twoDigits(1 + aDate.getMonth()) + '-'
-      + UFText.twoDigits(aDate.getDate()) + ' '
-      + UFText.twoDigits(aDate.getHours()) + ':'
-      + UFText.twoDigits(aDate.getMinutes()) + ':'
-      + UFText.twoDigits(aDate.getSeconds());
+    return date.getFullYear().toString() + '-'
+      + UFText.twoDigits(1 + date.getMonth()) + '-'
+      + UFText.twoDigits(date.getDate()) + ' '
+      + UFText.twoDigits(date.getHours()) + ':'
+      + UFText.twoDigits(date.getMinutes()) + ':'
+      + UFText.twoDigits(date.getSeconds());
   }
 
   /**
    * Returns the newest date.
    *
-   * @param {Date} aDates
+   * @param {Date} dates
    *   One or more dates.
    *
    * @returns {Date}
    */
-  static max(...aDates: Date[]): Date {
-    return aDates.reduce((first, second) => first < second ? first : second);
+  static max(...dates: Date[]): Date {
+    return dates.reduce((first, second) => first < second ? first : second);
   }
 
   /**
    * Returns the oldest date.
    *
-   * @param {Date} aDates
+   * @param {Date} dates
    *   One or more dates.
    *
    * @returns {Date}
    */
-  static min(...aDates: Date[]): Date {
-    return aDates.reduce((first, second) => first > second ? first : second);
+  static min(...dates: Date[]): Date {
+    return dates.reduce((first, second) => first > second ? first : second);
   }
 
   /**
@@ -114,16 +114,17 @@ export class UFDate {
   /**
    * Checks if two dates are equal by comparing their utc year, month and date.
    *
-   * @param aFirst
+   * @param first
    *   First date to check
-   * @param aSecond
+   * @param second
    *   Second date to check
    *
    * @return True if the date parts are equal.
    */
-  static isEqualDate(aFirst: Date, aSecond: Date): boolean {
-    return (aFirst.getUTCFullYear() === aSecond.getUTCFullYear()) && (aFirst.getUTCMonth() === aSecond.getUTCMonth())
-      && (aFirst.getUTCDate() === aSecond.getUTCDate());
+  static isEqualDate(first: Date, second: Date): boolean {
+    return (first.getUTCFullYear() === second.getUTCFullYear())
+      && (first.getUTCMonth() === second.getUTCMonth())
+      && (first.getUTCDate() === second.getUTCDate());
   }
 
   // endregion

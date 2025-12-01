@@ -32,10 +32,10 @@ export interface IUFQueueableAction {
     /**
      * Runs the action asynchronously.
      *
-     * @param aToken
+     * @param token
      *   A cancellation token which the action can check while running if the action still can continue.
      *
      * @return true if the action was successful, false if the action failed or was cancelled.
      */
-    run(aToken: IUFCancellationToken): Promise<boolean>;
+    run(token: IUFCancellationToken): Promise<boolean>;
 }

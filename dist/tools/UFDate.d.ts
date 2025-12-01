@@ -37,32 +37,32 @@ export declare class UFDate {
     /**
      * Gets the date formatted for use with mysql: "yyyy-mm-dd hh:mm:ss"
      *
-     * @param {Date | null | undefined} aDate
+     * @param {Date | null | undefined} date
      *   Date to format
-     * @param {string} aDefault
+     * @param {string} defaultValue
      *   Default to return if aData is not a date.
      *
      * @returns {string} Formatted date or aDefault if data is null or undefined
      */
-    static mysql(aDate: (Date | null | undefined), aDefault?: string): string;
+    static mysql(date: (Date | null | undefined), defaultValue?: string): string;
     /**
      * Returns the newest date.
      *
-     * @param {Date} aDates
+     * @param {Date} dates
      *   One or more dates.
      *
      * @returns {Date}
      */
-    static max(...aDates: Date[]): Date;
+    static max(...dates: Date[]): Date;
     /**
      * Returns the oldest date.
      *
-     * @param {Date} aDates
+     * @param {Date} dates
      *   One or more dates.
      *
      * @returns {Date}
      */
-    static min(...aDates: Date[]): Date;
+    static min(...dates: Date[]): Date;
     /**
      * Returns a 24-hour day in milliseconds.
      */
@@ -74,12 +74,12 @@ export declare class UFDate {
     /**
      * Checks if two dates are equal by comparing their utc year, month and date.
      *
-     * @param aFirst
+     * @param first
      *   First date to check
-     * @param aSecond
+     * @param second
      *   Second date to check
      *
      * @return True if the date parts are equal.
      */
-    static isEqualDate(aFirst: Date, aSecond: Date): boolean;
+    static isEqualDate(first: Date, second: Date): boolean;
 }

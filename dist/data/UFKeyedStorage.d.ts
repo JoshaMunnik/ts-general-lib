@@ -33,39 +33,39 @@ export declare abstract class UFKeyedStorage {
     /**
      * Stores string value in storage.
      *
-     * @param aKey
+     * @param key
      *   Key to store value for
-     * @param aValue
+     * @param value
      *   Value to store
      */
-    abstract setString(aKey: string, aValue: string): void;
+    abstract setString(key: string, value: string): void;
     /**
      * Gets a string from the storage or return default when missing.
      *
-     * @param aKey
+     * @param key
      *   Key to get value for
-     * @param aDefault
+     * @param defaultValue
      *   Default value to use when key is missing.
      *
      * @returns either stored value or aDefault.
      */
-    abstract getString(aKey: string, aDefault: string): string;
+    abstract getString(key: string, defaultValue: string): string;
     /**
      * Removes item from the storage.
      *
-     * @param aKey
+     * @param key
      *   Key of item to remove
      */
-    abstract remove(aKey: string): void;
+    abstract remove(key: string): void;
     /**
      * Checks if storage contains a certain item.
      *
-     * @param aKey
+     * @param key
      *   Key of item
      *
      * @returns true if item is contained in the storage.
      */
-    abstract has(aKey: string): boolean;
+    abstract has(key: string): boolean;
     /**
      * Removes all items from the storage.
      */
@@ -74,86 +74,86 @@ export declare abstract class UFKeyedStorage {
      * Stores an object in the storage. The default implementation uses JSON.stringify and calls
      * {@link setString} to store the object as string.
      *
-     * @param aKey
+     * @param key
      *   Key to store object for
-     * @param aValue
+     * @param value
      *   Object to store
      */
-    setObject<T>(aKey: string, aValue: T): void;
+    setObject<T>(key: string, value: T): void;
     /**
      * Retrieves an object from storage. The default implementation gets a string using {@link getString} and uses
      * JSON.parse to convert a string back to an object.
      *
-     * @param aKey
+     * @param key
      *   Key to retrieve object for
-     * @param aDefault
+     * @param defaultValue
      *   Default value to use
      *
      * @returns parsed object or aDefault if there is no item or an exception occurred while parsing the string.
      */
-    getObject<T>(aKey: string, aDefault: T): T;
+    getObject<T>(key: string, defaultValue: T): T;
     /**
      * Stores a number in the storage. The default implementation converts the value to a string and stores it as a
      * string.
      *
-     * @param aKey
+     * @param key
      *   Key to store number for
-     * @param aValue
+     * @param value
      *   number to store
      */
-    setNumber(aKey: string, aValue: number): void;
+    setNumber(key: string, value: number): void;
     /**
      * Retrieves a number from storage. The default implementation gets the value as string and uses parseFloat to
      * convert it back to a number.
      *
-     * @param aKey
+     * @param key
      *   Key to get value for
-     * @param aDefault
+     * @param defaultValue
      *   Default value to use
      *
      * @returns parsed number or aDefault if there is no item or parsing resulted in a NaN value.
      */
-    getNumber(aKey: string, aDefault: number): number;
+    getNumber(key: string, defaultValue: number): number;
     /**
      * Stores an integer in the storage. The default implementation converts the value to a string and stores it as
      * a string.
      *
-     * @param aKey
+     * @param key
      *   Key to store integer for
-     * @param aValue
+     * @param value
      *   Integer to store
      */
-    setInteger(aKey: string, aValue: number): void;
+    setInteger(key: string, value: number): void;
     /**
      * Retrieves a integer from storage. The default implementation gets the value as string and uses parseInt to convert
      * it back to an integer.
      *
-     * @param aKey
+     * @param key
      *   Key to get integer for
-     * @param aDefault
+     * @param defaultValue
      *   Default value to use
      *
      * @returns parsed integer or aDefault if there is no item or parsing resulted in a NaN value.
      */
-    getInteger(aKey: string, aDefault: number): number;
+    getInteger(key: string, defaultValue: number): number;
     /**
      * Stores a boolean in the storage. The default implementation stores either '1' or '0'.
      *
-     * @param aKey
+     * @param key
      *   Key to store boolean for
-     * @param aValue
+     * @param value
      *   Boolean to store
      */
-    setBoolean(aKey: string, aValue: boolean): void;
+    setBoolean(key: string, value: boolean): void;
     /**
      * Retrieves a boolean from storage. The default implementation gets the value as string and checks if it equals '1'
      *
-     * @param aKey
+     * @param key
      *   Key to get value for
-     * @param aDefault
+     * @param defaultValue
      *   Default value to use
      *
      * @returns stored value is '1' or aDefault if there is no item
      */
-    getBoolean(aKey: string, aDefault: boolean): boolean;
+    getBoolean(key: string, defaultValue: boolean): boolean;
 }

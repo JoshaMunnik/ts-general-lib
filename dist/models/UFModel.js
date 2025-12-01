@@ -44,6 +44,8 @@ class PropertyMetaData {
  */
 export class UFModel {
     constructor() {
+        // region type
+        // endregion
         // region private variables
         /**
          * Current lock count
@@ -117,51 +119,51 @@ export class UFModel {
     /**
      * Adds a listener for data changes. If the listener was already added, nothing happens.
      *
-     * @param aCallback
+     * @param callback
      *   Callback to add
      *
      * @return a function that can be called to remove the listener. It just
      * calls {@link removeChangeListener} with aCallback.
      */
-    addChangeListener(aCallback) {
-        this.m_listeners.add(aCallback);
-        return () => this.removeChangeListener(aCallback);
+    addChangeListener(callback) {
+        this.m_listeners.add(callback);
+        return () => this.removeChangeListener(callback);
     }
     /**
      * Removes a listener for data changes.
      *
-     * @param aCallback
+     * @param callback
      *   Callback to remove
      */
-    removeChangeListener(aCallback) {
-        this.m_listeners.delete(aCallback);
+    removeChangeListener(callback) {
+        this.m_listeners.delete(callback);
     }
     /**
      * Adds a listener for changes to a certain property. If the listener was already added for
      * the property, nothing happens.
      *
-     * @param aProperty
+     * @param property
      *   Name of property
-     * @param aListener
+     * @param listener
      *   Callback function to call when property changes value
      *
      * @return a function that can be called to remove the listener. It just calls
      * {@link removePropertyChangeListener} with aProperty and aListener.
      */
-    addPropertyChangeListener(aProperty, aListener) {
-        this.m_propertyListeners.add(aProperty, aListener);
-        return () => this.removePropertyChangeListener(aProperty, aListener);
+    addPropertyChangeListener(property, listener) {
+        this.m_propertyListeners.add(property, listener);
+        return () => this.removePropertyChangeListener(property, listener);
     }
     /**
      * Removes a listener for changes to a certain property.
      *
-     * @param aProperty
+     * @param property
      *   Name of property
-     * @param aListener
+     * @param listener
      *   Listener to remove
      */
-    removePropertyChangeListener(aProperty, aListener) {
-        this.m_propertyListeners.remove(aProperty, aListener);
+    removePropertyChangeListener(property, listener) {
+        this.m_propertyListeners.remove(property, listener);
     }
     /**
      * Checks if there are changed properties. This method only is useful while the data is locked.
@@ -199,10 +201,10 @@ export class UFModel {
     /**
      * @inheritDoc
      */
-    isValidPropertyValue(aPropertyName, aValue) {
+    isValidPropertyValue(propertyName, value) {
         // make sure metadata exists before using it (to prevent creation of unnecessary data)
-        if (this.hasPropertyMetaData(aPropertyName)) {
-            return this.getPropertyMetaData(aPropertyName).validators.every(validator => UFValidators.isValidProperty(this, aPropertyName, validator, aValue));
+        if (this.hasPropertyMetaData(propertyName)) {
+            return this.getPropertyMetaData(propertyName).validators.every(validator => UFValidators.isValidProperty(this, propertyName, validator, value));
         }
         // no metadata, so no validators were registered, so the value is always valid
         return true;
@@ -212,38 +214,33 @@ export class UFModel {
      * If it is, the method returns the result of a call to that function. Else the method just
      * returns the value.
      *
-     * @param aName
+     * @param name
      *   Name of property
      *
      * @returns Value of property
      */
-    getPropertyValue(aName) {
-        // @ts-ignore
-        return typeof this[aName] === 'function' ? this[aName]() : this[aName];
+    getPropertyValue(name) {
+        return typeof this[name] === 'function' ? this[name]() : this[name];
     }
     /**
      * Sets a property to a value. The method checks if the property is a function. If it is, the
      * method will call the function passing the value as parameter. Else the method will assign the
      * value directly and call {@link changed}.
      *
-     * @param aName
+     * @param name
      *   Property name
-     * @param aValue
+     * @param value
      *   Value to assign
      */
-    setPropertyValue(aName, aValue) {
-        // @ts-ignore
-        if (typeof this[aName] === 'function') {
-            // @ts-ignore
-            this[aName](aValue);
+    setPropertyValue(name, value) {
+        if (typeof this[name] === 'function') {
+            this[name](value);
         }
-        // @ts-ignore
-        else if (this[aName] !== aValue) {
+        else if (this[name] !== value) {
             // lock in case aName is a property and the setter also calls changed
             this.lock();
-            // @ts-ignore
-            this[aName] = aValue;
-            this.changed(aName);
+            this[name] = value;
+            this.changed(name);
             this.unlock();
         }
     }
@@ -259,48 +256,48 @@ export class UFModel {
      *
      * @protected
      *
-     * @param aName
+     * @param name
      *   Property name
-     * @param aCurrentValue
+     * @param currentValue
      *   Current value of the property
-     * @param aNewValue
+     * @param newValue
      *   New value of the property or undefined if no new value needs to be set
-     * @param aSetterFunction
+     * @param setterFunction
      *   Function that is called to set the new changed value (if any)
-     * @param [aTransformFunction]
+     * @param [transformFunction]
      *   Function to transform aNewValue with before comparing and assigning it
-     * @param [anEqualFunction]
+     * @param [equalFunction]
      *   Custom compare function that should return true if objects are equal. When null, the method
      *   uses === to compare the values.
      *
      * @returns the current or new property value
      */
-    processPropertyValue(aName, aCurrentValue, aNewValue, aSetterFunction, aTransformFunction, anEqualFunction) {
-        if (typeof aNewValue !== 'undefined') {
-            if (aTransformFunction) {
-                aNewValue = aTransformFunction(aNewValue);
+    processPropertyValue(name, currentValue, newValue, setterFunction, transformFunction, equalFunction) {
+        if (typeof newValue !== 'undefined') {
+            if (transformFunction) {
+                newValue = transformFunction(newValue);
             }
-            const equal = anEqualFunction
-                ? anEqualFunction(aCurrentValue, aNewValue)
-                : aCurrentValue === aNewValue;
+            const equal = equalFunction
+                ? equalFunction(currentValue, newValue)
+                : currentValue === newValue;
             if (!equal) {
-                aSetterFunction(aNewValue);
-                this.changed(aName);
-                return aNewValue;
+                setterFunction(newValue);
+                this.changed(name);
+                return newValue;
             }
         }
-        return aCurrentValue;
+        return currentValue;
     }
     /**
      * Adds a validator for a certain property.
      *
-     * @param aPropertyName
+     * @param propertyName
      *   Property name
-     * @param aValidator
+     * @param validator
      *   A validator for a value or property
      */
-    addValidation(aPropertyName, aValidator) {
-        this.getPropertyMetaData(aPropertyName).validators.push(aValidator);
+    addValidation(propertyName, validator) {
+        this.getPropertyMetaData(propertyName).validators.push(validator);
     }
     /**
      * This method can be called when a property changes value. If the instance is locked
@@ -309,16 +306,16 @@ export class UFModel {
      *
      * The function accepts a variable number of name parameters
      *
-     * @param aNames
+     * @param names
      *   One or more property names that changed
      */
-    changed(...aNames) {
-        aNames.forEach(name => this.m_dirtyList.add(name));
+    changed(...names) {
+        names.forEach(name => this.m_dirtyList.add(name));
         if (this.m_lockCount > 0) {
-            aNames.forEach(name => this.m_changedList.add(name));
+            names.forEach(name => this.m_changedList.add(name));
         }
         else {
-            this.onPropertiesChanged(aNames);
+            this.onPropertiesChanged(names);
         }
     }
     /**
@@ -328,56 +325,56 @@ export class UFModel {
      * The default implementation invokes all the registered listeners. Subclasses can override this
      * method to take additional actions.
      *
-     * @param aList
+     * @param list
      *   List of property names
      */
-    onPropertiesChanged(aList) {
+    onPropertiesChanged(list) {
         const changeListeners = [...this.m_listeners];
-        changeListeners.forEach(listener => listener(this, aList));
-        aList.forEach(property => this.callPropertyListeners(property));
+        changeListeners.forEach(listener => listener(this, list));
+        list.forEach(property => this.callPropertyListeners(property));
     }
     // endregion
     // region private methods
     /**
      * Gets metadata for property name. Creates a metadata record if none exists for the property.
      *
-     * @param aPropertyName
+     * @param propertyName
      *   Name of property
      *
      * @returns Meta data
      *
      * @private
      */
-    getPropertyMetaData(aPropertyName) {
+    getPropertyMetaData(propertyName) {
         // get meta, create new meta if there is none yet
-        const meta = this.m_propertyMetaData[aPropertyName] || new PropertyMetaData();
-        this.m_propertyMetaData[aPropertyName] = meta;
+        const meta = this.m_propertyMetaData[propertyName] || new PropertyMetaData();
+        this.m_propertyMetaData[propertyName] = meta;
         return meta;
     }
     /**
      * Checks if property has validation data.
      *
-     * @param aPropertyName
+     * @param propertyName
      *   Name of property
      *
      * @return True when there is validation data for the property.
      *
      * @private
      */
-    hasPropertyMetaData(aPropertyName) {
-        return this.m_propertyMetaData.hasOwnProperty(aPropertyName);
+    hasPropertyMetaData(propertyName) {
+        return this.m_propertyMetaData.hasOwnProperty(propertyName);
     }
     /**
      * Calls the listeners for a certain property.
      *
-     * @param aProperty
+     * @param property
      *   Property to call listeners for
      *
      * @private
      */
-    callPropertyListeners(aProperty) {
-        const listeners = this.m_propertyListeners.get(aProperty);
-        listeners.forEach(listener => listener(this, aProperty));
+    callPropertyListeners(property) {
+        const listeners = this.m_propertyListeners.get(property);
+        listeners.forEach(listener => listener(this, property));
     }
 }
 // endregion

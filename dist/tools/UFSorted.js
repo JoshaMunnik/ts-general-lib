@@ -43,36 +43,36 @@ export class UFSorted {
     /**
      * Sort a collection of a certain type using the {@link UFSortableObject.sortOrder} property.
      *
-     * @param aData
+     * @param data
      *   Object, array, Set or Map to sort.
      *
      * @returns sorted values
      */
-    static sort(aData) {
-        return UFSorted.getValues(aData).sort((item0, item1) => item0.sortOrder - item1.sortOrder);
+    static sort(data) {
+        return UFSorted.getValues(data).sort((item0, item1) => item0.sortOrder - item1.sortOrder);
     }
     /**
      * Gets the maximum {@link UFSortableObject.sortOrder} value.
      *
-     * @param aData
+     * @param data
      *   Object, array, Set or Map to process.
      *
      * @returns value or `Number.MIN_VALUE` if none was found.
      */
-    static getMax(aData) {
-        const list = UFSorted.getValues(aData);
+    static getMax(data) {
+        const list = UFSorted.getValues(data);
         return list.reduce((previous, current) => Math.max(previous, current.sortOrder), Number.MIN_VALUE);
     }
     /**
      * Gets the minimum {@link UFSortableObject.sortOrder} value.
      *
-     * @param aData
+     * @param data
      *  Object, array, Set or Map to process.
      *
      * @returns minimum value or `Number.MAX_VALUE` if none was found.
      */
-    static getMin(aData) {
-        const list = UFSorted.getValues(aData);
+    static getMin(data) {
+        const list = UFSorted.getValues(data);
         return list.reduce((previous, current) => Math.min(previous, current.sortOrder), Number.MAX_VALUE);
     }
     // endregion
@@ -80,22 +80,22 @@ export class UFSorted {
     /**
      * Gets the values of a collection as an array.
      *
-     * @param aData
+     * @param data
      *   Data to get values from
      *
      * @returns list of values
      */
-    static getValues(aData) {
-        if (Array.isArray(aData)) {
-            return aData;
+    static getValues(data) {
+        if (Array.isArray(data)) {
+            return data;
         }
-        if (aData instanceof Set) {
-            return Array.from(aData);
+        if (data instanceof Set) {
+            return Array.from(data);
         }
-        if (aData instanceof Map) {
-            return Array.from(aData.values());
+        if (data instanceof Map) {
+            return Array.from(data.values());
         }
-        return Object.values(aData);
+        return Object.values(data);
     }
 }
 // endregion

@@ -46,22 +46,22 @@ export class UFProgressTools {
    * Checks if the object has a {@link IUFWeightedProgress.progressWeight} property and return the value; else return
    * a default value.
    *
-   * @param anObject
-   * @param aDefault
+   * @param objectValue
+   * @param defaultValue
    */
-  public static getProgressWeight(anObject: object, aDefault: number = 1.0): number {
-    return UFObject.getAs(anObject, 'progressWeight', aDefault);
+  public static getProgressWeight(objectValue: object, defaultValue: number = 1.0): number {
+    return UFObject.getAs(objectValue, 'progressWeight', defaultValue);
   }
 
   /**
    * Checks if the object has a {@link IUFProgress.progress} property and return the value; else return
    * a default value.
    *
-   * @param anObject
-   * @param aDefault
+   * @param objectValue
+   * @param defaultValue
    */
-  public static getProgress(anObject: object, aDefault: number = 0.0): number {
-    return UFObject.getAs(anObject, 'progress', aDefault);
+  public static getProgress(objectValue: object, defaultValue: number = 0.0): number {
+    return UFObject.getAs(objectValue, 'progress', defaultValue);
   }
 
   // endregion

@@ -38,42 +38,42 @@ export abstract class UFKeyedStorage {
   /**
    * Stores string value in storage.
    *
-   * @param aKey
+   * @param key
    *   Key to store value for
-   * @param aValue
+   * @param value
    *   Value to store
    */
-  abstract setString(aKey: string, aValue: string): void;
+  abstract setString(key: string, value: string): void;
   
   /**
    * Gets a string from the storage or return default when missing.
    *
-   * @param aKey
+   * @param key
    *   Key to get value for
-   * @param aDefault
+   * @param defaultValue
    *   Default value to use when key is missing.
    *
    * @returns either stored value or aDefault.
    */
-  abstract getString(aKey: string, aDefault: string): string;
+  abstract getString(key: string, defaultValue: string): string;
 
   /**
    * Removes item from the storage.
    *
-   * @param aKey
+   * @param key
    *   Key of item to remove
    */
-  abstract remove(aKey: string): void;
+  abstract remove(key: string): void;
 
   /**
    * Checks if storage contains a certain item.
    *
-   * @param aKey
+   * @param key
    *   Key of item
    *
    * @returns true if item is contained in the storage.
    */
-  abstract has(aKey: string): boolean;
+  abstract has(key: string): boolean;
 
   /**
    * Removes all items from the storage.
@@ -88,32 +88,32 @@ export abstract class UFKeyedStorage {
    * Stores an object in the storage. The default implementation uses JSON.stringify and calls
    * {@link setString} to store the object as string.
    *
-   * @param aKey
+   * @param key
    *   Key to store object for
-   * @param aValue
+   * @param value
    *   Object to store
    */
-  setObject<T>(aKey: string, aValue: T): void {
-    this.setString(aKey, JSON.stringify(aValue));
+  setObject<T>(key: string, value: T): void {
+    this.setString(key, JSON.stringify(value));
   }
 
   /**
    * Retrieves an object from storage. The default implementation gets a string using {@link getString} and uses
    * JSON.parse to convert a string back to an object.
    *
-   * @param aKey
+   * @param key
    *   Key to retrieve object for
-   * @param aDefault
+   * @param defaultValue
    *   Default value to use
    *
    * @returns parsed object or aDefault if there is no item or an exception occurred while parsing the string.
    */
-  getObject<T>(aKey: string, aDefault: T): T {
+  getObject<T>(key: string, defaultValue: T): T {
     try {
-      return this.has(aKey) ? JSON.parse(this.getString(aKey, "")) as T : aDefault;
+      return this.has(key) ? JSON.parse(this.getString(key, "")) as T : defaultValue;
     }
     catch (error) {
-      return aDefault;
+      return defaultValue;
     }
   }
 
@@ -121,33 +121,33 @@ export abstract class UFKeyedStorage {
    * Stores a number in the storage. The default implementation converts the value to a string and stores it as a
    * string.
    *
-   * @param aKey
+   * @param key
    *   Key to store number for
-   * @param aValue
+   * @param value
    *   number to store
    */
-  setNumber(aKey: string, aValue: number): void {
-    this.setString(aKey, '' + aValue);
+  setNumber(key: string, value: number): void {
+    this.setString(key, '' + value);
   }
 
   /**
    * Retrieves a number from storage. The default implementation gets the value as string and uses parseFloat to
    * convert it back to a number.
    *
-   * @param aKey
+   * @param key
    *   Key to get value for
-   * @param aDefault
+   * @param defaultValue
    *   Default value to use
    *
    * @returns parsed number or aDefault if there is no item or parsing resulted in a NaN value.
    */
-  getNumber(aKey: string, aDefault: number): number {
-    if (this.has(aKey)) {
-      const result = parseFloat(this.getString(aKey, ""));
-      return isNaN(result) ? aDefault : result;
+  getNumber(key: string, defaultValue: number): number {
+    if (this.has(key)) {
+      const result = parseFloat(this.getString(key, ""));
+      return isNaN(result) ? defaultValue : result;
     }
     else {
-      return aDefault;
+      return defaultValue;
     }
   }
 
@@ -155,64 +155,64 @@ export abstract class UFKeyedStorage {
    * Stores an integer in the storage. The default implementation converts the value to a string and stores it as
    * a string.
    *
-   * @param aKey
+   * @param key
    *   Key to store integer for
-   * @param aValue
+   * @param value
    *   Integer to store
    */
-  setInteger(aKey: string, aValue: number): void {
-    this.setString(aKey, '' + aValue);
+  setInteger(key: string, value: number): void {
+    this.setString(key, '' + value);
   }
 
   /**
    * Retrieves a integer from storage. The default implementation gets the value as string and uses parseInt to convert
    * it back to an integer.
    *
-   * @param aKey
+   * @param key
    *   Key to get integer for
-   * @param aDefault
+   * @param defaultValue
    *   Default value to use
    *
    * @returns parsed integer or aDefault if there is no item or parsing resulted in a NaN value.
    */
-  getInteger(aKey: string, aDefault: number): number {
-    if (this.has(aKey)) {
-      const result = parseInt(this.getString(aKey, ""), 10);
-      return isNaN(result) ? aDefault : result;
+  getInteger(key: string, defaultValue: number): number {
+    if (this.has(key)) {
+      const result = parseInt(this.getString(key, ""), 10);
+      return isNaN(result) ? defaultValue : result;
     }
     else {
-      return aDefault;
+      return defaultValue;
     }
   }
 
   /**
    * Stores a boolean in the storage. The default implementation stores either '1' or '0'.
    *
-   * @param aKey
+   * @param key
    *   Key to store boolean for
-   * @param aValue
+   * @param value
    *   Boolean to store
    */
-  setBoolean(aKey: string, aValue: boolean): void {
-    this.setString(aKey, aValue ? '1' : '0');
+  setBoolean(key: string, value: boolean): void {
+    this.setString(key, value ? '1' : '0');
   }
 
   /**
    * Retrieves a boolean from storage. The default implementation gets the value as string and checks if it equals '1'
    *
-   * @param aKey
+   * @param key
    *   Key to get value for
-   * @param aDefault
+   * @param defaultValue
    *   Default value to use
    *
    * @returns stored value is '1' or aDefault if there is no item
    */
-  getBoolean(aKey: string, aDefault: boolean): boolean {
-    if (this.has(aKey)) {
-      return this.getString(aKey, '') === '1';
+  getBoolean(key: string, defaultValue: boolean): boolean {
+    if (this.has(key)) {
+      return this.getString(key, '') === '1';
     }
     else {
-      return aDefault;
+      return defaultValue;
     }
   }
 

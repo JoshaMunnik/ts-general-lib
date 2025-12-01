@@ -38,40 +38,40 @@ export declare class UFSorted {
     /**
      * Sort a collection of a certain type using the {@link UFSortableObject.sortOrder} property.
      *
-     * @param aData
+     * @param data
      *   Object, array, Set or Map to sort.
      *
      * @returns sorted values
      */
-    static sort<T extends UFSortableObject>(aData: T[] | {
+    static sort<T extends UFSortableObject>(data: T[] | {
         [key: string]: T;
     } | Set<T> | Map<any, T>): T[];
     /**
      * Gets the maximum {@link UFSortableObject.sortOrder} value.
      *
-     * @param aData
+     * @param data
      *   Object, array, Set or Map to process.
      *
      * @returns value or `Number.MIN_VALUE` if none was found.
      */
-    static getMax<T extends UFSortableObject>(aData: T[] | {
+    static getMax<T extends UFSortableObject>(data: T[] | {
         [key: string]: T;
     } | Set<T> | Map<any, T>): number;
     /**
      * Gets the minimum {@link UFSortableObject.sortOrder} value.
      *
-     * @param aData
+     * @param data
      *  Object, array, Set or Map to process.
      *
      * @returns minimum value or `Number.MAX_VALUE` if none was found.
      */
-    static getMin<T extends UFSortableObject>(aData: T[] | {
+    static getMin<T extends UFSortableObject>(data: T[] | {
         [key: string]: T;
     } | Set<T> | Map<any, T>): number;
     /**
      * Gets the values of a collection as an array.
      *
-     * @param aData
+     * @param data
      *   Data to get values from
      *
      * @returns list of values

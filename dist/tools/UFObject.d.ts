@@ -37,109 +37,109 @@ export declare class UFObject {
     /**
      * Gets a property or throws an error if the property is missing.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to get property from
-     * @param aPropertyName
+     * @param propertyName
      *   Property to get
      *
      * @return value of property
      *
      * @throws an error if the object does not contain the property
      */
-    static getOrFail(anObject: any, aPropertyName: string): any;
+    static getOrFail(objectValue: any, propertyName: string): any;
     /**
      * Gets a property as a certain type or throws an error if the property is missing.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to get property from
-     * @param aPropertyName
+     * @param propertyName
      *   Property to get
      *
      * @return value of property
      *
      * @throws an error if the object does not contain the property
      */
-    static getOrFailAs<T>(anObject: any, aPropertyName: string): T;
+    static getOrFailAs<T>(objectValue: any, propertyName: string): T;
     /**
      * Gets a property from an object.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to get property from
-     * @param aPropertyName
+     * @param propertyName
      *   Property to get
-     * @param aDefault
+     * @param defaultValue
      *   Default value to use
      *
      * @return value from property or aDefault if it does not exist
      */
-    static get(anObject: any, aPropertyName: string, aDefault: any): any;
+    static get(objectValue: any, propertyName: string, defaultValue: any): any;
     /**
      * Gets a property from an object and typecast it to a type.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to get property from
-     * @param aPropertyName
+     * @param propertyName
      *   Property to get
-     * @param aDefault
+     * @param defaultValue
      *   Default value to use
      *
      * @return value from property or aDefault if it does not exist
      */
-    static getAs<T>(anObject: any, aPropertyName: string, aDefault: T): T;
+    static getAs<T>(objectValue: any, propertyName: string, defaultValue: T): T;
     /**
      * Sets a property in an object to a value. If the property can not be found, the method does
      * nothing.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to get property from
-     * @param aPropertyName
+     * @param propertyName
      *   Property to set
-     * @param aValue
+     * @param value
      *   Value to set property with
      */
-    static set(anObject: any, aPropertyName: string, aValue: any): void;
+    static set(objectValue: any, propertyName: string, value: any): void;
     /**
      * Sets a property in an object to a value. If the property can not be found, the method throws
      * an error.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to get property from
-     * @param aPropertyName
+     * @param propertyName
      *   Property to set
-     * @param aValue
+     * @param value
      *   Value to set property with
      */
-    static setOrFail(anObject: any, aPropertyName: string, aValue: any): void;
+    static setOrFail(objectValue: any, propertyName: string, value: any): void;
     /**
      * Gets a property from an object. If there is no property, create a new value and attach it
      * to the object.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to get property from
-     * @param aPropertyName
+     * @param propertyName
      *   Name of property to get
-     * @param aFactory
+     * @param factory
      *   Factory function to create a new value
      *
      * @return value from property
      */
-    static getAttachedAs<T>(anObject: any, aPropertyName: string, aFactory: () => T): T;
+    static getAttachedAs<T>(objectValue: any, propertyName: string, factory: () => T): T;
     /**
      * See if all properties in aMatch can be found in aSource and are equal. If a property is
      * an object, the method will call itself recursively.
      *
      * Only properties defined in aMatch are checked.
      *
-     * @param aSource
+     * @param source
      *   Source object to test
-     * @param aMatch
+     * @param match
      *   Contains properties to match
-     * @param anIgnoreCase
+     * @param ignoreCase
      *   True: ignore case of string properties, false: casing must match for properties to be equal
      *
      * @return True: all properties found and matching in value
      */
-    static equalProperties(aSource: any, aMatch: any, anIgnoreCase?: boolean): boolean;
+    static equalProperties(source: any, match: any, ignoreCase?: boolean): boolean;
     /**
      * Create a copy of the map object, setting properties in it to values of properties in aSource.
      *
@@ -149,9 +149,9 @@ export declare class UFObject {
      * If aSource is an Array instance, a new Array instance is created else a new Object
      * instance is used.
      *
-     * @param aSource
+     * @param source
      *   Source object to obtain values from
-     * @param aMap
+     * @param map
      *   An object with various properties
      *
      * @return A copy of aMap with values obtained from a Source.
@@ -171,7 +171,7 @@ export declare class UFObject {
      * // data.textField.backgroundColor = current background color
      * </listing>
      */
-    static backupProperties(aSource: any, aMap: any): any;
+    static backupProperties(source: any, map: any): any;
     /**
      * Copy the values of properties in aValues to properties of same name in anObject.
      *
@@ -181,9 +181,9 @@ export declare class UFObject {
      * two parameters: anObject, property name. The function is responsible for assigning a value to
      * anObject.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to update properties
-     * @param aValues
+     * @param values
      *   Object to get parse and obtain values from
      *
      * @return Value of anObject
@@ -202,28 +202,28 @@ export declare class UFObject {
      * // restore original settings
      * UFObjectTools.applyProperties(SomeTextInput, originalProperties);
      */
-    static applyProperties(anObject: any, aValues: any): any;
+    static applyProperties(objectValue: any, values: any): any;
     /**
      * Copies the properties of an object. Recursively call this method for properties that are
      * object values.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to copy
      *
      * @return copy of an object
      */
-    static deepCopy<T extends object>(anObject: T): T;
+    static deepCopy<T extends object>(objectValue: T): T;
     /**
      * Checks if an object contains a certain key. It is possible to specify multiple values.
      *
-     * @param anObject
+     * @param objectValue
      *   An object (keys are checked)
-     * @param aKeys
+     * @param keys
      *   One or more key names to check
      *
      * @returns True if the object has a key that matches one of the aKeys values.
      */
-    static contains(anObject: any, ...aKeys: string[]): boolean;
+    static contains(objectValue: any, ...keys: string[]): boolean;
     /**
      * Combines multiple object instances.
      *
@@ -239,30 +239,30 @@ export declare class UFObject {
      * If aCallInit is false, a new initialize method is attached to the created object that will call
      * all the other initialize methods with the correct function scope.
      *
-     * @param anObjects
+     * @param objects
      *   Object instances to combine
-     * @param aCallInitialize
+     * @param callInitialize
      *   When false do not call the initialize methods but create and attach a new initialize method
      *   that will call the initialize methods (if any of the other objects contains the initialize
      *   method).
-     * @param anInitializeName
+     * @param initializeName
      *   The name of the initialize method to call or null to skip.
      *
      * @return An instance being a combination of all arguments
      */
-    static combineObjects(anObjects: any[], aCallInitialize?: boolean, anInitializeName?: string): any;
+    static combineObjects(objects: any[], callInitialize?: boolean, initializeName?: string): any;
     /**
      * Copies a property/method from one object to another. If the property is a getter or setter,
      * the method will redefine the property in the target object.
      *
-     * @param aName
+     * @param name
      *   Name of property
-     * @param aSource
+     * @param source
      *   Source to copy property from
-     * @param aTarget
+     * @param target
      *   Target to copy property to
      */
-    static copyProperty(aName: string, aSource: any, aTarget: any): void;
+    static copyProperty(name: string, source: any, target: any): void;
     /**
      * Copies all properties from one object to another object using {@link copyProperty}.
      *
@@ -271,43 +271,43 @@ export declare class UFObject {
      *
      * @private
      *
-     * @param aSource
+     * @param source
      *   Source to copy from
-     * @param aTarget
+     * @param target
      *   Target to copy to
-     * @param aSeparatorName
+     * @param separatorName
      *   Optional name of property to place in aSeparatorList
-     * @param aSeparatorList
+     * @param separatorList
      *   Must be specified if aSeparatorName is specified.
      */
-    static copyProperties(aSource: any, aTarget: any, aSeparatorName?: string, aSeparatorList?: any[]): void;
+    static copyProperties(source: any, target: any, separatorName?: string, separatorList?: any[]): void;
     /**
      * Processes init methods.
      *
      * @private
      *
-     * @param {object} aTarget
+     * @param {object} target
      *   Object that acts as the function scope and might get an initialized function attached to it
      *   if aCallInit is false.
-     * @param aFunctions
+     * @param functions
      *   A list of functions to call using aTarget as function scope.
-     * @param aMethodName
+     * @param methodName
      *   When specified, instead of calling the functions a new method will be attached to aTarget
      *   using this name. The method will call all functions with aTarget as function scope.
      */
-    static callMethods(aTarget: any, aFunctions: any[], aMethodName?: string): void;
+    static callMethods(target: any, functions: any[], methodName?: string): void;
     /**
      * Checks if an object is an instance of a class. If anObject is not an object, the method will
      * return false.
      *
      * The method will also return false if instanceOf fails with an exception.
      *
-     * @param anObject
+     * @param objectValue
      *   Object to check
-     * @param aClass
+     * @param classType
      *   Class to check
      *
      * @return True if anObject is an instance of aClass; in all other cases false.
      */
-    static instanceOf(anObject: any, aClass: any): boolean;
+    static instanceOf(objectValue: any, classType: any): boolean;
 }

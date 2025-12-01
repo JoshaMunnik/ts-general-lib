@@ -45,10 +45,10 @@ export declare class UFDelayAction extends UFQueueableAction {
     /**
      * Constructs an instance of {@link UFDelayAction}.
      *
-     * @param aDelay
+     * @param delay
      *   Delay in milliseconds
      */
-    constructor(aDelay: number);
+    constructor(delay: number);
     /**
      * @inheritDoc
      */

@@ -45,86 +45,86 @@ export declare abstract class UFDatabase<TRow> implements IUFDatabase {
     /**
      * @inheritDoc
      */
-    fieldAs<T>(aSql: string, aParameterValues: UFDynamicObject, aDefault: T): Promise<T>;
+    fieldAs<T>(sql: string, parameterValues: UFDynamicObject, defaultValue: T): Promise<T>;
     /**
      * @inheritDoc
      */
-    fieldOrFailAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T>;
+    fieldOrFailAs<T>(sql: string, parameterValues?: UFDynamicObject): Promise<T>;
     /**
      * @inheritDoc
      */
-    abstract insert(aSql: string, aParameterValues?: UFDynamicObject): Promise<number>;
+    abstract insert(sql: string, parameterValues?: UFDynamicObject): Promise<number>;
     /**
      * @inheritDoc
      */
-    insertObject<T extends object>(aTable: string, aData: T, aPrimaryKey?: string, anIgnoreFields?: string[]): Promise<T>;
+    insertObject<T extends object>(table: string, data: T, primaryKey?: string, ignoreFields?: string[]): Promise<T>;
     /**
      * @inheritDoc
      */
-    rowAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T | undefined>;
+    rowAs<T>(sql: string, parameterValues?: UFDynamicObject): Promise<T | undefined>;
     /**
      * @inheritDoc
      */
-    rowOrFailAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T>;
+    rowOrFailAs<T>(sql: string, parameterValues?: UFDynamicObject): Promise<T>;
     /**
      * @inheritDoc
      */
-    rowsAs<T>(aSql: string, aParameterValues?: UFDynamicObject): Promise<T[]>;
+    rowsAs<T>(sql: string, parameterValues?: UFDynamicObject): Promise<T[]>;
     /**
      * @inheritDoc
      */
-    abstract transaction(aCallback: (aDatabase: IUFDatabase) => Promise<void>): Promise<void>;
+    abstract transaction(callback: (database: IUFDatabase) => Promise<void>): Promise<void>;
     /**
      * @inheritDoc
      */
-    abstract update(aSql: string, aParameterValues?: UFDynamicObject): Promise<number>;
+    abstract update(sql: string, parameterValues?: UFDynamicObject): Promise<number>;
     /**
      * @inheritDoc
      */
-    updateObject<T extends object>(aTable: string, aPrimaryValue: any, aData: T, aPrimaryKey?: string, anIgnoreFields?: string[]): Promise<void>;
+    updateObject<T extends object>(table: string, primaryValue: any, data: T, primaryKey?: string, ignoreFields?: string[]): Promise<void>;
     /**
      * @inheritDoc
      */
-    delete(aSql: string, aParameterValues?: UFDynamicObject): Promise<number>;
+    delete(sql: string, parameterValues?: UFDynamicObject): Promise<number>;
     /**
      * @inheritDoc
      */
-    getUniqueCode(aTable: string, aColumn: string, aLength: number): Promise<string>;
+    getUniqueCode(table: string, column: string, length: number): Promise<string>;
     /**
      * Execute a sql to get a single value.
      *
-     * @param aSql
+     * @param sql
      *   Sql statement to perform
-     * @param aParameterValues
+     * @param parameterValues
      *   Values to use in case the statement contains parameters
-     * @param aDefault
+     * @param defaultValue
      *   Default value to return if the sql statement did not have any results
      *
      * @return result from sql statement or aDefault
      */
-    protected abstract field(aSql: string, aParameterValues?: UFDynamicObject, aDefault?: any): Promise<any>;
+    protected abstract field(sql: string, parameterValues?: UFDynamicObject, defaultValue?: any): Promise<any>;
     /**
      * Execute a sql to get a row.
      *
-     * @param aSql
+     * @param sql
      *   Sql statement to perform
-     * @param aParameterValues
+     * @param parameterValues
      *   Values to use in case the statement contains parameters
      *
      * @return result from sql statement; undefined when no row could be found
      */
-    protected abstract row(aSql: string, aParameterValues?: UFDynamicObject): Promise<TRow | undefined>;
+    protected abstract row(sql: string, parameterValues?: UFDynamicObject): Promise<TRow | undefined>;
     /**
      * Execute a sql to get multiple rows.
      *
-     * @param aSql
+     * @param sql
      *   Sql statement to perform
-     * @param aParameterValues
+     * @param parameterValues
      *   Values to use in case the statement contains parameters
      *
      * @return Result from sql statement
      */
-    protected abstract rows(aSql: string, aParameterValues?: UFDynamicObject): Promise<TRow[]>;
+    protected abstract rows(sql: string, parameterValues?: UFDynamicObject): Promise<TRow[]>;
     /**
      * Converts a row from database type to an external type. The default implementation just uses a
      * typecast.
@@ -132,23 +132,23 @@ export declare abstract class UFDatabase<TRow> implements IUFDatabase {
      * @template T
      * @template TRow
      *
-     * @param aRow
+     * @param row
      *   Row to convert.
      *
      * @return The data from aRow as new type.
      */
-    protected convertRow<T>(aRow: TRow): T;
+    protected convertRow<T>(row: TRow): T;
     /**
      * Processes a sql with named parameters and replaces the named parameters with values returned by the callback.
      *
-     * @param aSql
+     * @param sql
      *   Sql statement to process.
-     * @param aParameterValues
+     * @param parameterValues
      *   An object that contains properties whose name match the named parameters
-     * @param aCallback
+     * @param callback
      *   This callback is invoked for every found named parameter. The result will be used to replace the named parameter.
      *
      * @return an updated SQL statement
      */
-    protected processSqlParameters(aSql: string, aParameterValues: UFDynamicObject, aCallback: (aName: string, aValue: any) => string): string;
+    protected processSqlParameters(sql: string, parameterValues: UFDynamicObject, callback: (name: string, value: any) => string): string;
 }

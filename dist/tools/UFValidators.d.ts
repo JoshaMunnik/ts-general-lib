@@ -32,12 +32,12 @@ export interface IUFValidateValue {
     /**
      * Checks if a value is valid.
      *
-     * @param aValue
+     * @param value
      *   Value to check
      *
      * @returns True if the value is valid; false otherwise.
      */
-    (aValue: any): boolean;
+    (value: any): boolean;
 }
 /**
  * A object interface that defines a method to test if a value is valid.
@@ -46,12 +46,12 @@ export interface IUFValueValidator {
     /**
      * Checks if a value is valid.
      *
-     * @param aValue
+     * @param value
      *   Value to check
      *
      * @returns True if the value is valid; false otherwise.
      */
-    isValidValue(aValue: any): boolean;
+    isValidValue(value: any): boolean;
 }
 /**
  * An object interface that defines a method to test if a property is valid.
@@ -60,16 +60,16 @@ export interface IUFPropertyValidator {
     /**
      * Checks if a value is valid for a certain property.
      *
-     * @param aPropertyName
+     * @param propertyName
      *   Name of property
-     * @param aData
+     * @param data
      *   Data that contains the property
-     * @param aValue
+     * @param value
      *   Value to check
      *
      * @returns True if the value is valid; false otherwise.
      */
-    isValidPropertyValue(aPropertyName: string, aData: IUFModel, aValue: any): boolean;
+    isValidPropertyValue(propertyName: string, data: IUFModel, value: any): boolean;
 }
 /**
  * {@link UFValidators} defines various static methods to validate values.
@@ -88,201 +88,201 @@ export declare class UFValidators {
     /**
      * Checks if a text contains at least one non space character.
      *
-     * @param aValue
+     * @param text
      *   Value to validate
      *
      * @returns True if the value contains one or more non-space chars; false if the string is null, empty or
      *   contains only spaces.
      */
-    static isNonEmptyText(aValue: any): boolean;
+    static isNonEmptyText(text: any): boolean;
     /**
      * Checks if a value is valid number.
      *
-     * @param aValue
+     * @param value
      *   Value to test
      *
      * @returns the result of !isNaN(aValue)
      */
-    static isNumber(aValue: any): boolean;
+    static isNumber(value: any): boolean;
     /**
      * Checks if a value is a valid integer.
      *
-     * @param aValue
+     * @param value
      *   Value to test
      *
      * @returns true if aValue is a valid integer.
      */
-    static isInteger(aValue: any): boolean;
+    static isInteger(value: any): boolean;
     /**
      * Checks if a value is a valid email address.
      *
-     * @param aValue
+     * @param value
      *   Value to test
      *
      * @returns true if aValue is a valid email address.
      */
-    static isEmail(aValue: any): boolean;
+    static isEmail(value: any): boolean;
     /**
      * Checks if a value is a valid dutch zip code.
      *
-     * @param aValue
+     * @param value
      *   Value to test
      *
      * @returns true if aValue is a valid dutch zip code.
      */
-    static isZipCodeDutch(aValue: any): boolean;
+    static isZipCodeDutch(value: any): boolean;
     /**
      * Checks if a value is a valid city name.
      *
-     * @param aValue
+     * @param value
      *   Value to test
      *
      * @returns true if aValue is a valid city name.
      */
-    static isCityName(aValue: any): boolean;
+    static isCityName(value: any): boolean;
     /**
      * Checks if a value is an array.
      *
-     * @param aValue
+     * @param value
      *   Value to test
      *
      * @returns true if aValue is a valid city name.
      */
-    static isArray(aValue: any): boolean;
+    static isArray(value: any): boolean;
     /**
      * Creates a validator function that checks if a value matches a regular expression.
      *
-     * @param aRegExp
+     * @param regExp
      *   Regular expression to use for testing
      *
      * @returns validator function.
      */
-    static createRegExp(aRegExp: RegExp): IUFValidateValue;
+    static createRegExp(regExp: RegExp): IUFValidateValue;
     /**
      * Creates a validator function that checks if a value is string with a certain length.
      *
-     * @param aMin
+     * @param min
      *   Minimal number of characters allowed
-     * @param [aMax=Number.MAX_VALUE]
+     * @param [max=Number.MAX_VALUE]
      *   Maximum number of characters allowed
      *
      * @returns validator function.
      */
-    createTextLength(aMin: number, aMax?: number): IUFValidateValue;
+    createTextLength(min: number, max?: number): IUFValidateValue;
     /**
      * Creates a validator that checks if a value is a valid number and within a certain value range.
      *
-     * @param aMin
+     * @param min
      *   Minimum value allowed (including this value)
-     * @param [aMax=Number.MAX_VALUE]
+     * @param [max=Number.MAX_VALUE]
      *   Maximum value allowed (including this value)
      *
      * @returns validator function.
      */
-    createNumberRange(aMin: number, aMax?: number): IUFValidateValue;
+    createNumberRange(min: number, max?: number): IUFValidateValue;
     /**
      * Creates a validator that checks if a value is a valid integer and within a certain value range.
      *
-     * @param aMin
+     * @param min
      *   Minimum value allowed (including this value)
-     * @param [aMax=Number.MAX_VALUE]
+     * @param [max=Number.MAX_VALUE]
      *   Maximum value allowed (including this value)
      *
      * @returns validator function.
      */
-    createIntegerRange(aMin: number, aMax?: number): IUFValidateValue;
+    createIntegerRange(min: number, max?: number): IUFValidateValue;
     /**
      * Creates a validator that checks if a value is a valid integer and within a certain value range.
      *
-     * @param aMin
+     * @param min
      *   Minimum value allowed (including this value)
-     * @param [aMax=Number.MAX_VALUE]
+     * @param [max=Number.MAX_VALUE]
      *   Maximum value allowed (including this value)
      *
      * @returns validator function.
      */
-    createArrayRange(aMin: number, aMax?: number): IUFValidateValue;
+    createArrayRange(min: number, max?: number): IUFValidateValue;
     /**
      * Creates a validator that checks if a value matches a boolean value.
      *
-     * @param aValidValue
+     * @param validValue
      *   Value to match
      *
      * @returns validator function.
      */
-    static createBoolean(aValidValue: boolean): IUFValidateValue;
+    static createBoolean(validValue: boolean): IUFValidateValue;
     /**
      * Creates a validator that checks if a property contains a valid value. The validator does not do
      * anything with the passed value.
      *
-     * @param aProperty
+     * @param property
      *   Property name
-     * @param aData
+     * @param data
      *   Data instance
      *
      * @returns validator function.
      */
-    static createAnotherProperty(aProperty: string, aData: IUFModel): IUFValidateValue;
+    static createAnotherProperty(property: string, data: IUFModel): IUFValidateValue;
     /**
      * Creates a validator that checks if a value is equal to a property.
      *
-     * @param aProperty
+     * @param property
      *   Property name
-     * @param aData
+     * @param data
      *   Data instance
      *
      * @returns validator function.
      */
-    static createEqualToProperty(aProperty: string, aData: IUFModel): IUFValidateValue;
+    static createEqualToProperty(property: string, data: IUFModel): IUFValidateValue;
     /**
      * Creates a validator that optionally validates a value. If a value is empty or '' then the validator
      * will return true else it will pass the value to another validator.
      *
-     * @param aValidator
+     * @param validator
      *   Validator to use for non empty values.
      *
      * @returns validator function.
      */
-    static createOptional(aValidator: IUFValidateValue | IUFValueValidator): IUFValidateValue;
+    static createOptional(validator: IUFValidateValue | IUFValueValidator): IUFValidateValue;
     /**
      * Creates a validator to validate a day value.
      *
-     * @param aMonthProperty
+     * @param monthProperty
      *   Property name for month
-     * @param aYearProperty
+     * @param yearProperty
      *   Property name for year
-     * @param aData
+     * @param data
      *   UFModel instance
      *
      * @returns validator function.
      */
-    createDay(aMonthProperty: string, aYearProperty: string, aData: IUFModel): IUFValidateValue;
+    createDay(monthProperty: string, yearProperty: string, data: IUFModel): IUFValidateValue;
     /**
      * Checks if value is valid.
      *
-     * @param aValue
+     * @param value
      *   Value to validate
-     * @param aValidator
+     * @param validator
      *   Validator to use
      *
      * @returns result from validator or true if validator is not
      *   supported.
      */
-    static isValidValue(aValue: any, aValidator: IUFValidateValue | IUFValueValidator): boolean;
+    static isValidValue(value: any, validator: IUFValidateValue | IUFValueValidator): boolean;
     /**
      * Checks if a property has a valid value.
      *
-     * @param aData
+     * @param data
      *   Data to get property value from
-     * @param aPropertyName
+     * @param propertyName
      *   Name of property
-     * @param aValidator
+     * @param validator
      *   Validator to use
-     * @param [aValue]
+     * @param [value]
      *   Value to validate, when missing use the value of the property.
      *
      * @returns result from validator or true if validator is not
      *   supported.
      */
-    static isValidProperty(aData: IUFModel, aPropertyName: string, aValidator: IUFValidateValue | IUFValueValidator | IUFPropertyValidator, aValue?: any): boolean;
+    static isValidProperty(data: IUFModel, propertyName: string, validator: IUFValidateValue | IUFValueValidator | IUFPropertyValidator, value?: any): boolean;
 }

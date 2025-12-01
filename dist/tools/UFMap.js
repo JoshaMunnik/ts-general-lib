@@ -42,21 +42,21 @@ export class UFMap {
      * Gets a value from a map for a certain key. If no value exists, create a new value, store it
      * in the map and return it.
      *
-     * @param aMap
+     * @param map
      *   Map to get value from and update if necessary
-     * @param aKey
+     * @param key
      *   Key to get value for
-     * @param aFactory
+     * @param factory
      *   Factory function that will be called to create a new value if none could be found
      *
      * @return the value in the map
      */
-    static get(aMap, aKey, aFactory) {
-        if (aMap.has(aKey)) {
-            return aMap.get(aKey);
+    static get(map, key, factory) {
+        if (map.has(key)) {
+            return map.get(key);
         }
-        const newValue = aFactory();
-        aMap.set(aKey, newValue);
+        const newValue = factory();
+        map.set(key, newValue);
         return newValue;
     }
 }
