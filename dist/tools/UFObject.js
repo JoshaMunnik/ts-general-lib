@@ -476,7 +476,7 @@ export class UFObject {
         try {
             return objectValue instanceof classType;
         }
-        catch (_a) {
+        catch {
             return false;
         }
     }

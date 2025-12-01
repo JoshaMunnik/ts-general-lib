@@ -24,15 +24,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import { UFText } from "../tools/UFText.js";
 // endregion
 // region types
@@ -56,119 +47,104 @@ export class UFDatabase {
     /**
      * @inheritDoc
      */
-    fieldAs(sql, parameterValues, defaultValue) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield this.field(sql, parameterValues, defaultValue);
-        });
+    async fieldAs(sql, parameterValues, defaultValue) {
+        return await this.field(sql, parameterValues, defaultValue);
     }
     /**
      * @inheritDoc
      */
-    fieldOrFailAs(sql, parameterValues) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const field = yield this.field(sql, parameterValues);
-            if (field === undefined) {
-                throw new Error('no field for query');
-            }
-            return field;
-        });
+    async fieldOrFailAs(sql, parameterValues) {
+        const field = await this.field(sql, parameterValues);
+        if (field === undefined) {
+            throw new Error('no field for query');
+        }
+        return field;
     }
     /**
      * @inheritDoc
      */
-    insertObject(table_1, data_1) {
-        return __awaiter(this, arguments, void 0, function* (table, data, primaryKey = 'id', ignoreFields = []) {
-            let columns = '';
-            let values = '';
-            const parameters = {};
-            Object.entries(data).forEach(([key, value]) => {
-                if ((key !== primaryKey) && !ignoreFields.includes(key)) {
-                    columns = UFText.append(columns, key, ',');
-                    values = UFText.append(values, ':' + key, ',');
-                    parameters[key] = value;
-                }
-            });
-            const id = yield this.insert(`insert into ${table} (${columns}) values (${values})`, parameters);
-            if (id > 0) {
-                return Object.assign(Object.assign({}, data), { [primaryKey]: id });
-            }
-            return data;
-        });
-    }
-    /**
-     * @inheritDoc
-     */
-    rowAs(sql, parameterValues) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.row(sql, parameterValues);
-            return result == undefined ? undefined : this.convertRow(result);
-        });
-    }
-    /**
-     * @inheritDoc
-     */
-    rowOrFailAs(sql, parameterValues) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const row = yield this.rowAs(sql, parameterValues);
-            if (row == undefined) {
-                throw new Error('no row for query ' + sql + ' ' + JSON.stringify(parameterValues));
-            }
-            return row;
-        });
-    }
-    /**
-     * @inheritDoc
-     */
-    rowsAs(sql, parameterValues) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.rows(sql, parameterValues);
-            return result.map(row => this.convertRow(row));
-        });
-    }
-    /**
-     * @inheritDoc
-     */
-    updateObject(table_1, primaryValue_1, data_1) {
-        return __awaiter(this, arguments, void 0, function* (table, primaryValue, data, primaryKey = 'id', ignoreFields = []) {
-            let fields = '';
-            const parameters = {};
-            Object.entries(data).forEach(([key, value]) => {
-                if ((key !== primaryKey) && !ignoreFields.includes(key)) {
-                    fields = UFText.append(fields, key + '=' + ':' + key, ',');
-                    parameters[key] = value;
-                }
-            });
-            if (fields.length) {
-                const sql = 'update ' + table + ' set ' + fields + ' where ' + primaryKey + ' = :' + primaryKey;
-                parameters[primaryKey] = primaryValue;
-                yield this.update(sql, parameters);
+    async insertObject(table, data, primaryKey = 'id', ignoreFields = []) {
+        let columns = '';
+        let values = '';
+        const parameters = {};
+        Object.entries(data).forEach(([key, value]) => {
+            if ((key !== primaryKey) && !ignoreFields.includes(key)) {
+                columns = UFText.append(columns, key, ',');
+                values = UFText.append(values, ':' + key, ',');
+                parameters[key] = value;
             }
         });
+        const id = await this.insert(`insert into ${table} (${columns}) values (${values})`, parameters);
+        if (id > 0) {
+            return {
+                ...data,
+                [primaryKey]: id
+            };
+        }
+        return data;
     }
     /**
      * @inheritDoc
      */
-    delete(sql, parameterValues) {
-        return __awaiter(this, void 0, void 0, function* () {
-            // The default implementation calls update assuming it is handled in the same way by the database
-            // implementation.
-            return yield this.update(sql, parameterValues);
-        });
+    async rowAs(sql, parameterValues) {
+        const result = await this.row(sql, parameterValues);
+        return result == undefined ? undefined : this.convertRow(result);
     }
     /**
      * @inheritDoc
      */
-    getUniqueCode(table, column, length) {
-        return __awaiter(this, void 0, void 0, function* () {
-            while (true) {
-                const values = {
-                    code: UFText.generateCode(length)
-                };
-                if ((yield this.fieldAs(`select count(*) from ${table} where ${column} = :code`, values, 0)) === 0) {
-                    return values.code;
-                }
+    async rowOrFailAs(sql, parameterValues) {
+        const row = await this.rowAs(sql, parameterValues);
+        if (row == undefined) {
+            throw new Error('no row for query ' + sql + ' ' + JSON.stringify(parameterValues));
+        }
+        return row;
+    }
+    /**
+     * @inheritDoc
+     */
+    async rowsAs(sql, parameterValues) {
+        const result = await this.rows(sql, parameterValues);
+        return result.map(row => this.convertRow(row));
+    }
+    /**
+     * @inheritDoc
+     */
+    async updateObject(table, primaryValue, data, primaryKey = 'id', ignoreFields = []) {
+        let fields = '';
+        const parameters = {};
+        Object.entries(data).forEach(([key, value]) => {
+            if ((key !== primaryKey) && !ignoreFields.includes(key)) {
+                fields = UFText.append(fields, key + '=' + ':' + key, ',');
+                parameters[key] = value;
             }
         });
+        if (fields.length) {
+            const sql = 'update ' + table + ' set ' + fields + ' where ' + primaryKey + ' = :' + primaryKey;
+            parameters[primaryKey] = primaryValue;
+            await this.update(sql, parameters);
+        }
+    }
+    /**
+     * @inheritDoc
+     */
+    async delete(sql, parameterValues) {
+        // The default implementation calls update assuming it is handled in the same way by the database
+        // implementation.
+        return await this.update(sql, parameterValues);
+    }
+    /**
+     * @inheritDoc
+     */
+    async getUniqueCode(table, column, length) {
+        while (true) {
+            const values = {
+                code: UFText.generateCode(length)
+            };
+            if (await this.fieldAs(`select count(*) from ${table} where ${column} = :code`, values, 0) === 0) {
+                return values.code;
+            }
+        }
     }
     /**
      * Converts a row from database type to an external type. The default implementation just uses a

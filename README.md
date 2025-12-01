@@ -18,6 +18,9 @@ To view the generated documentation, visit: https://joshamunnik.github.io/ts-gen
 
 ## Version history
 
+1.0.27
+- changed target of tsconfig to es2021
+
 1.0.26
 - removed 'a' and 'an' prefix from parameters with method/function definitions
 - added `UFText.escapeRegExp` static method

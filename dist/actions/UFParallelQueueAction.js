@@ -24,15 +24,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import { UFQueueableAction } from "./UFQueueableAction.js";
 import { UFProgressTools } from "../tools/UFProgressTools.js";
 import { UFCancellationTokenSource } from "./UFCancellationTokenSource.js";
@@ -102,24 +93,22 @@ export class UFParallelQueueAction extends UFQueueableAction {
      *
      * @throws an error if one or more actions threw an error.
      */
-    run(token) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (this.running) {
-                return true;
-            }
-            this.m_doneProgressWeight = 0.0;
-            this.m_actionIndex = 0;
-            this.m_errorMessage = '';
-            const tokenSource = new UFCancellationTokenSource(token);
-            yield this.runActions(tokenSource);
-            // success if no task did cancel or threw an exception
-            const result = !tokenSource.isCancellationRequested;
-            // throw an exception if one or more actions threw an exception
-            if (this.m_errorMessage.length) {
-                throw new Error(`One or more actions raised an error: ${this.m_errorMessage}`);
-            }
-            return result;
-        });
+    async run(token) {
+        if (this.running) {
+            return true;
+        }
+        this.m_doneProgressWeight = 0.0;
+        this.m_actionIndex = 0;
+        this.m_errorMessage = '';
+        const tokenSource = new UFCancellationTokenSource(token);
+        await this.runActions(tokenSource);
+        // success if no task did cancel or threw an exception
+        const result = !tokenSource.isCancellationRequested;
+        // throw an exception if one or more actions threw an exception
+        if (this.m_errorMessage.length) {
+            throw new Error(`One or more actions raised an error: ${this.m_errorMessage}`);
+        }
+        return result;
     }
     /**
      * Gets all current running actions.
@@ -168,15 +157,13 @@ export class UFParallelQueueAction extends UFQueueableAction {
      *
      * @private
      */
-    runActions(tokenSource) {
-        return __awaiter(this, void 0, void 0, function* () {
-            // keep looping if there are actions that still can be added or if there are any active actions still running
-            while ((!tokenSource.isCancellationRequested && (this.m_actionIndex < this.m_actions.length)) ||
-                (this.m_activePromises.size > 0)) {
-                this.addPromises(tokenSource);
-                yield this.waitForPromiseToFinish();
-            }
-        });
+    async runActions(tokenSource) {
+        // keep looping if there are actions that still can be added or if there are any active actions still running
+        while ((!tokenSource.isCancellationRequested && (this.m_actionIndex < this.m_actions.length)) ||
+            (this.m_activePromises.size > 0)) {
+            this.addPromises(tokenSource);
+            await this.waitForPromiseToFinish();
+        }
     }
     /**
      * Waits for one of the active promises to resolve. The resolved promise will be removed from the active promises
@@ -184,11 +171,9 @@ export class UFParallelQueueAction extends UFQueueableAction {
      *
      * @private
      */
-    waitForPromiseToFinish() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const index = yield Promise.race(Array.from(this.m_activePromises.values()));
-            this.m_activePromises.delete(index);
-        });
+    async waitForPromiseToFinish() {
+        const index = await Promise.race(Array.from(this.m_activePromises.values()));
+        this.m_activePromises.delete(index);
     }
     /**
      * Keep adding promises from {@link runAction} to the active list until the concurrent maximum is reached or there are
@@ -218,27 +203,25 @@ export class UFParallelQueueAction extends UFQueueableAction {
      *
      * @private
      */
-    runAction(index, tokenSource) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const action = this.m_actions[index];
-            let actionResult;
-            try {
-                actionResult = yield action.run(tokenSource.token);
-            }
-            catch (error) {
-                // an error results in a running failure
-                actionResult = false;
-                this.m_errorMessage = UFText.append(this.m_errorMessage, `${error.name}: ${error.message}`, ',');
-            }
-            // request cancellation if the action did not run successful
-            if (!actionResult) {
-                tokenSource.cancel();
-            }
-            else {
-                this.m_doneProgressWeight += UFProgressTools.getProgressWeight(action);
-            }
-            return index;
-        });
+    async runAction(index, tokenSource) {
+        const action = this.m_actions[index];
+        let actionResult;
+        try {
+            actionResult = await action.run(tokenSource.token);
+        }
+        catch (error) {
+            // an error results in a running failure
+            actionResult = false;
+            this.m_errorMessage = UFText.append(this.m_errorMessage, `${error.name}: ${error.message}`, ',');
+        }
+        // request cancellation if the action did not run successful
+        if (!actionResult) {
+            tokenSource.cancel();
+        }
+        else {
+            this.m_doneProgressWeight += UFProgressTools.getProgressWeight(action);
+        }
+        return index;
     }
 }
 // endregion

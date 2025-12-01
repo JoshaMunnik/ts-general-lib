@@ -24,15 +24,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 // region imports
 import { UFQueueableAction } from "./UFQueueableAction.js";
 // endregion
@@ -64,13 +55,11 @@ export class UFCallbackAction extends UFQueueableAction {
     /**
      * @inheritDoc
      */
-    run(token) {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.m_progress = 0.0;
-            this.m_callback();
-            this.m_progress = 1.0;
-            return Promise.resolve(true);
-        });
+    async run(token) {
+        this.m_progress = 0.0;
+        this.m_callback();
+        this.m_progress = 1.0;
+        return Promise.resolve(true);
     }
     // endregion
     // region IUFProgress
