@@ -330,6 +330,8 @@ export class UFText {
      *
      * @return {string} aText padded with aPadChar, if aTexts length >= aMinSize then aText
      *   is just returned
+     *
+     * @obsolete Use string.padStart() instead
      */
     static lpad(text, minSize, padChar = ' ') {
         while (text.length < minSize) {
@@ -349,6 +351,8 @@ export class UFText {
      *
      * @return {string} aText padded with aPadChar, if aTexts length >= aMinSize then aText is
      * just returned
+     *
+     * @obsolete Use string.padEnd() instead
      */
     static rpad(text, minSize, padChar = ' ') {
         while (text.length < minSize) {
@@ -441,12 +445,12 @@ export class UFText {
      * If no argument index is used and there are no more arguments to map to, the method will
      * not process the string and just keep it.
      *
-     * @param {string} format
+     * @param format
      *   A string including format specifiers.
-     * @param {...*} argumentList
+     * @param argumentList
      *   Various arguments to format within the string
      *
-     * @return {string} formatted string
+     * @return formatted string
      *
      * @example <caption>A few formatting statements</caption>
      * var pear = {color: 'brown', shape: 'pear', weight: 100 };
@@ -699,6 +703,56 @@ export class UFText {
      */
     static printf(format, ...argumentList) {
         console.log(UFText.sprintf.apply(null, arguments));
+    }
+    /**
+     * Parses a CSV string into an array of rows, where each row is an array of cell values.
+     * The method handles quoted values, escaped quotes, and different line endings. The delimiter can
+     * be specified, default is a comma.
+     *
+     * @param csvText
+     *   String to parse as CSV
+     * @param delimiter
+     *   Delimiter to use (default is a comma)
+     *
+     * @return an array of rows, where each row is an array of cell values.
+     */
+    static parseCSV(csvText, delimiter = ',') {
+        const rows = [];
+        let row = [];
+        let current = '';
+        let inQuotes = false;
+        for (let index = 0; index < csvText.length; index++) {
+            const currentCharacter = csvText[index];
+            const nextCharacter = index < csvText.length - 2 ? csvText[index + 1] : '';
+            if (currentCharacter === '"') {
+                if (inQuotes && (nextCharacter === '"')) { // escaped quote
+                    current += '"';
+                    index++;
+                }
+                else {
+                    // enter/exit quotes
+                    inQuotes = !inQuotes;
+                }
+            }
+            else if ((currentCharacter === delimiter) && !inQuotes) {
+                row.push(current);
+                current = '';
+            }
+            else if (((currentCharacter === '\n') || (currentCharacter === '\r')) && !inQuotes) {
+                // skip the next character if it's a part of Windows-style line ending
+                if ((currentCharacter === '\r') && (nextCharacter === '\n')) {
+                    index++;
+                }
+                row.push(current);
+                rows.push(row);
+                row = [];
+                current = '';
+            }
+            else {
+                current += currentCharacter;
+            }
+        }
+        return rows;
     }
 }
 // endregion

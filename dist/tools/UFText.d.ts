@@ -217,6 +217,8 @@ export declare class UFText {
      *
      * @return {string} aText padded with aPadChar, if aTexts length >= aMinSize then aText
      *   is just returned
+     *
+     * @obsolete Use string.padStart() instead
      */
     static lpad(text: string, minSize: number, padChar?: string): string;
     /**
@@ -231,6 +233,8 @@ export declare class UFText {
      *
      * @return {string} aText padded with aPadChar, if aTexts length >= aMinSize then aText is
      * just returned
+     *
+     * @obsolete Use string.padEnd() instead
      */
     static rpad(text: string, minSize: number, padChar?: string): string;
     /**
@@ -312,12 +316,12 @@ export declare class UFText {
      * If no argument index is used and there are no more arguments to map to, the method will
      * not process the string and just keep it.
      *
-     * @param {string} format
+     * @param format
      *   A string including format specifiers.
-     * @param {...*} argumentList
+     * @param argumentList
      *   Various arguments to format within the string
      *
-     * @return {string} formatted string
+     * @return formatted string
      *
      * @example <caption>A few formatting statements</caption>
      * var pear = {color: 'brown', shape: 'pear', weight: 100 };
@@ -388,4 +392,17 @@ export declare class UFText {
      *   Various parameters to format within the string
      */
     static printf(format: string, ...argumentList: any[]): void;
+    /**
+     * Parses a CSV string into an array of rows, where each row is an array of cell values.
+     * The method handles quoted values, escaped quotes, and different line endings. The delimiter can
+     * be specified, default is a comma.
+     *
+     * @param csvText
+     *   String to parse as CSV
+     * @param delimiter
+     *   Delimiter to use (default is a comma)
+     *
+     * @return an array of rows, where each row is an array of cell values.
+     */
+    static parseCSV(csvText: string, delimiter?: string): string[][];
 }

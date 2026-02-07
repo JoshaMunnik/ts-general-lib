@@ -18,6 +18,10 @@ To view the generated documentation, visit: https://joshamunnik.github.io/ts-gen
 
 ## Version history
 
+1.0.28
+- added `UFText.parseCSV` static method 
+- added `@obsolete` decorator to `UFText.rpad` and `UFText.lpad`
+
 1.0.27
 - changed target of tsconfig to es2021
 
